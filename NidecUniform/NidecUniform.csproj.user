@@ -54,13 +54,49 @@
     <Page Update="Styles\Button.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\cardButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\dotsButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\Image.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\menuButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\menuButtonIcon.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Page.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\RepeatButtonTransparent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\searchTextbox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\SliderStyle1.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\tabButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\Text.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\titleButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\titleIcon.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\titleText.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\topMenuButton.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\UserCard.xaml">

@@ -10,6 +10,6 @@
         <vm:ImportVM />
     </UserControl.DataContext>
     <Grid Background="red">
-            
+        <Button Width="50" Height="50" Content="Import" Command="{Binding ImportCommand}" />
     </Grid>
 </UserControl>
