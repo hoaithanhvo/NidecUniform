@@ -60,7 +60,7 @@ namespace NidecUniform.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/NidecUniform;V1.0.0.0;component/usercontrols/textinfo.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/NidecUniform;component/usercontrols/textinfo.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\UserControls\TextInfo.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

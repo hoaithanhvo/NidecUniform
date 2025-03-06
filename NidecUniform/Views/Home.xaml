@@ -1,0 +1,250 @@
+﻿<UserControl x:Class="NidecUniform.Views.Home"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NidecUniform.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="760" d:DesignWidth="1280"
+            xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+            xmlns:Ivc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+            xmlns:uc="clr-namespace:NidecUniform.UserControls"
+            xmlns:vm="clr-namespace:NidecUniform.ViewModels">
+
+    <UserControl.DataContext>
+        <vm:HomeVM/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="260"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="5 20 25 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--Title Section-->
+            <StackPanel Margin="7 10  0 25">
+                <TextBlock Text="Primary" Foreground="#797295" FontSize="13"/>
+                <TextBlock Text="Dashboard" Foreground="#797295" FontSize="13" Style="{StaticResource titleText}"/>
+            </StackPanel>
+            <Grid Grid.Column="2" VerticalAlignment="Top" Margin=" 0 10 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <!--<TextBlock Margin="40 0 0 0" VerticalAlignment="Center" Foreground="#594f7f" IsHitTestVisible="False" Panel.ZIndex="1" Text="Search..."
+                Visibility="{Binding ElementName=txtSearch,Path=Text.IsEmpty,Converter={StaticResource BoolToVis}}"/>-->
+                    <TextBox x:Name="txtSearch" Style="{StaticResource searchTextbox}"/>
+                    <Icon:PackIconMaterial Kind="Magnify" Width="14" Height="14" Foreground="#594f7f" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15 0 0 0"/>
+                </Grid>
+                <!--User Image-->
+                <Ellipse Width="45" Height="45" Margin="15 0 7 0" Grid.Column="1">
+                    <Ellipse.Fill >
+                        <ImageBrush ImageSource="/Images/Nidec-Logo.jpg"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+            </Grid>
+            <!--Main Middle Chart Section-->
+            <Border Grid.Row="1" Grid.ColumnSpan="2" CornerRadius="30" Margin="0 0 20 50">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#6a5dae" Offset="0"/>
+                        <GradientStop Color="#54479c" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Background="#6e60b5" BorderThickness="2" BorderBrush="#8276c0" CornerRadius="30" Margin=" 0 0 0 -10"/>
+                    <TextBlock Text="Overview" Foreground="#f0eff6" FontSize="18" FontWeight="SemiBold" Margin="35 25 0 0"/>
+                    <TextBlock Text="Monthly" Foreground="#f0eff6" FontSize="16" FontWeight="SemiBold" Margin="0 27 27 0" HorizontalAlignment="Right"/>
+                    <!--Main Chart-->
+                    <Ivc:CartesianChart LegendLocation="None" Margin="10">
+                        <Ivc:CartesianChart.ToolTip>
+                            <Ivc:DefaultTooltip Background="#5a5080" Foreground="#f4f3f6" BulletSize="0"/>
+                        </Ivc:CartesianChart.ToolTip>
+                        <Ivc:CartesianChart.AxisX>
+                            <Ivc:Axis Foreground="#a79fd1" FontSize="14" ShowLabels="True" Labels="Jan,Feb,Mar, Apr ,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec">
+                                <Ivc:Axis.Separator>
+                                    <Ivc:Separator StrokeThickness="0" Step="1"/>
+                                </Ivc:Axis.Separator>
+                            </Ivc:Axis>
+                        </Ivc:CartesianChart.AxisX>
+                        <Ivc:CartesianChart.AxisY>
+                            <Ivc:Axis Foreground="#a79fd1" FontSize="14" ShowLabels="False" MinValue="0" MaxValue="170">
+                                <Ivc:Axis.Separator>
+                                    <Ivc:Separator StrokeThickness="0"/>
+                                </Ivc:Axis.Separator>
+                            </Ivc:Axis>
+                        </Ivc:CartesianChart.AxisY>
+                        <Ivc:CartesianChart.Series>
+                            <Ivc:LineSeries Fill="#7164b2" StrokeThickness="4" PointGeometrySize="0" Values="10,15,20,30,102,123,90">
+                                <Ivc:LineSeries.Stroke>
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="Transparent" Offset="0"/>
+                                        <GradientStop Color="#f782ab" Offset="1"/>
+                                        <GradientStop Color="Transparent" Offset="2"/>
+                                    </LinearGradientBrush>
+                                </Ivc:LineSeries.Stroke>
+                            </Ivc:LineSeries>
+                        </Ivc:CartesianChart.Series>
+                    </Ivc:CartesianChart>
+                    <Grid Grid.Row="1" Margin="10 20 10 15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <!--Text Info Cards-->
+                        <uc:TextInfo TextTop="Total Time" TextMiddle="748 Hr" TextBottom="April" IsActive="False" />
+                        <uc:TextInfo TextTop="Total Steps" TextMiddle="9.123 St" TextBottom="April" IsActive="True" Grid.Column="1" />
+                        <uc:TextInfo TextTop="Target" TextMiddle="9200 St" TextBottom="April" IsActive="False"  Grid.Column="2"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!--Middle Right Section-->
+            <Grid Grid.Column="2" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--Top Box-->
+                <Border CornerRadius="30" Background="#7163ba">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="#8d82c8" CornerRadius="22" Width="70" Height="70" Margin="17" BorderThickness="1" BorderBrush="#aea6d8">
+                            <Icon:PackIconMaterial Kind="ShoeFormal" VerticalAlignment="Center" HorizontalAlignment="Center" Height="35" Width="35" Foreground="White"/>
+                        </Border>
+                        <TextBlock Text="Daily Jogging" FontSize="20" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                <!--Bottom Box-->
+                <Border CornerRadius="30" Background="#e95e89" Grid.Row="1" Margin="0 20 0 50">
+                    <Border.Clip>
+                        <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,271.9,250.45"/>
+                    </Border.Clip>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border CornerRadius="30" Background="#fd91b3" VerticalAlignment="Top" BorderThickness="1" BorderBrush="#fc9cba">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Background="#feaec7" CornerRadius="25" Width="70" Height="70" BorderThickness="1" BorderBrush="#fec5d6" Margin="20">
+                                    <Icon:PackIconMaterial Kind="Run" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"  />
+                                </Border>
+                                <TextBlock Text="My Jogging" FontSize="20" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                        <!--Chart-->
+
+
+                        <Ivc:CartesianChart LegendLocation="None" Margin="-7" Grid.Row="1" DataTooltip="{x:Null}">
+                            <Ivc:CartesianChart.AxisX>
+                                <Ivc:Axis ShowLabels="False">
+                                    <Ivc:Axis.Separator>
+                                        <Ivc:Separator StrokeThickness="0"/>
+                                    </Ivc:Axis.Separator>
+                                </Ivc:Axis>
+                            </Ivc:CartesianChart.AxisX>
+
+                            <Ivc:CartesianChart.AxisY>
+                                <Ivc:Axis ShowLabels="False" MinValue="0">
+                                    <Ivc:Axis.Separator>
+                                        <Ivc:Separator StrokeThickness="0"/>
+                                    </Ivc:Axis.Separator>
+                                </Ivc:Axis>
+                            </Ivc:CartesianChart.AxisY>
+                            <Ivc:CartesianChart.Series>
+                                <Ivc:LineSeries StrokeThickness="2" PointGeometrySize="0" Values="10,20,30,40,50,60">
+                                    <Ivc:LineSeries.Fill>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="#e95e89" Offset="0"/>
+                                            <GradientStop Color="#ef779c" Offset="0.9"/>
+                                        </LinearGradientBrush>
+                                    </Ivc:LineSeries.Fill>
+                                    <Ivc:LineSeries.Stroke>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="#e95e89" Offset="0"/>
+                                            <GradientStop Color="#ee7fa2" Offset="0.9"/>
+                                        </LinearGradientBrush>
+                                    </Ivc:LineSeries.Stroke>
+                                </Ivc:LineSeries>
+                            </Ivc:CartesianChart.Series>
+                        </Ivc:CartesianChart>
+                        <!--Title-->
+                        <StackPanel Grid.Row="1" Margin="30 0 0 0" VerticalAlignment="Center">
+                            <TextBlock Foreground="#fbc8d9" FontSize="14" Text="Total Time"/>
+                            <TextBlock Foreground="#fbc8d9" FontSize="24" FontWeight="SemiBold" Text="748 Hr"/>
+                            <TextBlock Foreground="#fbc8d9" FontSize="16" FontWeight="SemiBold" Text="April"/>
+                        </StackPanel>
+
+                        <Icon:PackIconMaterial Kind="ChevronDownCircleOutline" Foreground="#ffffff" Width="28" Height="28" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin=" 0 40 25 0"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <!--Bottom Info Card-->
+            <uc:InfoCard Grid.Column="0" Grid.Row="2" Title="Bicycle Drill" Desc="36km/weeks" Percentage="45%" BottomText="17 / 36km" Days="2 days left" Icon="Bike" Value="5" CardIsActive="True"/>
+            <uc:InfoCard Grid.Column="1" Grid.Row="2" Title="Bicycle Drill" Desc="36km/weeks" Percentage="45%" BottomText="17 / 36km" Days="2 days left" Icon="AbjadArabic" Value="5" CardIsActive="True"/>
+            <uc:InfoCard Grid.Column="2" Grid.Row="2" Title="Bicycle Drill" Desc="36km/weeks" Percentage="45%" BottomText="17 / 36km" Days="2 days left" Icon="Bike" Value="5" CardIsActive="True"/>
+        </Grid>
+
+        <!--Right Section-->
+        <Border Background="White" Grid.Column="1" CornerRadius="0 40 40 0">
+            <StackPanel>
+                <!--Top TitleBar-->
+                <Grid Margin="10 30 0 5">
+                    <Icon:PackIconMaterial  Kind="AccountGroupOutline" Style="{StaticResource titleIcon}"/>
+                    <TextBlock Text="Friends" Margin="40 0 0 0" Style="{StaticResource titleText}"/>
+                    <Button Content="View All" Style="{StaticResource titleButton}"/>
+                </Grid>
+
+                <!--Tab Buttons-->
+                <Border CornerRadius="20" Background="#ebecf0" Padding="0" Margin="20 15">
+                    <Grid Margin="10 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Activities" Background="#7163da" Foreground="White" Style="{StaticResource tabButton}" Command="{Binding LoadEmployeesCommand}" />
+                        <Button Content="Online" Grid.Column="1" Style="{StaticResource tabButton}"/>
+                    </Grid>
+                </Border>
+
+                <!--Users Info-->
+                <StackPanel>
+                    <uc:UserCard FullName="Vo Hoai Thanh" Image="/Images/Nidec-Logo.jpg" Title="27age" Time="20H"/>
+                    <uc:UserCard FullName="Vo Hoai Thanh" Image="/Images/Nidec-Logo.jpg" Title="27age" Time="20H"/>
+                    <uc:UserCard FullName="Vo Hoai Thanh" Image="/Images/Nidec-Logo.jpg" Title="27age" Time="20H"/>
+                    <uc:UserCard FullName="Vo Hoai Thanh" Image="/Images/Nidec-Logo.jpg" Title="27age" Time="20H"/>
+
+                </StackPanel>
+
+                <Separator Background="#e7e5f3" Margin="20 15" Height="0.8"/>
+                <!--Bottom TitleBar-->
+                <Grid Margin="10 0 0 0">
+                    <Icon:PackIconMaterial  Kind="MapMarkerAccountOutline" Style="{StaticResource titleIcon}"/>
+                    <TextBlock Text="Friends" Margin="40 0 0 0" Style="{StaticResource titleText}"/>
+                    <Button Content="View" Margin="0 3 15 0" Style="{StaticResource titleButton}"/>
+                </Grid>
+                <!--Image Map-->
+                <Border CornerRadius="10" Height="125" Margin="10 25" >
+                    <Border.Background >
+                        <ImageBrush ImageSource="/Images/Map.jpg"/>
+                    </Border.Background>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

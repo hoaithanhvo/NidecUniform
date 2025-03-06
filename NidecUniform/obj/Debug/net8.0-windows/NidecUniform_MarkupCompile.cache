@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\NidecUniform\NidecUniform\App.xaml
-4-1593449731
+17-1313337818
 
-16-245069185
+331411512223
 233-944656457
-MainWindow.xaml;UserControls\InfoCard.xaml;UserControls\TextInfo.xaml;UserControls\UserCard.xaml;
+MainWindow.xaml;Pages\ExportPage.xaml;Pages\HomePage.xaml;Pages\ImportPage.xaml;Pages\ScanPage.xaml;Styles\Button.xaml;Styles\Image.xaml;Styles\Page.xaml;Styles\Text.xaml;UserControls\InfoCard.xaml;UserControls\TextInfo.xaml;UserControls\UserCard.xaml;Utilities\DataTemplate.xaml;Views\Export.xaml;Views\Home.xaml;Views\Import.xaml;Views\Scan.xaml;
 
 False
 
