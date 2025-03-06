@@ -1,0 +1,153 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\NidecUniform\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|d:\\nidecuniform\\nidecuniform\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|solutionrelative:nidecuniform\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|d:\\nidecuniform\\nidecuniform\\usercontrols\\usercard.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|solutionrelative:nidecuniform\\usercontrols\\usercard.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|d:\\nidecuniform\\nidecuniform\\usercontrols\\usercard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|solutionrelative:nidecuniform\\usercontrols\\usercard.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|D:\\NidecUniform\\nidecuniform\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|solutionrelative:nidecuniform\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|D:\\NidecUniform\\nidecuniform\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|solutionrelative:nidecuniform\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|D:\\NidecUniform\\nidecuniform\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|solutionrelative:nidecuniform\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|D:\\NidecUniform\\nidecuniform\\usercontrols\\textinfo.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|solutionrelative:nidecuniform\\usercontrols\\textinfo.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|d:\\nidecuniform\\nidecuniform\\nidecuniform.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{E34AB357-FD2C-4C6C-B058-165349F794F5}|NidecUniform\\NidecUniform.csproj|solutionrelative:nidecuniform\\nidecuniform.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\NidecUniform\\NidecUniform\\App.xaml.cs",
+              "RelativeDocumentMoniker": "NidecUniform\\App.xaml.cs",
+              "ToolTip": "D:\\NidecUniform\\NidecUniform\\App.xaml.cs",
+              "RelativeToolTip": "NidecUniform\\App.xaml.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAgwC4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T00:52:49.156Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserCard.xaml",
+              "DocumentMoniker": "D:\\NidecUniform\\NidecUniform\\UserControls\\UserCard.xaml",
+              "RelativeDocumentMoniker": "NidecUniform\\UserControls\\UserCard.xaml",
+              "ToolTip": "D:\\NidecUniform\\NidecUniform\\UserControls\\UserCard.xaml",
+              "RelativeToolTip": "NidecUniform\\UserControls\\UserCard.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-06T01:48:35.806Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserCard.xaml.cs",
+              "DocumentMoniker": "D:\\NidecUniform\\NidecUniform\\UserControls\\UserCard.xaml.cs",
+              "RelativeDocumentMoniker": "NidecUniform\\UserControls\\UserCard.xaml.cs",
+              "ToolTip": "D:\\NidecUniform\\NidecUniform\\UserControls\\UserCard.xaml.cs",
+              "RelativeToolTip": "NidecUniform\\UserControls\\UserCard.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwBsAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T01:34:47.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\NidecUniform\\NidecUniform\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "NidecUniform\\MainWindow.xaml",
+              "ToolTip": "D:\\NidecUniform\\NidecUniform\\MainWindow.xaml",
+              "RelativeToolTip": "NidecUniform\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-06T00:52:43.737Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\NidecUniform\\NidecUniform\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "NidecUniform\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\NidecUniform\\NidecUniform\\MainWindow.xaml.cs",
+              "RelativeToolTip": "NidecUniform\\MainWindow.xaml.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAqwBIAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T00:52:42.078Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "App.xaml",
+              "DocumentMoniker": "D:\\NidecUniform\\NidecUniform\\App.xaml",
+              "RelativeDocumentMoniker": "NidecUniform\\App.xaml",
+              "ToolTip": "D:\\NidecUniform\\NidecUniform\\App.xaml",
+              "RelativeToolTip": "NidecUniform\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-03-06T01:06:37.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TextInfo.xaml.cs",
+              "DocumentMoniker": "D:\\NidecUniform\\NidecUniform\\UserControls\\TextInfo.xaml.cs",
+              "RelativeDocumentMoniker": "NidecUniform\\UserControls\\TextInfo.xaml.cs",
+              "ToolTip": "D:\\NidecUniform\\NidecUniform\\UserControls\\TextInfo.xaml.cs",
+              "RelativeToolTip": "NidecUniform\\UserControls\\TextInfo.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAABSAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T01:06:24.343Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NidecUniform",
+              "DocumentMoniker": "D:\\NidecUniform\\NidecUniform\\NidecUniform.csproj",
+              "RelativeDocumentMoniker": "NidecUniform\\NidecUniform.csproj",
+              "ToolTip": "D:\\NidecUniform\\NidecUniform\\NidecUniform.csproj",
+              "RelativeToolTip": "NidecUniform\\NidecUniform.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-03-06T01:12:16.217Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
