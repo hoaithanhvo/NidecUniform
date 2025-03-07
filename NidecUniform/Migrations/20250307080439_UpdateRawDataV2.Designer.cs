@@ -12,8 +12,8 @@ using NidecUniform.Models;
 namespace NidecUniform.Migrations
 {
     [DbContext(typeof(NidecUniformContext))]
-    [Migration("20250306120529_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250307080439_UpdateRawDataV2")]
+    partial class UpdateRawDataV2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

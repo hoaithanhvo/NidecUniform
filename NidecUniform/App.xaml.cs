@@ -26,11 +26,10 @@ namespace NidecUniform
         {
             // Đăng ký DbContext
             services.AddDbContext<NidecUniformContext>(options =>
-                options.UseSqlServer("Data Source = LAPTOP - 99421S3D\\SQLEXPRESS; Initial Catalog = NIDEC_UNIFORM; Integrated Security = True; Encrypt=True;Trust Server Certificate=True"));
-
+                //options.UseSqlServer("Data Source = LAPTOP - 99421S3D\\SQLEXPRESS; Initial Catalog = NIDEC_UNIFORM; Integrated Security = True; Encrypt=True;Trust Server Certificate=True"));
+                options.UseSqlServer("Data Source=10.234.1.89;Initial Catalog=NIDEC_UNIFORM;Persist Security Info=True;User ID=sa;Password=sa;Encrypt=True;Trust Server Certificate=True"));
             // Đăng ký Repository
             services.AddScoped<IEmpoloyeeRepository, EmployeeRepository>();
-
             // Đăng ký MainWindow với tham số từ DI
             services.AddTransient<MainWindow>();
         }
