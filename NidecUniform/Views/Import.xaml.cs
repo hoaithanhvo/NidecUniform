@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NidecUniform.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace NidecUniform.Views
         public Import()
         {
             InitializeComponent();
+            this.DataContext = new ImportVM();
         }
     }
 }

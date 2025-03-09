@@ -63,6 +63,12 @@
     <Page Update="Styles\Image.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\MainButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\mainTitle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\menuButton.xaml">
       <SubType>Designer</SubType>
     </Page>

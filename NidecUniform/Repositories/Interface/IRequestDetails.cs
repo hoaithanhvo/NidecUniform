@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories
 {
-    public interface IEmpoloyeeRepository
+    interface IRequestDetails
     {
-        MEmployee GetEmployee(int id);
+        void ImportRequestDetailsList(List<RequestDetail> requestDetailsList);
     }
 }

@@ -22,6 +22,10 @@
                 <ResourceDictionary Source="Styles/titleButton.xaml" />
                 <ResourceDictionary Source="Styles/titleIcon.xaml" />
                 <ResourceDictionary Source="Styles/tabButton.xaml" />
+                <ResourceDictionary Source="Styles/mainButton.xaml" />
+                <ResourceDictionary Source="Styles/mainTitle.xaml" />
+
+
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="SliderThumb.Static.Background" Color="#FFF0F0F0"/>
             <SolidColorBrush x:Key="SliderThumb.Static.Border" Color="#FFACACAC"/>

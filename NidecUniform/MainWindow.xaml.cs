@@ -26,6 +26,8 @@ namespace NidecUniform
         {
             InitializeComponent();
             _empoloyeeRepository = empoloyeeRepository;
+            this.DataContext = new NavigationVM();
+              
         }
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {

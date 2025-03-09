@@ -16,9 +16,15 @@ namespace NidecUniform.Repositories
 
             _context = context;
         }
-        public MEmployee GetEmployee(int id)
+        public M_Employee GetEmployee(int id)
         {
-            return _context.MEmployees.Find(id);
+            return _context.M_Employees.Find(id);
+        }
+
+        public async Task importEmployee(List<M_Employee> employees)
+        {
+            _context.M_Employees.AddRange(employees);
+            await _context.SaveChangesAsync();
         }
     }
 }

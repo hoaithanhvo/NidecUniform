@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NidecUniform.Models;
 
@@ -11,9 +12,11 @@ using NidecUniform.Models;
 namespace NidecUniform.Migrations
 {
     [DbContext(typeof(NidecUniformContext))]
-    partial class NidecUniformContextModelSnapshot : ModelSnapshot
+    [Migration("20250308191944_UpdateEntity")]
+    partial class UpdateEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,14 +40,8 @@ namespace NidecUniform.Migrations
                     b.Property<int>("DeliveryID")
                         .HasColumnType("int");
 
-                    b.Property<string>("EmployeeID")
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int?>("M_RequestID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
-
-                    b.Property<string>("ProductID")
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
@@ -52,23 +49,10 @@ namespace NidecUniform.Migrations
                     b.Property<int>("QuantityDelivered")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RequestDetailID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Unit")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("DeliveryID");
-
-                    b.HasIndex("EmployeeID");
-
-                    b.HasIndex("M_RequestID");
-
-                    b.HasIndex("ProductID");
-
-                    b.HasIndex("RequestDetailID");
 
                     b.ToTable("DeliveryDetail");
                 });
@@ -92,35 +76,28 @@ namespace NidecUniform.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EmployeeID")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("EmpolyeeID")
+                        .HasColumnType("int");
 
                     b.Property<int>("RequestID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EmployeeID");
-
-                    b.HasIndex("RequestID")
-                        .IsUnique();
-
                     b.ToTable("M_Delivery", (string)null);
                 });
 
             modelBuilder.Entity("NidecUniform.Models.M_Employee", b =>
                 {
-                    b.Property<string>("EmployeeID")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -128,6 +105,11 @@ namespace NidecUniform.Migrations
                     b.Property<string>("Department")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("EmployeeID")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -138,20 +120,27 @@ namespace NidecUniform.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("EmployeeID");
+                    b.HasKey("ID");
 
                     b.ToTable("M_Employee", (string)null);
                 });
 
             modelBuilder.Entity("NidecUniform.Models.M_Product", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
                     b.Property<string>("ProductID")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("ProductID");
-
-                    b.Property<double?>("Price")
-                        .HasColumnType("float");
 
                     b.Property<string>("ProductName")
                         .HasMaxLength(50)
@@ -160,7 +149,7 @@ namespace NidecUniform.Migrations
                     b.Property<string>("Unit")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductID");
+                    b.HasKey("ID");
 
                     b.ToTable("M_Product", (string)null);
                 });
@@ -178,8 +167,10 @@ namespace NidecUniform.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmployeeID")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("EmpolyeeID")
+                        .HasColumnType("int");
 
                     b.Property<DateOnly?>("EndDate")
                         .HasColumnType("date");
@@ -192,14 +183,15 @@ namespace NidecUniform.Migrations
                     b.Property<DateOnly?>("StartDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("EmpolyeeID");
 
                     b.HasIndex(new[] { "EmployeeID" }, "IX_MRequests_EmpolyeeId");
 
@@ -279,14 +271,8 @@ namespace NidecUniform.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EmployeeID")
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int?>("M_DeliveryID")
+                    b.Property<int>("ProductID")
                         .HasColumnType("int");
-
-                    b.Property<string>("ProductID")
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
@@ -300,96 +286,39 @@ namespace NidecUniform.Migrations
                     b.Property<int>("RequestID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Unit")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EmployeeID");
-
-                    b.HasIndex("M_DeliveryID");
-
-                    b.HasIndex("ProductID");
+                    b.HasIndex(new[] { "ProductID" }, "IX_RequestDetails_ProductId");
 
                     b.HasIndex(new[] { "RequestID" }, "IX_RequestDetails_RequestId");
 
                     b.ToTable("RequestDetail");
                 });
 
-            modelBuilder.Entity("NidecUniform.Models.DeliveryDetail", b =>
-                {
-                    b.HasOne("NidecUniform.Models.M_Delivery", "Delivery")
-                        .WithMany("DeliveryDetail")
-                        .HasForeignKey("DeliveryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeID");
-
-                    b.HasOne("NidecUniform.Models.M_Request", null)
-                        .WithMany("DeliveryDetails")
-                        .HasForeignKey("M_RequestID");
-
-                    b.HasOne("NidecUniform.Models.M_Product", "Product")
-                        .WithMany("DeliveryDetails")
-                        .HasForeignKey("ProductID");
-
-                    b.HasOne("NidecUniform.Models.RequestDetail", null)
-                        .WithMany("DeliveryDetails")
-                        .HasForeignKey("RequestDetailID");
-
-                    b.Navigation("Delivery");
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("NidecUniform.Models.M_Delivery", b =>
-                {
-                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
-                        .WithMany("DeliveryDetails")
-                        .HasForeignKey("EmployeeID");
-
-                    b.HasOne("NidecUniform.Models.M_Request", "Request")
-                        .WithOne("Delivery")
-                        .HasForeignKey("NidecUniform.Models.M_Delivery", "RequestID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Request");
-                });
-
             modelBuilder.Entity("NidecUniform.Models.M_Request", b =>
                 {
-                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
-                        .WithMany("Requests")
-                        .HasForeignKey("EmployeeID");
+                    b.HasOne("NidecUniform.Models.M_Employee", "Empolyee")
+                        .WithMany()
+                        .HasForeignKey("EmpolyeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Employee");
+                    b.Navigation("Empolyee");
                 });
 
             modelBuilder.Entity("NidecUniform.Models.RequestDetail", b =>
                 {
-                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeID");
-
-                    b.HasOne("NidecUniform.Models.M_Delivery", null)
-                        .WithMany("RequestDetail")
-                        .HasForeignKey("M_DeliveryID");
-
                     b.HasOne("NidecUniform.Models.M_Product", "Product")
                         .WithMany("RequestDetails")
-                        .HasForeignKey("ProductID");
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("NidecUniform.Models.M_Request", "Request")
                         .WithMany("RequestDetails")
@@ -397,47 +326,19 @@ namespace NidecUniform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employee");
-
                     b.Navigation("Product");
 
                     b.Navigation("Request");
                 });
 
-            modelBuilder.Entity("NidecUniform.Models.M_Delivery", b =>
-                {
-                    b.Navigation("DeliveryDetail");
-
-                    b.Navigation("RequestDetail");
-                });
-
-            modelBuilder.Entity("NidecUniform.Models.M_Employee", b =>
-                {
-                    b.Navigation("DeliveryDetails");
-
-                    b.Navigation("Requests");
-                });
-
             modelBuilder.Entity("NidecUniform.Models.M_Product", b =>
                 {
-                    b.Navigation("DeliveryDetails");
-
                     b.Navigation("RequestDetails");
                 });
 
             modelBuilder.Entity("NidecUniform.Models.M_Request", b =>
                 {
-                    b.Navigation("Delivery")
-                        .IsRequired();
-
-                    b.Navigation("DeliveryDetails");
-
                     b.Navigation("RequestDetails");
-                });
-
-            modelBuilder.Entity("NidecUniform.Models.RequestDetail", b =>
-                {
-                    b.Navigation("DeliveryDetails");
                 });
 #pragma warning restore 612, 618
         }

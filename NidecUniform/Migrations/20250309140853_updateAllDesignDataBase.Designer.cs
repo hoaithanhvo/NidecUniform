@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NidecUniform.Models;
 
@@ -11,9 +12,11 @@ using NidecUniform.Models;
 namespace NidecUniform.Migrations
 {
     [DbContext(typeof(NidecUniformContext))]
-    partial class NidecUniformContextModelSnapshot : ModelSnapshot
+    [Migration("20250309140853_updateAllDesignDataBase")]
+    partial class updateAllDesignDataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +40,6 @@ namespace NidecUniform.Migrations
                     b.Property<int>("DeliveryID")
                         .HasColumnType("int");
 
-                    b.Property<string>("EmployeeID")
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<int?>("M_RequestID")
                         .HasColumnType("int");
 
@@ -61,8 +61,6 @@ namespace NidecUniform.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("DeliveryID");
-
-                    b.HasIndex("EmployeeID");
 
                     b.HasIndex("M_RequestID");
 
@@ -98,10 +96,6 @@ namespace NidecUniform.Migrations
 
                     b.Property<int>("RequestID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -192,9 +186,8 @@ namespace NidecUniform.Migrations
                     b.Property<DateOnly?>("StartDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -300,9 +293,8 @@ namespace NidecUniform.Migrations
                     b.Property<int>("RequestID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Unit")
                         .HasColumnType("nvarchar(max)");
@@ -328,10 +320,6 @@ namespace NidecUniform.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeID");
-
                     b.HasOne("NidecUniform.Models.M_Request", null)
                         .WithMany("DeliveryDetails")
                         .HasForeignKey("M_RequestID");
@@ -345,8 +333,6 @@ namespace NidecUniform.Migrations
                         .HasForeignKey("RequestDetailID");
 
                     b.Navigation("Delivery");
-
-                    b.Navigation("Employee");
 
                     b.Navigation("Product");
                 });
