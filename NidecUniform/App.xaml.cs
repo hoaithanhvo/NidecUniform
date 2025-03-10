@@ -1,7 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LiveCharts.Wpf;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NidecUniform.Models;
 using NidecUniform.Repositories;
+using NidecUniform.Repositories.Interface;
+using NidecUniform.Utilities;
+using NidecUniform.ViewModels;
+using NidecUniform.Views;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -13,33 +18,21 @@ namespace NidecUniform
     /// </summary>
     public partial class App : Application
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public App()
-        {
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-            _serviceProvider = services.BuildServiceProvider();
-        }
-
-        private void ConfigureServices(IServiceCollection services)
-        {
-            // Đăng ký DbContext
-            services.AddDbContext<NidecUniformContext>(options =>
-                //options.UseSqlServer("Data Source = LAPTOP - 99421S3D\\SQLEXPRESS; Initial Catalog = NIDEC_UNIFORM; Integrated Security = True; Encrypt=True;Trust Server Certificate=True"));
-                options.UseSqlServer("Data Source=10.234.1.89;Initial Catalog=NIDEC_UNIFORM;Persist Security Info=True;User ID=sa;Password=sa;Encrypt=True;Trust Server Certificate=True"));
-            // Đăng ký Repository
-            services.AddScoped<IEmpoloyeeRepository, EmployeeRepository>();
-            // Đăng ký MainWindow với tham số từ DI
-            services.AddTransient<MainWindow>();
-        }
-
         protected override void OnStartup(StartupEventArgs e)
         {
-            var mainWindow = _serviceProvider.GetRequiredService<MainWindow>(); // Lấy service từ DI
+            base.OnStartup(e);
+
+            // Khởi tạo Dependency Injection
+            AppServices.ConfigureServices();
+            // Trong App.xaml.cs hoặc nơi bạn đăng ký dịch vụ DI
+         
+
+            // Lấy MainWindow từ DI
+            var mainWindow = AppServices.GetService<MainWindow>();
             mainWindow.Show();
         }
-
     }
-
 }
+       
+
+

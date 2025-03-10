@@ -24,328 +24,420 @@ namespace NidecUniform.Migrations
 
             modelBuilder.Entity("NidecUniform.Models.DeliveryDetail", b =>
                 {
-                    b.Property<int>("DeliveryDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("DeliveryDetailID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryDetailId"));
-
-                    b.Property<int>("DeliveryId")
-                        .HasColumnType("int")
-                        .HasColumnName("DeliveryID");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("ProductID");
-
-                    b.Property<int>("QuantityDelivered")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Size")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Unit")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("DeliveryDetailId")
-                        .HasName("PK__Delivery__EFD2C287B58D7321");
-
-                    b.HasIndex("DeliveryId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("DeliveryDetails");
-                });
-
-            modelBuilder.Entity("NidecUniform.Models.MDelivery", b =>
-                {
-                    b.Property<int>("DeliveryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("DeliveryID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryId"));
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<string>("DeliveredBy")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<DateTime?>("DeliveryDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<int>("EmpolyeeId")
-                        .HasColumnType("int")
-                        .HasColumnName("Empolyee_ID");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int")
-                        .HasColumnName("RequestID");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.HasKey("DeliveryId")
-                        .HasName("PK__Deliveri__626D8FEED074CDB0");
-
-                    b.HasIndex("EmpolyeeId");
-
-                    b.HasIndex("RequestId");
-
-                    b.ToTable("M_Deliveries", (string)null);
-                });
-
-            modelBuilder.Entity("NidecUniform.Models.MEmployee", b =>
-                {
-                    b.Property<int>("EmpolyeeId")
-                        .HasColumnType("int")
-                        .HasColumnName("Empolyee_ID");
-
-                    b.Property<string>("Department")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("FullName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Section")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("EmpolyeeId")
-                        .HasName("PK_M_Empolyee");
-
-                    b.ToTable("M_Employees", (string)null);
-                });
-
-            modelBuilder.Entity("NidecUniform.Models.MProduct", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Code")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("DeliveryID")
+                        .HasColumnType("int");
 
-                    b.Property<double?>("Price")
-                        .HasColumnType("float");
+                    b.Property<string>("EmployeeID")
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("M_RequestID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductID")
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuantityDelivered")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RequestDetailID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Unit")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.ToTable("M_Products", (string)null);
+                    b.HasIndex("DeliveryID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("M_RequestID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("RequestDetailID");
+
+                    b.ToTable("DeliveryDetail", (string)null);
                 });
 
-            modelBuilder.Entity("NidecUniform.Models.MRequest", b =>
+            modelBuilder.Entity("NidecUniform.Models.M_Delivery", b =>
                 {
-                    b.Property<int>("RequestId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("RequestID");
+                        .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<DateTime?>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("EmpolyeeId")
-                        .HasColumnType("int")
-                        .HasColumnName("Empolyee_ID");
+                    b.Property<string>("DeliveredBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("RequestDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeID")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("RequestID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                        .HasColumnType("datetime2");
 
-                    b.HasKey("RequestId")
-                        .HasName("PK__M_Reques__33A8519A60486747");
+                    b.HasKey("ID");
 
-                    b.HasIndex("EmpolyeeId");
+                    b.HasIndex("EmployeeID");
 
-                    b.ToTable("M_Requests", (string)null);
+                    b.HasIndex("RequestID")
+                        .IsUnique();
+
+                    b.ToTable("M_Delivery", (string)null);
                 });
 
-            modelBuilder.Entity("NidecUniform.Models.RequestDetail", b =>
+            modelBuilder.Entity("NidecUniform.Models.M_Employee", b =>
                 {
-                    b.Property<int>("DetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("DetailID");
+                    b.Property<string>("EmployeeID")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetailId"));
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
+                    b.Property<string>("Department")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Position")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("EmployeeID");
+
+                    b.ToTable("M_Employee", (string)null);
+                });
+
+            modelBuilder.Entity("NidecUniform.Models.M_Product", b =>
+                {
+                    b.Property<string>("ProductID")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
                         .HasColumnName("ProductID");
 
-                    b.Property<int?>("QuantityApproved")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
 
-                    b.Property<int?>("QuantityDelivered")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<int>("QuantityRequested")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int")
-                        .HasColumnName("RequestID");
-
-                    b.Property<string>("Size")
+                    b.Property<string>("ProductName")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Unit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductID");
+
+                    b.ToTable("M_Product", (string)null);
+                });
+
+            modelBuilder.Entity("NidecUniform.Models.M_Request", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeID")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateOnly?>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("RequestType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateOnly?>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Status")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("DetailId")
-                        .HasName("PK__RequestD__135C314DC9F0A3FF");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("ProductId");
+                    b.HasKey("ID");
 
-                    b.HasIndex("RequestId");
+                    b.HasIndex(new[] { "EmployeeID" }, "IX_MRequests_EmpolyeeId");
 
-                    b.ToTable("RequestDetails");
+                    b.ToTable("M_Request", (string)null);
                 });
 
-            modelBuilder.Entity("NidecUniform.Models.DeliveryDetail", b =>
+            modelBuilder.Entity("NidecUniform.Models.RawData", b =>
                 {
-                    b.HasOne("NidecUniform.Models.MDelivery", "Delivery")
-                        .WithMany("DeliveryDetails")
-                        .HasForeignKey("DeliveryId")
-                        .IsRequired()
-                        .HasConstraintName("FK_DeliveryDetails_Delivery");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasOne("NidecUniform.Models.MProduct", "Product")
-                        .WithMany("DeliveryDetails")
-                        .HasForeignKey("ProductId")
-                        .IsRequired()
-                        .HasConstraintName("FK_DeliveryDetails_Product");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Navigation("Delivery");
+                    b.Property<string>("ConesType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Navigation("Product");
-                });
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
-            modelBuilder.Entity("NidecUniform.Models.MDelivery", b =>
-                {
-                    b.HasOne("NidecUniform.Models.MEmployee", "Empolyee")
-                        .WithMany("MDeliveries")
-                        .HasForeignKey("EmpolyeeId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Deliveries_Employee");
+                    b.Property<string>("Dept")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasOne("NidecUniform.Models.MRequest", "Request")
-                        .WithMany("MDeliveries")
-                        .HasForeignKey("RequestId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Deliveries_Request");
+                    b.Property<string>("EmployeeID")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Navigation("Empolyee");
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
 
-                    b.Navigation("Request");
-                });
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity("NidecUniform.Models.MRequest", b =>
-                {
-                    b.HasOne("NidecUniform.Models.MEmployee", "Empolyee")
-                        .WithMany("MRequests")
-                        .HasForeignKey("EmpolyeeId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Requests_Employee");
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Navigation("Empolyee");
+                    b.Property<int>("NumberOfCones")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfPaint")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfShoes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfshirts")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaintType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShirtsType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShoesType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("UniformType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("RawData", (string)null);
                 });
 
             modelBuilder.Entity("NidecUniform.Models.RequestDetail", b =>
                 {
-                    b.HasOne("NidecUniform.Models.MProduct", "Product")
-                        .WithMany("RequestDetails")
-                        .HasForeignKey("ProductId")
-                        .IsRequired()
-                        .HasConstraintName("FK_RequestDetails_Product");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
 
-                    b.HasOne("NidecUniform.Models.MRequest", "Request")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeID")
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("M_DeliveryID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductID")
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QuantityDelivered")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityRequested")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequestID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.HasIndex("M_DeliveryID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex(new[] { "RequestID" }, "IX_RequestDetails_RequestId");
+
+                    b.ToTable("RequestDetail", (string)null);
+                });
+
+            modelBuilder.Entity("NidecUniform.Models.DeliveryDetail", b =>
+                {
+                    b.HasOne("NidecUniform.Models.M_Delivery", "Delivery")
+                        .WithMany("DeliveryDetail")
+                        .HasForeignKey("DeliveryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID");
+
+                    b.HasOne("NidecUniform.Models.M_Request", null)
+                        .WithMany("DeliveryDetails")
+                        .HasForeignKey("M_RequestID");
+
+                    b.HasOne("NidecUniform.Models.M_Product", "Product")
+                        .WithMany("DeliveryDetails")
+                        .HasForeignKey("ProductID");
+
+                    b.HasOne("NidecUniform.Models.RequestDetail", null)
+                        .WithMany("DeliveryDetails")
+                        .HasForeignKey("RequestDetailID");
+
+                    b.Navigation("Delivery");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("NidecUniform.Models.M_Delivery", b =>
+                {
+                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
+                        .WithMany("DeliveryDetails")
+                        .HasForeignKey("EmployeeID");
+
+                    b.HasOne("NidecUniform.Models.M_Request", "Request")
+                        .WithOne("Delivery")
+                        .HasForeignKey("NidecUniform.Models.M_Delivery", "RequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Request");
+                });
+
+            modelBuilder.Entity("NidecUniform.Models.M_Request", b =>
+                {
+                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
+                        .WithMany("Requests")
+                        .HasForeignKey("EmployeeID");
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("NidecUniform.Models.RequestDetail", b =>
+                {
+                    b.HasOne("NidecUniform.Models.M_Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeID");
+
+                    b.HasOne("NidecUniform.Models.M_Delivery", null)
+                        .WithMany("RequestDetail")
+                        .HasForeignKey("M_DeliveryID");
+
+                    b.HasOne("NidecUniform.Models.M_Product", "Product")
                         .WithMany("RequestDetails")
-                        .HasForeignKey("RequestId")
-                        .IsRequired()
-                        .HasConstraintName("FK_RequestDetails_Request");
+                        .HasForeignKey("ProductID");
+
+                    b.HasOne("NidecUniform.Models.M_Request", "Request")
+                        .WithMany("RequestDetails")
+                        .HasForeignKey("RequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
 
                     b.Navigation("Product");
 
                     b.Navigation("Request");
                 });
 
-            modelBuilder.Entity("NidecUniform.Models.MDelivery", b =>
+            modelBuilder.Entity("NidecUniform.Models.M_Delivery", b =>
+                {
+                    b.Navigation("DeliveryDetail");
+
+                    b.Navigation("RequestDetail");
+                });
+
+            modelBuilder.Entity("NidecUniform.Models.M_Employee", b =>
                 {
                     b.Navigation("DeliveryDetails");
+
+                    b.Navigation("Requests");
                 });
 
-            modelBuilder.Entity("NidecUniform.Models.MEmployee", b =>
-                {
-                    b.Navigation("MDeliveries");
-
-                    b.Navigation("MRequests");
-                });
-
-            modelBuilder.Entity("NidecUniform.Models.MProduct", b =>
+            modelBuilder.Entity("NidecUniform.Models.M_Product", b =>
                 {
                     b.Navigation("DeliveryDetails");
 
                     b.Navigation("RequestDetails");
                 });
 
-            modelBuilder.Entity("NidecUniform.Models.MRequest", b =>
+            modelBuilder.Entity("NidecUniform.Models.M_Request", b =>
                 {
-                    b.Navigation("MDeliveries");
+                    b.Navigation("Delivery")
+                        .IsRequired();
+
+                    b.Navigation("DeliveryDetails");
 
                     b.Navigation("RequestDetails");
+                });
+
+            modelBuilder.Entity("NidecUniform.Models.RequestDetail", b =>
+                {
+                    b.Navigation("DeliveryDetails");
                 });
 #pragma warning restore 612, 618
         }

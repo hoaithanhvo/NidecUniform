@@ -5,21 +5,56 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
              xmlns:vm="clr-namespace:NidecUniform.ViewModels"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <vm:ImportVM />
-    </UserControl.DataContext>
-    <Grid Background="Aqua">
-        <Grid.RowDefinitions>
+    <Border CornerRadius="0,20,20,0" Margin="0,5,5,0">
+    <Grid Background="White">
+       
+            <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <StackPanel>
-            <Button Width="50" Height="50" Content="Import" Command="{Binding ImportCommand}" />
+        <StackPanel Grid.Row="0">
+            <Border CornerRadius="10" Padding="5" Background="#039F41" Margin="5">
+                <TextBlock Text="Select Uniform Allocation List"  Style="{StaticResource mainTitle}"/>
+            </Border>
         </StackPanel>
-        <StackPanel VerticalAlignment="Bottom" Grid.Row="1">
-            <DataGrid Height="400" x:Name="dtgExcel" ItemsSource="{Binding Items}">
-            </DataGrid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5 0">
+            <Button Content="Open File" Command="{Binding OpenCommand}" Style="{StaticResource mainButton}"/>
+            <Button Content="Clear" Command="{Binding ClearCommand}" Style="{StaticResource mainButton}"/>
+        </StackPanel>
+        <Grid VerticalAlignment="Top" Grid.Row="2" >
+            <Border BorderBrush="#039F41" Margin="5"  BorderThickness="2" CornerRadius="10" >
+                <DataGrid ItemsSource="{Binding DgvImportRequest}" GridLinesVisibility="Horizontal"  Margin="5"
+          Background="White" BorderBrush="White" FontSize="12" FontStretch="SemiCondensed" AutoGenerateColumns="False" FontWeight="SemiBold"
+          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="#" Width="25" Binding="{Binding No}" />
+                        <DataGridTextColumn Header="Emp. ID" Width="60" Binding="{Binding EmployeeID}" />
+                        <DataGridTextColumn Header="Full Name" Width="170" Binding="{Binding FullName}" />
+                        <DataGridTextColumn Header="Dept" Width="170" Binding="{Binding Dept}" />
+                        <DataGridTextColumn Header="U.Type"  Width="120" Binding="{Binding UniformType}" />
+                        <DataGridTextColumn Header="Start Date"  Width="80" Binding="{Binding StartDate, StringFormat=d}" />
+                        <DataGridTextColumn Header="End date"  Width="80" Binding="{Binding EndDate, StringFormat=d}" />
+                        <DataGridTextColumn Header="P.Type" Width="150" Binding="{Binding PaintType}" />
+                        <DataGridTextColumn Header="P.Qty" Width="40"  Binding="{Binding NumberOfPaint}" />
+                        <DataGridTextColumn Header="S.Type" Width="150"  Binding="{Binding ShirtsType}" />
+                        <DataGridTextColumn Header="S.Qty" Width="40" Binding="{Binding NumberOfshirts}" />
+                        <DataGridTextColumn Header="H.Type" Width="80" Binding="{Binding ConesType}" />
+                        <DataGridTextColumn Header="Hat" Width="40" Binding="{Binding NumberOfCones}" />
+                        <DataGridTextColumn Header="Sh.Type" Width="80" Binding="{Binding ShoesType}" />
+                        <DataGridTextColumn Header="Sh.Qty" Width="40" Binding="{Binding NumberOfShoes}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
+            <TextBlock Text="Total:" VerticalAlignment="Center" FontSize="13" Foreground="Black"/>
+            <TextBlock Text="{Binding TotalCount,TargetNullValue = 0}" VerticalAlignment="Center" FontSize="13" Foreground="Black" Margin="2 0 10 0"/>
+            <Button  Content="Import" Command="{Binding ImportCommand}"  Style="{StaticResource mainButton}" />
         </StackPanel>
     </Grid>
+    </Border>
 </UserControl>

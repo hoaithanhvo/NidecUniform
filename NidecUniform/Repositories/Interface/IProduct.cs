@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NidecUniform.Repositories
+namespace NidecUniform.Repositories.Interface
 {
-    public interface IEmpoloyeeRepository
+    public interface IProduct
     {
-        MEmployee GetEmployee(int id);
+        Task<List<M_Product>> GetProductList();
     }
 }

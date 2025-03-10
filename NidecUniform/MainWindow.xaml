@@ -10,9 +10,7 @@
         Icon="/Images/Nidec_Logo.png"
         xmlns:Menu="clr-namespace:NidecUniform.Utilities"
         xmlns:vm="clr-namespace:NidecUniform.ViewModels">
-    <Window.DataContext>
-        <vm:NavigationVM />
-    </Window.DataContext>
+  
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>

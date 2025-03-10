@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Media;
 using Microsoft.EntityFrameworkCore;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace NidecUniform.Models;
 
@@ -20,146 +17,76 @@ public partial class NidecUniformContext : DbContext
 
     public virtual DbSet<DeliveryDetail> DeliveryDetails { get; set; }
 
-    public virtual DbSet<MDelivery> MDeliveries { get; set; }
+    public virtual DbSet<M_Delivery> M_Deliveries { get; set; }
 
-    public virtual DbSet<MEmployee> MEmployees { get; set; }
+    public virtual DbSet<M_Employee> M_Employees { get; set; }
 
-    public virtual DbSet<MProduct> MProducts { get; set; }
+    public virtual DbSet<M_Product> M_Products { get; set; }
 
-    public virtual DbSet<MRequest> MRequests { get; set; }
+    public virtual DbSet<M_Request> M_Requests { get; set; }
 
     public virtual DbSet<RequestDetail> RequestDetails { get; set; }
+
+    public virtual DbSet<RawData> RawData { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-    //=> optionsBuilder.UseSqlServer("Data Source=LAPTOP-99421S3D\\SQLEXPRESS; Initial Catalog=NIDEC_UNIFORM; Integrated Security=True; Encrypt=True; TrustServerCertificate=True;");
-        => optionsBuilder.UseSqlServer("Data Source = 10.234.1.89; Initial Catalog = NIDEC_UNIFORM; Persist Security Info=True;User ID = sa; Password=sa;Encrypt=True;Trust Server Certificate=True");
-
+        //=> optionsBuilder.UseSqlServer("Data Source=LAPTOP-99421S3D\\SQLEXPRESS; Initial Catalog=NIDEC_UNIFORM; Integrated Security=True; Encrypt=True; Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Data Source = 10.234.1.89; Initial Catalog = NidecUniform; Persist Security Info=True;User ID = sa; Password=sa;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DeliveryDetail>(entity =>
         {
-            entity.HasKey(e => e.DeliveryDetailId).HasName("PK__Delivery__EFD2C287B58D7321");
-
-            entity.Property(e => e.DeliveryDetailId).HasColumnName("DeliveryDetailID");
-            entity.Property(e => e.DeliveryId).HasColumnName("DeliveryID");
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.Size).HasMaxLength(50);
-            entity.Property(e => e.Unit).HasMaxLength(50);
-
-            entity.HasOne(d => d.Delivery).WithMany(p => p.DeliveryDetails)
-                .HasForeignKey(d => d.DeliveryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DeliveryDetails_Delivery");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.DeliveryDetails)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DeliveryDetails_Product");
+            entity.Property(e => e.ID).HasColumnName("ID");
         });
 
-        modelBuilder.Entity<MDelivery>(entity =>
+        modelBuilder.Entity<M_Delivery>(entity =>
         {
-            entity.HasKey(e => e.DeliveryId).HasName("PK__Deliveri__626D8FEED074CDB0");
+            entity.ToTable("M_Delivery");
 
-            entity.ToTable("M_Deliveries");
-
-            entity.Property(e => e.DeliveryId).HasColumnName("DeliveryID");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.DeliveredBy).HasMaxLength(255);
-            entity.Property(e => e.DeliveryDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.EmpolyeeId).HasColumnName("Empolyee_ID");
-            entity.Property(e => e.RequestId).HasColumnName("RequestID");
-            entity.Property(e => e.Status).HasMaxLength(50);
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-
-            entity.HasOne(d => d.Empolyee).WithMany(p => p.MDeliveries)
-                .HasForeignKey(d => d.EmpolyeeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Deliveries_Employee");
-
-            entity.HasOne(d => d.Request).WithMany(p => p.MDeliveries)
-                .HasForeignKey(d => d.RequestId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Deliveries_Request");
+            entity.Property(e => e.ID).HasColumnName("ID");
         });
 
-        modelBuilder.Entity<MEmployee>(entity =>
+        modelBuilder.Entity<M_Employee>(entity =>
         {
-            entity.HasKey(e => e.EmpolyeeId).HasName("PK_M_Empolyee");
+            entity.ToTable("M_Employee");
 
-            entity.ToTable("M_Employees");
-
-            entity.Property(e => e.EmpolyeeId)
-                .ValueGeneratedNever()
-                .HasColumnName("Empolyee_ID");
-            entity.Property(e => e.Department).HasMaxLength(255);
-            entity.Property(e => e.FullName).HasMaxLength(255);
-            entity.Property(e => e.Section).HasMaxLength(255);
+            //entity.Property(e => e.ID).HasColumnName("ID");
+            entity.Property(e => e.Department).HasMaxLength(50);
+            entity.Property(e => e.EmployeeID).HasMaxLength(20);
+            entity.Property(e => e.FullName).HasMaxLength(100);
+            entity.Property(e => e.Position).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<MProduct>(entity =>
+        modelBuilder.Entity<M_Product>(entity =>
         {
-            entity.ToTable("M_Products");
+            entity.ToTable("M_Product");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Code).HasMaxLength(255);
-            entity.Property(e => e.Description).HasMaxLength(255);
-            entity.Property(e => e.Unit).HasMaxLength(255);
+            //entity.Property(e => e.ID).HasColumnName("ID");
+            entity.Property(e => e.ProductID)
+                .HasMaxLength(20)
+                .HasColumnName("ProductID");
+            entity.Property(e => e.ProductName).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<MRequest>(entity =>
+        modelBuilder.Entity<M_Request>(entity =>
         {
-            entity.HasKey(e => e.RequestId).HasName("PK__M_Reques__33A8519A60486747");
+            entity.ToTable("M_Request");
 
-            entity.ToTable("M_Requests");
+            entity.HasIndex(e => e.EmployeeID, "IX_MRequests_EmpolyeeId");
 
-            entity.Property(e => e.RequestId).HasColumnName("RequestID");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.EmpolyeeId).HasColumnName("Empolyee_ID");
-            entity.Property(e => e.RequestDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Status).HasMaxLength(50);
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-
-            entity.HasOne(d => d.Empolyee).WithMany(p => p.MRequests)
-                .HasForeignKey(d => d.EmpolyeeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Requests_Employee");
+            entity.Property(e => e.ID).HasColumnName("ID");
+            entity.Property(e => e.RequestType).HasMaxLength(30);
         });
 
         modelBuilder.Entity<RequestDetail>(entity =>
         {
-            entity.HasKey(e => e.DetailId).HasName("PK__RequestD__135C314DC9F0A3FF");
+            entity.HasIndex(e => e.RequestID, "IX_RequestDetails_RequestId");
 
-            entity.Property(e => e.DetailId).HasColumnName("DetailID");
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.QuantityApproved).HasDefaultValue(0);
-            entity.Property(e => e.QuantityDelivered).HasDefaultValue(0);
-            entity.Property(e => e.RequestId).HasColumnName("RequestID");
-            entity.Property(e => e.Size).HasMaxLength(50);
-            entity.Property(e => e.Unit).HasMaxLength(50);
+            entity.Property(e => e.ID).HasColumnName("ID");
 
-            entity.HasOne(d => d.Product).WithMany(p => p.RequestDetails)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RequestDetails_Product");
-
-            entity.HasOne(d => d.Request).WithMany(p => p.RequestDetails)
-                .HasForeignKey(d => d.RequestId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RequestDetails_Request");
+            entity.HasOne(d => d.Request).WithMany(p => p.RequestDetails).HasForeignKey(d => d.RequestID);
         });
 
         OnModelCreatingPartial(modelBuilder);

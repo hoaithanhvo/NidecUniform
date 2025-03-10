@@ -8,17 +8,30 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories
 {
-    class EmployeeRepository : IEmpoloyeeRepository
+    public class EmployeeRepository : IEmpoloyee
     {
         private readonly NidecUniformContext _context;
 
-        public EmployeeRepository(NidecUniformContext context) {
+        public EmployeeRepository(NidecUniformContext context)
+        {
 
             _context = context;
         }
-        public MEmployee GetEmployee(int id)
+
+        public async Task<HashSet<string>> GetAllEmployeeIdsAsync()
         {
-            return _context.MEmployees.Find(id);
+            return await _context.M_Employees.Select(s => s.EmployeeID).ToHashSetAsync();
+        }
+
+        public M_Employee GetEmployee(int id)
+        {
+            return _context.M_Employees.Find(id);
+        }
+
+        public async Task importEmployee(List<M_Employee> employees)
+        {
+            _context.M_Employees.AddRange(employees);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,7 +1,13 @@
-﻿using Microsoft.Win32;
+﻿using LiveCharts.Maps;
+using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 using NidecUniform.Helpers;
 using NidecUniform.Models;
+using NidecUniform.Repositories;
+using NidecUniform.Repositories.Interface;
 using NidecUniform.Utilities;
+using NidecUniform.Views;
+using NidecUniform.Views.Common;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -9,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,15 +25,83 @@ namespace NidecUniform.ViewModels
 {
     public class ImportVM : ViewModelBase
     {
-        public ObservableCollection<RawData> Items { get; set; }
-        public ICommand ImportCommand { get; set; }
-        public ImportVM()
+        private ObservableCollection<RawData> _dgvImportRequest;
+        public ObservableCollection<RawData> DgvImportRequest
         {
-            ImportCommand = new RelayCommand(_ => ExecuteImport());
-            Items = new ObservableCollection<RawData>();
+            get => _dgvImportRequest;
+            set
+            {
+                _dgvImportRequest = value;
+                OnPropertyChanged();
+            }
         }
-        private string filePath;
-        private void ExecuteImport()
+
+        public ICommand ImportCommand { get; set; }
+        public ICommand OpenCommand { get; set; }
+        public ICommand ClearCommand { get; set; }
+
+        private int _totalCount;
+        public int TotalCount
+        {
+            get => _totalCount;
+            set
+            {
+                _totalCount = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private readonly IRawData _rawDataRepository;
+        private readonly IRequest _requestRepository;
+        private readonly IRequestDetails _requestDetailsRepository;
+        private readonly IEmpoloyee _employeeRepository;
+        private readonly IProduct _productRepository;
+        private readonly IUIServices _uiServices;
+
+        #region Variable
+
+
+        private List<RawData> listRawData = new List<RawData>();
+
+        #endregion
+        public ImportVM(IUIServices uiServices)
+        {
+            ClearCommand = new RelayCommand(_ => ClearDgv());
+            OpenCommand = new RelayCommand(_ => ExecuteOpen());
+            ImportCommand = new AsyncRelayCommand(() => ExecuteImportAsyc());
+            DgvImportRequest = new ObservableCollection<RawData>();
+            _rawDataRepository = AppServices.GetService<IRawData>();
+            _requestRepository = AppServices.GetService<IRequest>();
+            _requestDetailsRepository = AppServices.GetService<IRequestDetails>();
+            _employeeRepository = AppServices.GetService<IEmpoloyee>();
+            _productRepository = AppServices.GetService<IProduct>();
+            _uiServices = uiServices;
+        }
+        private void ClearDgv()
+        {
+            DgvImportRequest.Clear();
+            TotalCount = 0;
+        }
+        private async Task<bool> CheckUserInvalidAsync()
+        {
+            List<string> errorList = new List<string>();
+            var existingEmployeeIds = await _employeeRepository.GetAllEmployeeIdsAsync();
+            foreach (var rawData in DgvImportRequest)
+            {
+                if (!existingEmployeeIds.Contains(rawData.EmployeeID))
+                {
+                    errorList.Add(rawData.No + " - " + rawData.EmployeeID + " - " + rawData.FullName);
+                }
+            }
+            if (errorList.Any())
+            {
+                MessageBox.Show(string.Join("\n", errorList), "Invalid Employee List", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            return true;
+        }
+
+        private void ExecuteOpen()
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -37,14 +112,15 @@ namespace NidecUniform.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                filePath = openFileDialog.FileName;
+                ProcessExcelFile(openFileDialog.FileName);
             }
-            List<RawData> listRawData = new List<RawData>();
+
+        }
+        private void ProcessExcelFile(string filePath)
+        {
             try
             {
-                listRawData.Clear();
                 var package = new ExcelPackage(new FileInfo(filePath));
-                var worksheetCount = package.Workbook.Worksheets.Count;
                 ExcelWorksheet worksheet = package.Workbook.Worksheets["Phát ĐP"];
                 if (worksheet == null)
                 {
@@ -55,59 +131,133 @@ namespace NidecUniform.ViewModels
                 {
                     try
                     {
-                        string sttNo = worksheet.Cells[i, 1].Text;
-                        string msnvID = worksheet.Cells[i, 2].Text;
-                        string fullName = worksheet.Cells[i, 3].Text;
-                        string dept = worksheet.Cells[i, 4].Text;
-                        string gender = worksheet.Cells[i, 5].Text;
-                        string uniformType = worksheet.Cells[i, 6].Text;
-                        DateTime startDate = worksheet.Cells[i, 7].Value.ToDateTime();
-                        DateTime endDate = worksheet.Cells[i, 8].Value.ToDateTime();
+                        var rawData = ParseRowData(worksheet, i);
+                        DgvImportRequest.Add(rawData);
+                        TotalCount = DgvImportRequest.Count();
+                        listRawData.Add(rawData);
 
-                        int numberOfPaint = worksheet.Cells[i, 9].Value as int? ?? 0;
-                        string paintType = worksheet.Cells[i, 10].Text;
-                        int numberOfshirts = worksheet.Cells[i, 12].Value as int? ?? 0;
-                        string shirtsType = worksheet.Cells[i, 13].Text;
-                        string numberOfCones = worksheet.Cells[i, 14].Text;
-                        string conesType = worksheet.Cells[i, 15].Text;
-                        int numberOfShoes = worksheet.Cells[i, 16].Value as int? ?? 0;
-                        string shoesType = worksheet.Cells[i, 17].Text;
-                        bool signReceived = worksheet.Cells[i, 18].Value as bool? ?? true;
-
-                        RawData data = new RawData();
-                        data.ID = Int32.Parse(sttNo);
-                        data.EmployeeID = msnvID;
-                        data.FullName = fullName;
-                        data.Dept = dept;
-                        data.Gender = gender;
-                        data.UniformType = uniformType;
-                        data.StartDate = startDate;
-                        data.EndDate = endDate;
-                        data.NumberOfPaint = numberOfPaint;
-                        data.PaintType = paintType;
-                        data.NumberOfshirts = numberOfshirts;
-                        data.ShirtsType = shirtsType;
-                        data.ConesType = conesType;
-                        data.NumberOfShoes = numberOfShoes;
-                        data.ShoesType = shoesType;
-                        data.SignReceived = signReceived;
-                        listRawData.Add(data);
                     }
                     catch (Exception ex)
                     {
-
+                        Console.WriteLine($"Lỗi đọc dữ liệu: {ex.Message}");
                     }
                 }
             }
-            catch (Exception ex) { }
-
-            if (Items != null)
+            catch (Exception ex)
             {
-                Items.Clear();
-                foreach (var item in listRawData)
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
+        private RawData ParseRowData(ExcelWorksheet worksheet, int rowIndex)
+        {
+            return new RawData
+            {
+                No = worksheet.Cells[rowIndex, 1].Value.ToInt(),
+                EmployeeID = worksheet.Cells[rowIndex, 2].Text,
+                FullName = worksheet.Cells[rowIndex, 3].Text,
+                Dept = worksheet.Cells[rowIndex, 4].Text,
+                UniformType = worksheet.Cells[rowIndex, 6].Text,
+                StartDate = worksheet.Cells[rowIndex, 7].Value.ToDateOnly(),
+                EndDate = worksheet.Cells[rowIndex, 8].Value.ToDateOnly(),
+                NumberOfPaint = worksheet.Cells[rowIndex, 9].Text.ToInt(),
+                PaintType = worksheet.Cells[rowIndex, 10].Text,
+                NumberOfshirts = worksheet.Cells[rowIndex, 12].Text.ToInt(),
+                ShirtsType = worksheet.Cells[rowIndex, 13].Text,
+                NumberOfCones = worksheet.Cells[rowIndex, 15].Text.ToInt(),
+                ConesType = worksheet.Cells[rowIndex, 16].Text,
+                NumberOfShoes = worksheet.Cells[rowIndex, 17].Text.ToInt(),
+                ShoesType = worksheet.Cells[rowIndex, 18].Text,
+            };
+        }
+
+        private async Task ExecuteImportAsyc()
+        {
+            try
+            {
+                if (!await CheckUserInvalidAsync())
                 {
-                    Items.Add(item);
+                    return;
                 }
+                _uiServices.ShowProgressDialog();
+                await _rawDataRepository.ImportListRequest(listRawData);
+                var productList = await _productRepository.GetProductList();
+                await ProcessRequests(productList);
+                _uiServices.HideProgressDialog();
+                MessageBox.Show("Import Success!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException?.Message, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private async Task ProcessRequests(List<M_Product> productList)
+        {
+            try
+            {
+                foreach (var rawData in DgvImportRequest)
+                {
+                    var request = new M_Request
+                    {
+                        EmployeeID = rawData.EmployeeID,
+                        StartDate = rawData.StartDate,
+                        EndDate = rawData.EndDate,
+                        RequestType = rawData.UniformType ?? "",
+                    };
+
+                    int realRequestID = await _requestRepository.SaveRequest(request);
+
+                    var requestDetails = new List<RequestDetail>();
+                    if (rawData.NumberOfPaint > 0)
+                    {
+                        requestDetails.Add(new RequestDetail
+                        {
+                            RequestID = realRequestID,
+                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.ProductName ?? "",
+                            QuantityRequested = rawData.NumberOfPaint,
+                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.Unit ?? ""
+                        });
+                    }
+
+                    if (rawData.NumberOfshirts > 0)
+                    {
+                        requestDetails.Add(new RequestDetail
+                        {
+                            RequestID = realRequestID,
+                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.ProductName ?? "",
+                            QuantityRequested = rawData.NumberOfshirts,
+                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.Unit ?? ""
+                        });
+                    }
+                    if (rawData.NumberOfCones > 0)
+                    {
+                        requestDetails.Add(new RequestDetail
+                        {
+                            RequestID = realRequestID,
+                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.ProductName ?? "",
+                            QuantityRequested = rawData.NumberOfCones,
+                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.Unit ?? ""
+                        });
+                    }
+                    if (rawData.NumberOfShoes > 0)
+                    {
+                        requestDetails.Add(new RequestDetail
+                        {
+                            RequestID = realRequestID,
+                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.ProductName ?? "",
+                            QuantityRequested = rawData.NumberOfShoes,
+                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.Unit ?? ""
+                        });
+                    }
+                    await _requestDetailsRepository.ImportRequestDetailsListAsync(requestDetails);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException?.Message, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

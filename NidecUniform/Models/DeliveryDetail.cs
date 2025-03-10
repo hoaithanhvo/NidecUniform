@@ -1,23 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NidecUniform.Models;
+[Table("DeliveryDetail")]
 
 public partial class DeliveryDetail
 {
-    public int DeliveryDetailId { get; set; }
+    public int ID { get; set; }
 
-    public int DeliveryId { get; set; }
+    public string? EmployeeID { get; set; }
 
-    public int ProductId { get; set; }
+
+    public int DeliveryID { get; set; }
+
+    public string? ProductID { get; set; }
+
+    public string? ProductName { get; set; }
 
     public int QuantityDelivered { get; set; }
 
-    public string? Size { get; set; }
-
     public string? Unit { get; set; }
 
-    public virtual MDelivery Delivery { get; set; } = null!;
+    public DateTime CreateDate { get; set; } = DateTime.Now;
 
-    public virtual MProduct Product { get; set; } = null!;
+
+    [ForeignKey("EmployeeID")]
+    public virtual M_Employee? Employee { get; set; } = null!;
+
+
+    [ForeignKey("ProductID")]
+    public virtual M_Product? Product { get; set; } = null!;
+
+    [ForeignKey("DeliveryID")]
+    public virtual M_Delivery? Delivery { get; set; } = null!;
 }
