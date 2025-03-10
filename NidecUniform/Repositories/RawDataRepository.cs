@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories
 {
-    public class RawDataRepository : IRawDateRepository
+    public class RawDataRepository : IRawData
     {
         private readonly NidecUniformContext _context;
 

@@ -10,6 +10,6 @@ namespace NidecUniform.Repositories
     interface IRequest
     {
         void ImportRequest(List<M_Request> ImportRequestList);
-        int SaveRequest(M_Request request);
+        Task<int> SaveRequest(M_Request request);
     }
 }

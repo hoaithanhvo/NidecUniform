@@ -15,10 +15,10 @@ namespace NidecUniform.Repositories
         {
             _context = context;
         }
-        public void ImportRequestDetailsList(List<RequestDetail> requestDetailsList)
+        public async Task ImportRequestDetailsListAsync(List<RequestDetail> requestDetailsList)
         {
-            _context.RequestDetails.AddRange(requestDetailsList);
-            _context.SaveChanges();
+            await _context.RequestDetails.AddRangeAsync(requestDetailsList);
+            await _context.SaveChangesAsync();
         }
     }
 }

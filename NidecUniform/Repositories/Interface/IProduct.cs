@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NidecUniform.Repositories
+namespace NidecUniform.Repositories.Interface
 {
-    interface IRequestDetails
+    public interface IProduct
     {
-        Task ImportRequestDetailsListAsync(List<RequestDetail> requestDetailsList);
+        Task<List<M_Product>> GetProductList();
     }
-
 }

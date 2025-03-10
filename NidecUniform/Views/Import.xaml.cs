@@ -1,4 +1,6 @@
-﻿using NidecUniform.ViewModels;
+﻿using NidecUniform.Repositories.Interface;
+using NidecUniform.ViewModels;
+using NidecUniform.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +21,22 @@ namespace NidecUniform.Views
     /// <summary>
     /// Interaction logic for Import.xaml
     /// </summary>
-    public partial class Import : UserControl
+    public partial class Import : UserControl, IUIServices
     {
         public Import()
         {
             InitializeComponent();
-            this.DataContext = new ImportVM();
+            this.DataContext = new ImportVM(this);
+        }
+
+        public void HideProgressDialog()
+        {
+            ShowProgressDialogCommon.HideProgressDialog(this);
+        }
+
+        public void ShowProgressDialog()
+        {
+            ShowProgressDialogCommon.ShowProgressDialog(this);
         }
     }
 }

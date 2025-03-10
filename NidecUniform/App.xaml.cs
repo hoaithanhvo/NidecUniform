@@ -1,8 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LiveCharts.Wpf;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NidecUniform.Models;
 using NidecUniform.Repositories;
+using NidecUniform.Repositories.Interface;
 using NidecUniform.Utilities;
+using NidecUniform.ViewModels;
+using NidecUniform.Views;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -20,6 +24,8 @@ namespace NidecUniform
 
             // Khởi tạo Dependency Injection
             AppServices.ConfigureServices();
+            // Trong App.xaml.cs hoặc nơi bạn đăng ký dịch vụ DI
+         
 
             // Lấy MainWindow từ DI
             var mainWindow = AppServices.GetService<MainWindow>();

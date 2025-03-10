@@ -25,7 +25,9 @@ namespace NidecUniform.ViewModels
 
         private void Home(object obj) => CurrentView = new HomeVM();
         private void Export(object obj) => CurrentView = new ExportVM();
-        private void Import(object obj) => CurrentView = new ImportVM();
+        //private void Import(object obj) => CurrentView = AppServices.GetService<ImportVM>();
+        private void Import(object obj) => CurrentView = AppServices.GetService<ImportVM>();
+
         private void Scan(object obj) => CurrentView = new ScanVM();
 
 

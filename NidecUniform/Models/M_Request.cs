@@ -19,7 +19,7 @@ public partial class M_Request
     public DateOnly? EndDate { get; set; }
 
     [StringLength(50)]
-    public string? Status { get; set; }
+    public string? Status { get; set; } = "Pending";
 
     public string RequestType { get; set; } = null!;
 

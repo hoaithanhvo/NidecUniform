@@ -1,9 +1,13 @@
 ﻿using LiveCharts.Maps;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using NidecUniform.Helpers;
 using NidecUniform.Models;
 using NidecUniform.Repositories;
+using NidecUniform.Repositories.Interface;
 using NidecUniform.Utilities;
+using NidecUniform.Views;
+using NidecUniform.Views.Common;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -11,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,6 +35,7 @@ namespace NidecUniform.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public ICommand ImportCommand { get; set; }
         public ICommand OpenCommand { get; set; }
         public ICommand ClearCommand { get; set; }
@@ -45,28 +51,56 @@ namespace NidecUniform.ViewModels
             }
         }
 
-
-
-        private readonly IRawDateRepository _rawDataRepository;
+        private readonly IRawData _rawDataRepository;
         private readonly IRequest _requestRepository;
         private readonly IRequestDetails _requestDetailsRepository;
-
+        private readonly IEmpoloyee _employeeRepository;
+        private readonly IProduct _productRepository;
+        private readonly IUIServices _uiServices;
 
         #region Variable
 
-        private string filePath = string.Empty;
+
         private List<RawData> listRawData = new List<RawData>();
+
         #endregion
-        public ImportVM()
+        public ImportVM(IUIServices uiServices)
         {
-            OpenCommand = new RelayCommand(_ => ExecuteOpen());
             ClearCommand = new RelayCommand(_ => ClearDgv());
-            ImportCommand = new AsyncRelayCommand(()=>ExecuteImportAsyc());
+            OpenCommand = new RelayCommand(_ => ExecuteOpen());
+            ImportCommand = new AsyncRelayCommand(() => ExecuteImportAsyc());
             DgvImportRequest = new ObservableCollection<RawData>();
-            _rawDataRepository = AppServices.GetService<IRawDateRepository>();
+            _rawDataRepository = AppServices.GetService<IRawData>();
             _requestRepository = AppServices.GetService<IRequest>();
             _requestDetailsRepository = AppServices.GetService<IRequestDetails>();
+            _employeeRepository = AppServices.GetService<IEmpoloyee>();
+            _productRepository = AppServices.GetService<IProduct>();
+            _uiServices = uiServices;
         }
+        private void ClearDgv()
+        {
+            DgvImportRequest.Clear();
+            TotalCount = 0;
+        }
+        private async Task<bool> CheckUserInvalidAsync()
+        {
+            List<string> errorList = new List<string>();
+            var existingEmployeeIds = await _employeeRepository.GetAllEmployeeIdsAsync();
+            foreach (var rawData in DgvImportRequest)
+            {
+                if (!existingEmployeeIds.Contains(rawData.EmployeeID))
+                {
+                    errorList.Add(rawData.No + " - " + rawData.EmployeeID + " - " + rawData.FullName);
+                }
+            }
+            if (errorList.Any())
+            {
+                MessageBox.Show(string.Join("\n", errorList), "Invalid Employee List", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            return true;
+        }
+
         private void ExecuteOpen()
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -78,8 +112,12 @@ namespace NidecUniform.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                filePath = openFileDialog.FileName;
+                ProcessExcelFile(openFileDialog.FileName);
             }
+
+        }
+        private void ProcessExcelFile(string filePath)
+        {
             try
             {
                 var package = new ExcelPackage(new FileInfo(filePath));
@@ -93,24 +131,7 @@ namespace NidecUniform.ViewModels
                 {
                     try
                     {
-                        var rawData = new RawData
-                        {
-                            No = worksheet.Cells[i,1].Value.ToInt(),
-                            EmployeeID = worksheet.Cells[i, 2].Text,
-                            FullName = worksheet.Cells[i, 3].Text,
-                            Dept = worksheet.Cells[i, 4].Text,
-                            UniformType = worksheet.Cells[i, 6].Text,
-                            StartDate = worksheet.Cells[i, 7].Value.ToDateOnly(),
-                            EndDate = worksheet.Cells[i, 8].Value.ToDateOnly(),
-                            NumberOfPaint = worksheet.Cells[i, 9].Text.ToInt(),
-                            PaintType = worksheet.Cells[i, 10].Text,
-                            NumberOfshirts = worksheet.Cells[i, 12].Text.ToInt(),
-                            ShirtsType = worksheet.Cells[i, 13].Text,
-                            NumberOfCones = worksheet.Cells[i, 15].Text.ToInt(),
-                            ConesType = worksheet.Cells[i, 16].Text,
-                            NumberOfShoes = worksheet.Cells[i, 17].Text.ToInt(),
-                            ShoesType = worksheet.Cells[i, 18].Text,
-                        };
+                        var rawData = ParseRowData(worksheet, i);
                         DgvImportRequest.Add(rawData);
                         TotalCount = DgvImportRequest.Count();
                         listRawData.Add(rawData);
@@ -127,17 +148,52 @@ namespace NidecUniform.ViewModels
                 MessageBox.Show(ex.Message.ToString());
             }
         }
-        private void ClearDgv()
+        private RawData ParseRowData(ExcelWorksheet worksheet, int rowIndex)
         {
-            DgvImportRequest.Clear();
-            TotalCount = 0;
+            return new RawData
+            {
+                No = worksheet.Cells[rowIndex, 1].Value.ToInt(),
+                EmployeeID = worksheet.Cells[rowIndex, 2].Text,
+                FullName = worksheet.Cells[rowIndex, 3].Text,
+                Dept = worksheet.Cells[rowIndex, 4].Text,
+                UniformType = worksheet.Cells[rowIndex, 6].Text,
+                StartDate = worksheet.Cells[rowIndex, 7].Value.ToDateOnly(),
+                EndDate = worksheet.Cells[rowIndex, 8].Value.ToDateOnly(),
+                NumberOfPaint = worksheet.Cells[rowIndex, 9].Text.ToInt(),
+                PaintType = worksheet.Cells[rowIndex, 10].Text,
+                NumberOfshirts = worksheet.Cells[rowIndex, 12].Text.ToInt(),
+                ShirtsType = worksheet.Cells[rowIndex, 13].Text,
+                NumberOfCones = worksheet.Cells[rowIndex, 15].Text.ToInt(),
+                ConesType = worksheet.Cells[rowIndex, 16].Text,
+                NumberOfShoes = worksheet.Cells[rowIndex, 17].Text.ToInt(),
+                ShoesType = worksheet.Cells[rowIndex, 18].Text,
+            };
         }
+
         private async Task ExecuteImportAsyc()
         {
             try
             {
+                if (!await CheckUserInvalidAsync())
+                {
+                    return;
+                }
+                _uiServices.ShowProgressDialog();
                 await _rawDataRepository.ImportListRequest(listRawData);
-
+                var productList = await _productRepository.GetProductList();
+                await ProcessRequests(productList);
+                _uiServices.HideProgressDialog();
+                MessageBox.Show("Import Success!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException?.Message, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private async Task ProcessRequests(List<M_Product> productList)
+        {
+            try
+            {
                 foreach (var rawData in DgvImportRequest)
                 {
                     var request = new M_Request
@@ -145,28 +201,63 @@ namespace NidecUniform.ViewModels
                         EmployeeID = rawData.EmployeeID,
                         StartDate = rawData.StartDate,
                         EndDate = rawData.EndDate,
-                        RequestType = rawData.UniformType,
-                        Status = "Pending"
+                        RequestType = rawData.UniformType ?? "",
                     };
 
-                    int realRequestID = _requestRepository.SaveRequest(request);
+                    int realRequestID = await _requestRepository.SaveRequest(request);
 
-                    var requestDetails = new List<RequestDetail>
+                    var requestDetails = new List<RequestDetail>();
+                    if (rawData.NumberOfPaint > 0)
                     {
-                        new RequestDetail { RequestID = realRequestID, ProductName = rawData.PaintType, QuantityRequested = rawData.NumberOfPaint, Unit = "Bộ", Status = "Pending" },
-                        new RequestDetail { RequestID = realRequestID, ProductName = rawData.ShirtsType, QuantityRequested = rawData.NumberOfshirts, Unit = "Cái", Status = "Pending" },
-                        new RequestDetail { RequestID = realRequestID, ProductName = rawData.ConesType, QuantityRequested = rawData.NumberOfCones, Unit = "Cái", Status = "Pending" },
-                        new RequestDetail { RequestID = realRequestID, ProductName = rawData.ShoesType, QuantityRequested = rawData.NumberOfShoes, Unit = "Đôi", Status = "Pending" }
-                    };
+                        requestDetails.Add(new RequestDetail
+                        {
+                            RequestID = realRequestID,
+                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.ProductName ?? "",
+                            QuantityRequested = rawData.NumberOfPaint,
+                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.Unit ?? ""
+                        });
+                    }
 
-                    _requestDetailsRepository.ImportRequestDetailsList(requestDetails);
+                    if (rawData.NumberOfshirts > 0)
+                    {
+                        requestDetails.Add(new RequestDetail
+                        {
+                            RequestID = realRequestID,
+                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.ProductName ?? "",
+                            QuantityRequested = rawData.NumberOfshirts,
+                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.Unit ?? ""
+                        });
+                    }
+                    if (rawData.NumberOfCones > 0)
+                    {
+                        requestDetails.Add(new RequestDetail
+                        {
+                            RequestID = realRequestID,
+                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.ProductName ?? "",
+                            QuantityRequested = rawData.NumberOfCones,
+                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.Unit ?? ""
+                        });
+                    }
+                    if (rawData.NumberOfShoes > 0)
+                    {
+                        requestDetails.Add(new RequestDetail
+                        {
+                            RequestID = realRequestID,
+                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.ProductName ?? "",
+                            QuantityRequested = rawData.NumberOfShoes,
+                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.Unit ?? ""
+                        });
+                    }
+                    await _requestDetailsRepository.ImportRequestDetailsListAsync(requestDetails);
                 }
-
-                MessageBox.Show("Import thành công!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi import dữ liệu: {ex.Message}");
+                MessageBox.Show(ex.InnerException?.Message, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -19,10 +19,10 @@ namespace NidecUniform.Repositories
            _context.M_Requests.AddRange(ImportRequestList);
            _context.SaveChanges();
         }
-        public int SaveRequest(M_Request request)
+        public async Task<int> SaveRequest(M_Request request)
         {
-            _context.M_Requests.Add(request);
-            _context.SaveChanges();
+            await  _context.M_Requests.AddAsync(request);
+            await _context.SaveChangesAsync();
             return request.ID; // Trả về ID sau khi lưu vào DB
         }
     }

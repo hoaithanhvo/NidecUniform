@@ -70,7 +70,7 @@ namespace NidecUniform.Migrations
 
                     b.HasIndex("RequestDetailID");
 
-                    b.ToTable("DeliveryDetail");
+                    b.ToTable("DeliveryDetail", (string)null);
                 });
 
             modelBuilder.Entity("NidecUniform.Models.M_Delivery", b =>
@@ -264,7 +264,7 @@ namespace NidecUniform.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("RawData");
+                    b.ToTable("RawData", (string)null);
                 });
 
             modelBuilder.Entity("NidecUniform.Models.RequestDetail", b =>
@@ -317,7 +317,7 @@ namespace NidecUniform.Migrations
 
                     b.HasIndex(new[] { "RequestID" }, "IX_RequestDetails_RequestId");
 
-                    b.ToTable("RequestDetail");
+                    b.ToTable("RequestDetail", (string)null);
                 });
 
             modelBuilder.Entity("NidecUniform.Models.DeliveryDetail", b =>

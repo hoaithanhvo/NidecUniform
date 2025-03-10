@@ -7,8 +7,11 @@
              xmlns:vm="clr-namespace:NidecUniform.ViewModels"
              xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              d:DesignHeight="450" d:DesignWidth="800">
+    <Border CornerRadius="0,20,20,0" Margin="0,5,5,0">
     <Grid Background="White">
-        <Grid.RowDefinitions>
+       
+            <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
@@ -20,12 +23,9 @@
             </Border>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5 0">
-            <!--<Icon:PackIconMaterial Kind="Bell" Style="{StaticResource menuButtonIcon}"/>-->
-            <!--<TextBlock Text="- Please select the file to import here." VerticalAlignment="Center" FontSize="13" FontWeight="Bold" Foreground="#039f41"/>-->
             <Button Content="Open File" Command="{Binding OpenCommand}" Style="{StaticResource mainButton}"/>
             <Button Content="Clear" Command="{Binding ClearCommand}" Style="{StaticResource mainButton}"/>
         </StackPanel>
-
         <Grid VerticalAlignment="Top" Grid.Row="2" >
             <Border BorderBrush="#039F41" Margin="5"  BorderThickness="2" CornerRadius="10" >
                 <DataGrid ItemsSource="{Binding DgvImportRequest}" GridLinesVisibility="Horizontal"  Margin="5"
@@ -57,4 +57,5 @@
             <Button  Content="Import" Command="{Binding ImportCommand}"  Style="{StaticResource mainButton}" />
         </StackPanel>
     </Grid>
+    </Border>
 </UserControl>

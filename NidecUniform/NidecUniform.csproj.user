@@ -22,6 +22,9 @@
     <Compile Update="UserControls\UserCard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Common\LoadingControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Export.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -109,6 +112,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Utilities\DataTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Common\LoadingControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Export.xaml">

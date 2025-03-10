@@ -21,8 +21,8 @@ namespace NidecUniform
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly IEmpoloyeeRepository _empoloyeeRepository;
-        public MainWindow(IEmpoloyeeRepository empoloyeeRepository)
+        private readonly IEmpoloyee _empoloyeeRepository;
+        public MainWindow(IEmpoloyee empoloyeeRepository)
         {
             InitializeComponent();
             _empoloyeeRepository = empoloyeeRepository;

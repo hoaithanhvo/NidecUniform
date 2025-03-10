@@ -21,7 +21,8 @@ public partial class RequestDetail
     public int? QuantityDelivered { get; set; }
 
     [StringLength(50)]
-    public string? Status { get; set; }
+    public string? Status { get; set; } = "Pending";
+ 
     public string? Unit { get; set; }
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
 

@@ -2,7 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using NidecUniform.Models;
 using NidecUniform.Repositories;
+using NidecUniform.Repositories.Interface;
 using NidecUniform.ViewModels;
+using NidecUniform.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,17 +23,20 @@ namespace NidecUniform.Utilities
             var services = new ServiceCollection();
 
             // Đăng ký DbContext
+            //services.AddDbContext<NidecUniformContext>(options =>
+            //    options.UseSqlServer("Data Source=LAPTOP-99421S3D\\SQLEXPRESS; Initial Catalog=NIDEC_UNIFORM; Integrated Security=True; Encrypt=True; Trust Server Certificate=True"));
             services.AddDbContext<NidecUniformContext>(options =>
-                options.UseSqlServer("Data Source=LAPTOP-99421S3D\\SQLEXPRESS; Initial Catalog=NIDEC_UNIFORM; Integrated Security=True; Encrypt=True; Trust Server Certificate=True"));
-
+               options.UseSqlServer("Data Source=10.234.1.89;Initial Catalog=NidecUniform;Persist Security Info=True;User ID=sa;Password=sa;Encrypt=True;Trust Server Certificate=True"));
             // Đăng ký Repository
-            services.AddScoped<IEmpoloyeeRepository, EmployeeRepository>();
-            services.AddScoped<IRawDateRepository, RawDataRepository>();
+            services.AddScoped<IEmpoloyee, EmployeeRepository>();
+            services.AddScoped<IRawData, RawDataRepository>();
             services.AddScoped<IRequest, RequestRepository>();
             services.AddScoped<IRequestDetails, RequestDetailsRepository>();
-
-
-
+            services.AddScoped<IProduct, ProductRepository>();
+            // Trong App.xaml.cs hoặc nơi bạn đăng ký dịch vụ DI
+            services.AddTransient<Import>(); // Đăng ký Import UserControl
+            services.AddTransient<IUIServices>(sp => sp.GetRequiredService<Import>());
+            services.AddTransient<ImportVM>();
             // Đăng ký ViewModel (không cần inject constructor)
             services.AddSingleton<HomeVM>();
             services.AddSingleton<ExportVM>();
