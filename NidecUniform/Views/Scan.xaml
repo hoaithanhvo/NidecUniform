@@ -7,6 +7,9 @@
              xmlns:vm="clr-namespace:NidecUniform.ViewModels"
              xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              d:DesignHeight="760" d:DesignWidth="1280">
+    <!--<UserControl.DataContext>
+        <vm:ScanVM />
+    </UserControl.DataContext>-->
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
