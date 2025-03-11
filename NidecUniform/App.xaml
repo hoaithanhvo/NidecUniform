@@ -24,6 +24,8 @@
                 <ResourceDictionary Source="Styles/tabButton.xaml" />
                 <ResourceDictionary Source="Styles/mainButton.xaml" />
                 <ResourceDictionary Source="Styles/mainTitle.xaml" />
+                <ResourceDictionary Source="Styles/mainLabel.xaml" />
+
 
 
             </ResourceDictionary.MergedDictionaries>

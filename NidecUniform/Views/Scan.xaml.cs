@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NidecUniform.Repositories.Interface;
+using NidecUniform.ViewModels;
+using NidecUniform.Views.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +21,22 @@ namespace NidecUniform.Views
     /// <summary>
     /// Interaction logic for Scan.xaml
     /// </summary>
-    public partial class Scan : UserControl
+    public partial class Scan : UserControl, IUIServices
     {
         public Scan()
         {
             InitializeComponent();
+            this.DataContext = new ScanVM(this);
+        }
+
+        public void HideProgressDialog()
+        {
+            ShowProgressDialogCommon.HideProgressDialog(this);
+        }
+
+        public void ShowProgressDialog()
+        {
+            ShowProgressDialogCommon.ShowProgressDialog(this);
         }
     }
 }

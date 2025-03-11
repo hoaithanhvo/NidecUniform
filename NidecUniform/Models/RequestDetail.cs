@@ -26,6 +26,11 @@ public partial class RequestDetail
     public string? Unit { get; set; }
     public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
+    [NotMapped]
+    public DateOnly? StartDate { get; set; }
+    [NotMapped]
+    public DateOnly? EndDate { get; set; }
+
     [ForeignKey("RequestID")]
     public virtual M_Request? Request { get; set; } = null!;
     [ForeignKey("EmployeeID")]

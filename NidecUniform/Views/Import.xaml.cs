@@ -26,7 +26,7 @@ namespace NidecUniform.Views
         public Import()
         {
             InitializeComponent();
-            this.DataContext = new ImportVM(this);
+            DataContext = new ImportVM(this);
         }
 
         public void HideProgressDialog()

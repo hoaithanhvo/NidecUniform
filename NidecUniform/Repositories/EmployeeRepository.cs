@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NidecUniform.Migrations;
 using NidecUniform.Models;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,9 @@ namespace NidecUniform.Repositories
             return await _context.M_Employees.Select(s => s.EmployeeID).ToHashSetAsync();
         }
 
-        public M_Employee GetEmployee(int id)
+        public async Task<M_Employee> GetEmployee(string employeeID)
         {
-            return _context.M_Employees.Find(id);
+            return await _context.M_Employees.Include(s => s.Requests).ThenInclude(r=>r.RequestDetails).Where(s=>s.EmployeeID == employeeID).FirstOrDefaultAsync();
         }
 
         public async Task importEmployee(List<M_Employee> employees)

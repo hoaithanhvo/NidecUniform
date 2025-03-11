@@ -9,7 +9,7 @@ namespace NidecUniform.Repositories
 {
     public interface IEmpoloyee
     {
-        M_Employee GetEmployee(int id);
+        Task<M_Employee> GetEmployee(string employeeID);
 
         Task importEmployee(List<M_Employee> employees);
 

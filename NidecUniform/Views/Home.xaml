@@ -15,6 +15,13 @@
         <vm:HomeVM/>
     </UserControl.DataContext>
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="White" Offset="0.0"/>
+                <GradientStop Color="#9df6b0" Offset="0.5"/>
+                <GradientStop Color="#039F41" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="260"/>
@@ -41,8 +48,6 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid>
-                    <!--<TextBlock Margin="40 0 0 0" VerticalAlignment="Center" Foreground="#594f7f" IsHitTestVisible="False" Panel.ZIndex="1" Text="Search..."
-                Visibility="{Binding ElementName=txtSearch,Path=Text.IsEmpty,Converter={StaticResource BoolToVis}}"/>-->
                     <TextBox x:Name="txtSearch" Style="{StaticResource searchTextbox}"/>
                     <Icon:PackIconMaterial Kind="Magnify" Width="14" Height="14" Foreground="#594f7f" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15 0 0 0"/>
                 </Grid>
@@ -189,7 +194,6 @@
                             <TextBlock Foreground="#fbc8d9" FontSize="24" FontWeight="SemiBold" Text="748 Hr"/>
                             <TextBlock Foreground="#fbc8d9" FontSize="16" FontWeight="SemiBold" Text="April"/>
                         </StackPanel>
-
                         <Icon:PackIconMaterial Kind="ChevronDownCircleOutline" Foreground="#ffffff" Width="28" Height="28" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin=" 0 40 25 0"/>
                     </Grid>
                 </Border>
@@ -199,9 +203,8 @@
             <uc:InfoCard Grid.Column="1" Grid.Row="2" Title="Bicycle Drill" Desc="36km/weeks" Percentage="45%" BottomText="17 / 36km" Days="2 days left" Icon="AbjadArabic" Value="5" CardIsActive="True"/>
             <uc:InfoCard Grid.Column="2" Grid.Row="2" Title="Bicycle Drill" Desc="36km/weeks" Percentage="45%" BottomText="17 / 36km" Days="2 days left" Icon="Bike" Value="5" CardIsActive="True"/>
         </Grid>
-
         <!--Right Section-->
-        <Border Background="White" Grid.Column="1" CornerRadius="0 40 40 0">
+        <Border Background="Transparent" Grid.Column="1" CornerRadius="0 40 40 0">
             <StackPanel>
                 <!--Top TitleBar-->
                 <Grid Margin="10 30 0 5">

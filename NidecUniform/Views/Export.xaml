@@ -9,6 +9,14 @@
     <UserControl.DataContext>
         <vm:ExportVM />
     </UserControl.DataContext>
-    <Grid Background="AliceBlue">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="White" Offset="0.0"/>
+                <GradientStop Color="LightBlue" Offset="0.5"/>
+                <GradientStop Color="Blue" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
+
 </UserControl>
