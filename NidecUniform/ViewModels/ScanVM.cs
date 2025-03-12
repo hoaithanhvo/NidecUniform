@@ -30,7 +30,7 @@ namespace NidecUniform.ViewModels
         private readonly IEmpoloyee _employeeRepository;
         private readonly IDelivery _deliveryRepository;
         private readonly IDeliveryDetail _deliveryDetailReporitory;
-
+        private readonly IRequestDetails _requestDetailReporitory;
         private readonly IUIServices _uiServices;
 
 
@@ -118,6 +118,8 @@ namespace NidecUniform.ViewModels
             _employeeRepository = AppServices.GetService<IEmpoloyee>();
             _deliveryRepository = AppServices.GetService<IDelivery>();
             _deliveryDetailReporitory = AppServices.GetService<IDeliveryDetail>();
+            _requestDetailReporitory = AppServices.GetService<IRequestDetails>();
+
             _uiServices = uiServices;
 
             SearchCommand = new RelayCommand(_ => SearchUser());
@@ -204,7 +206,11 @@ namespace NidecUniform.ViewModels
             {
                 foreach (var j in i.RequestDetails)
                 {
-                    BDListRequest.Add(new RequestDetail { ID = j.ID, ProductName = j.ProductName, QuantityDelivered = j.QuantityDelivered, QuantityRequested = j.QuantityRequested, StartDate = i.StartDate, EndDate = i.EndDate, RequestID = i.ID });
+                    BDListRequest.Add(new RequestDetail { ID = j.ID, ProductName = j.ProductName, 
+                        QuantityDelivered = j.QuantityDelivered, QuantityRequested = j.QuantityRequested, 
+                        StartDate = i.StartDate, EndDate = i.EndDate, RequestID = i.ID ,ProductID = j.ProductID,EmployeeID = j.EmployeeID,Unit=j.Unit
+
+                    });
                 }
             }
         }
@@ -225,6 +231,7 @@ namespace NidecUniform.ViewModels
 
                 List<RequestDetail> BDListRequestTemp = new List<RequestDetail>();
                 List<DeliveryDetail> deliveryDetailsList = new List<DeliveryDetail>();
+                List<RequestDetail> updateQuantityDelivered = new List<RequestDetail>();
                 foreach (var item in BDListRequest.Where(i => i.BDQuantity > 0))
                 {
                     BDListRequestTemp.Add(item);
@@ -260,8 +267,17 @@ namespace NidecUniform.ViewModels
                                 QuantityDelivered = (int)item.BDQuantity,
                                 Unit = item.Unit,
                             });
+                            updateQuantityDelivered.Add(new RequestDetail
+                            {
+                                ID = item.ID,
+                                QuantityDelivered = item.BDQuantity,
+                            });
                         }
                     }
+                }
+                foreach (var request in updateQuantityDelivered)
+                {
+                    await _requestDetailReporitory.UpdateQuantityDelivered(request.ID,request.QuantityDelivered);
                 }
                 await _deliveryDetailReporitory.AddDeliveryDetails(deliveryDetailsList);
                 MessageBox.Show("Import Sucess", "Information", MessageBoxButton.OK, MessageBoxImage.Information);

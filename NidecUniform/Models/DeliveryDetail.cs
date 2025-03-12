@@ -18,7 +18,7 @@ public partial class DeliveryDetail
 
     public string? ProductName { get; set; }
 
-    public int QuantityDelivered { get; set; }
+    public int QuantityDelivered { get; set; } = 0;
 
     public string? Unit { get; set; }
 

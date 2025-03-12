@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NidecUniform.Models;
 
@@ -11,9 +12,11 @@ using NidecUniform.Models;
 namespace NidecUniform.Migrations
 {
     [DbContext(typeof(NidecUniformContext))]
-    partial class NidecUniformContextModelSnapshot : ModelSnapshot
+    [Migration("20250312184303_RemoveUpdateAt")]
+    partial class RemoveUpdateAt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +73,7 @@ namespace NidecUniform.Migrations
 
                     b.HasIndex("RequestDetailID");
 
-                    b.ToTable("DeliveryDetail", (string)null);
+                    b.ToTable("DeliveryDetail");
                 });
 
             modelBuilder.Entity("NidecUniform.Models.M_Delivery", b =>
@@ -254,7 +257,7 @@ namespace NidecUniform.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("RawData", (string)null);
+                    b.ToTable("RawData");
                 });
 
             modelBuilder.Entity("NidecUniform.Models.RequestDetail", b =>
@@ -307,7 +310,7 @@ namespace NidecUniform.Migrations
 
                     b.HasIndex(new[] { "RequestID" }, "IX_RequestDetails_RequestId");
 
-                    b.ToTable("RequestDetail", (string)null);
+                    b.ToTable("RequestDetail");
                 });
 
             modelBuilder.Entity("NidecUniform.Models.DeliveryDetail", b =>
