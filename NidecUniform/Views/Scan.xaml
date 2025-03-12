@@ -130,13 +130,17 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <!-- Dấu trừ -->
-                                                <Button Content="-" Width="30" Command="{Binding DecreaseCommand}" Margin="10 0 20 0" />
+                                                <Button Content="-" Width="30" Margin="10 0 20 0"
+Command="{Binding DataContext.DecreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+CommandParameter="{Binding}" />
 
                                                 <!-- Số lượng -->
-                                                <TextBlock Text="{Binding QuantityRequested}" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                                <TextBlock Text="{Binding BDQuantity, Mode=TwoWay}" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 
                                                 <!-- Dấu cộng -->
-                                                <Button Content="+" Width="30" Command="{Binding IncreaseCommand}" />
+                                                <Button Content="+" Width="30"
+                        Command="{Binding DataContext.IncreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>

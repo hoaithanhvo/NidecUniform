@@ -15,16 +15,48 @@ public partial class M_Delivery
     [MaxLength(20)]
     public string? EmployeeID { get; set; }
 
-    public DateTime DeliveryDate { get; set; }
+    public DateTime? DeliveryDate { get; set; } = DateTime.Now;
 
-    public string DeliveredBy { get; set; } = null!;
+    public string DeliveredBy { get; set; } = "NCC"!;
 
-    public DateTime? CreatedAt { get; set; } = DateTime.Now;
+    //public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
     public DateTime? UpdatedAt { get; set; }
 
     [StringLength(50)]
-    public string? Status { get; set; }
+    public string Status
+    {
+        get
+        {
+            if (DeliveryDetail == null || !DeliveryDetail.Any())
+                return "Chưa giao";
+
+            var requestDetails = Request?.RequestDetails ?? new List<RequestDetail>();
+
+            bool allDelivered = true;
+            bool someDelivered = false;
+
+            foreach (var req in requestDetails)
+            {
+                var totalDelivered = DeliveryDetail
+                    .Where(d => d.ProductID == req.ProductID)
+                    .Sum(d => d.QuantityDelivered);
+
+                if (totalDelivered < req.QuantityRequested)
+                {
+                    allDelivered = false;
+                }
+                if (totalDelivered > 0)
+                {
+                    someDelivered = true;
+                }
+            }
+
+            if (allDelivered) return "Đã giao đủ";
+            if (someDelivered) return "Thiếu";
+            return "Chưa giao";
+        }
+    }
 
 
     [ForeignKey("RequestID")]

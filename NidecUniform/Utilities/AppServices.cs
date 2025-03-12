@@ -33,6 +33,9 @@ namespace NidecUniform.Utilities
             services.AddScoped<IRequest, RequestRepository>();
             services.AddScoped<IRequestDetails, RequestDetailsRepository>();
             services.AddScoped<IProduct, ProductRepository>();
+            services.AddScoped<IDelivery, DeliveryRepository>();
+            services.AddScoped<IDeliveryDetail, DeliveryDetailRepository>();
+
             // Trong App.xaml.cs hoặc nơi bạn đăng ký dịch vụ DI
             services.AddTransient<Import>(); // Đăng ký Import UserControl
             services.AddTransient<IUIServices>(sp => sp.GetRequiredService<Import>());

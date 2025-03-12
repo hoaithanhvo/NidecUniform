@@ -41,4 +41,6 @@ public partial class RequestDetail
 
     public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
 
+    [NotMapped]
+    public int? BDQuantity { get; set; } = 0;
 }

@@ -26,7 +26,7 @@ namespace NidecUniform.Repositories
 
         public async Task<M_Employee> GetEmployee(string employeeID)
         {
-            return await _context.M_Employees.Include(s => s.Requests).ThenInclude(r=>r.RequestDetails).Where(s=>s.EmployeeID == employeeID).FirstOrDefaultAsync();
+            return await _context.M_Employees.Include(s => s.Requests).ThenInclude(r=>r.RequestDetails).ThenInclude(d=>d.DeliveryDetails).Where(s=>s.EmployeeID == employeeID).FirstOrDefaultAsync();
         }
 
         public async Task importEmployee(List<M_Employee> employees)

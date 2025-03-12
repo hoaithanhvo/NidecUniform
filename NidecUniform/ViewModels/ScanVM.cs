@@ -1,12 +1,16 @@
-﻿using NidecUniform.Models;
+﻿using Azure.Core;
+using NidecUniform.Helpers;
+using NidecUniform.Models;
 using NidecUniform.Repositories;
 using NidecUniform.Repositories.Interface;
 using NidecUniform.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,6 +21,20 @@ namespace NidecUniform.ViewModels
 {
     public class ScanVM : ViewModelBase
     {
+        public ICommand SearchCommand { get; set; }
+        public ICommand IncreaseQuantityCommand { get; private set; }
+        public ICommand DecreaseQuantityCommand { get; private set; }
+
+        public ICommand PushCommand { get; set; }
+
+        private readonly IEmpoloyee _employeeRepository;
+        private readonly IDelivery _deliveryRepository;
+        private readonly IDeliveryDetail _deliveryDetailReporitory;
+
+        private readonly IUIServices _uiServices;
+
+
+        #region Binding Data
         private string _bdEmployeeID;
         public string BDEmployeeID
         {
@@ -69,11 +87,17 @@ namespace NidecUniform.ViewModels
                 OnPropertyChanged(nameof(BDSearch));
             }
         }
-        #region
-        public ICommand SearchCommand { get; set; }
 
-        private readonly IEmpoloyee _employeeRepository;
-        private readonly IUIServices _uiServices;
+        private int _bdQuantity;
+        public int BDQuantity
+        {
+            get => _bdQuantity;
+            set
+            {
+                _bdQuantity = value;
+                OnPropertyChanged(nameof(BDQuantity));
+            }
+        }
 
         private ObservableCollection<RequestDetail> _bdListRequest;
         public ObservableCollection<RequestDetail> BDListRequest
@@ -86,20 +110,67 @@ namespace NidecUniform.ViewModels
             }
         }
 
-        #endregion
+        #endregion 
+
         public ScanVM(IUIServices uiServices)
         {
-            SearchCommand = new RelayCommand(_ => SearchUser());
+            BDListRequest = new ObservableCollection<RequestDetail>();
             _employeeRepository = AppServices.GetService<IEmpoloyee>();
+            _deliveryRepository = AppServices.GetService<IDelivery>();
+            _deliveryDetailReporitory = AppServices.GetService<IDeliveryDetail>();
             _uiServices = uiServices;
 
+            SearchCommand = new RelayCommand(_ => SearchUser());
+            IncreaseQuantityCommand = new RelayCommand(IncreaseQuantity);
+            DecreaseQuantityCommand = new RelayCommand(DecreaseQuantity);
+            PushCommand = new RelayCommand(_ => PushRequest());
         }
+
+        private void IncreaseQuantity(object parameter)
+        {
+            Debug.WriteLine("Increase Quantity clicked");
+            if (parameter is RequestDetail item)
+            {
+                var selectedItem = BDListRequest.FirstOrDefault(x => x.ID == item.ID);
+                if (selectedItem != null)
+                {
+                    selectedItem.BDQuantity = Math.Min(selectedItem.QuantityRequested, (selectedItem.BDQuantity ?? 0) + 1);
+                    BDListRequest = new ObservableCollection<RequestDetail>(BDListRequest);
+                    OnPropertyChanged(nameof(BDListRequest));
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Parameter is not a RequestDetail");
+            }
+        }
+        private void DecreaseQuantity(object parameter)
+        {
+            Debug.WriteLine("Increase Quantity clicked");
+            if (parameter is RequestDetail item)
+            {
+                var selectedItem = BDListRequest.FirstOrDefault(x => x.ID == item.ID);
+                if (selectedItem != null)
+                {
+                    selectedItem.BDQuantity = Math.Max(0, (selectedItem.BDQuantity ?? 0) - 1);
+                    BDListRequest = new ObservableCollection<RequestDetail>(BDListRequest);
+                    OnPropertyChanged(nameof(BDListRequest));
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Parameter is not a RequestDetail");
+            }
+        }
+
+        private M_Employee User = new M_Employee();
         private async void SearchUser()
         {
+            BDListRequest.Clear();
             _uiServices.ShowProgressDialog();
             try
             {
-                var User = await _employeeRepository.GetEmployee(BDSearch);
+                User = await _employeeRepository.GetEmployee(BDSearch.Trim());
                 if (User == null)
                 {
                     ClearBindingData();
@@ -107,7 +178,7 @@ namespace NidecUniform.ViewModels
                     return;
 
                 }
-                BindingData(User);
+                BindingData();
             }
             catch (Exception ex)
             {
@@ -121,20 +192,19 @@ namespace NidecUniform.ViewModels
 
         }
 
-        private void BindingData(M_Employee User)
+        private void BindingData()
         {
             BDEmployeeID = User.EmployeeID;
             BDFullName = User.FullName;
             BDDepartment = User.Department;
             BDSection = User.Position;
-            List<RequestDetail> Details = new List<RequestDetail>();
-            BDListRequest = new ObservableCollection<RequestDetail>();
-            
+
+
             foreach (var i in User.Requests)
             {
                 foreach (var j in i.RequestDetails)
                 {
-                    BDListRequest.Add(new RequestDetail { ProductName = j.ProductName, QuantityDelivered = j.QuantityDelivered, QuantityRequested = j.QuantityRequested,StartDate = i.StartDate,EndDate=i.EndDate});
+                    BDListRequest.Add(new RequestDetail { ID = j.ID, ProductName = j.ProductName, QuantityDelivered = j.QuantityDelivered, QuantityRequested = j.QuantityRequested, StartDate = i.StartDate, EndDate = i.EndDate, RequestID = i.ID });
                 }
             }
         }
@@ -146,6 +216,60 @@ namespace NidecUniform.ViewModels
             BDSection = string.Empty;
         }
 
+        private async Task PushRequest()
+        {
+            try
+            {
+                var deliveryTasks = new List<Task>();
+                var detailTasks = new List<Task>();
 
+                List<RequestDetail> BDListRequestTemp = new List<RequestDetail>();
+                List<DeliveryDetail> deliveryDetailsList = new List<DeliveryDetail>();
+                foreach (var item in BDListRequest.Where(i => i.BDQuantity > 0))
+                {
+                    BDListRequestTemp.Add(item);
+                }
+
+                foreach (var request in User.Requests)
+                {
+                    foreach (var item in BDListRequestTemp)
+                    {
+                        if (request.ID == item.RequestID)
+                        {
+                            var getDelivery = await _deliveryRepository.GetDelivery(request.ID);
+                            int deliveryID;
+
+                            if (getDelivery == null)
+                            {
+                                deliveryID = await _deliveryRepository.AddDelivery(new M_Delivery
+                                {
+                                    RequestID = request.ID,
+                                    EmployeeID = request.EmployeeID,
+                                });
+                            }
+                            else
+                            {
+                                deliveryID = getDelivery.ID;
+                            }
+                            deliveryDetailsList.Add(new DeliveryDetail
+                            {
+                                EmployeeID = item.EmployeeID,
+                                ProductID = item.ProductID,
+                                DeliveryID = deliveryID,
+                                ProductName = item.ProductName,
+                                QuantityDelivered = (int)item.BDQuantity,
+                                Unit = item.Unit,
+                            });
+                        }
+                    }
+                }
+                await _deliveryDetailReporitory.AddDeliveryDetails(deliveryDetailsList);
+                MessageBox.Show("Import Sucess", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException?.Message ?? ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
