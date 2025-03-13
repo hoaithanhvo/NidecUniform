@@ -18,7 +18,7 @@ public partial class RequestDetail
     public string? ProductID { get; set; }
     public string? ProductName { get; set; }
     public int QuantityRequested { get; set; }
-    public int? QuantityDelivered { get; set; }
+    public int QuantityDelivered { get; set; }
 
     [StringLength(50)]
     public string? Status { get; set; } = "Pending";

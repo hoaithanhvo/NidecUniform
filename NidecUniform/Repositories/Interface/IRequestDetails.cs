@@ -10,6 +10,8 @@ namespace NidecUniform.Repositories
     interface IRequestDetails
     {
         Task ImportRequestDetailsListAsync(List<RequestDetail> requestDetailsList);
+
+        Task UpdateQuantityDelivered(int requestDetailsID , int? quantityDelivered);
     }
 
 }

@@ -23,7 +23,7 @@ namespace NidecUniform.Repositories
         {
             await  _context.M_Requests.AddAsync(request);
             await _context.SaveChangesAsync();
-            return request.ID; // Trả về ID sau khi lưu vào DB
+            return request.ID; 
         }
     }
 }

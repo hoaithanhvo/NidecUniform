@@ -20,16 +20,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Images\Map.jpg" />
+    <None Remove="Images\AK_MP.png" />
+    <None Remove="Images\AT.png" />
+    <None Remove="Images\AX.png" />
+    <None Remove="Images\A_TD_TRANG.png" />
+    <None Remove="Images\N.png" />
     <None Remove="Images\Nidec-Logo.jpg" />
     <None Remove="Images\Nidec_Logo-removebg.png" />
     <None Remove="Images\Nidec_Logo.png" />
     <None Remove="Images\Nidec_Logo_RemoveBG.png" />
-    <None Remove="Images\shutdown_def.png" />
-    <None Remove="Images\shutdown_mo.png" />
+    <None Remove="Images\QT.png" />
+    <None Remove="Images\QX.png" />
+    <None Remove="Images\Q_NAM_MP.png" />
+    <None Remove="Images\Q_NU_MP.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\AK_MP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\AT.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\A_TD_TRANG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\N.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Nidec_Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -41,6 +59,7 @@
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.1.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.PhosphorIcons" Version="5.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
       <PrivateAssets>all</PrivateAssets>
@@ -50,20 +69,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\Map.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\Nidec-Logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Nidec_Logo_RemoveBG.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\shutdown_def.png">
+    <Resource Include="Images\QT.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\shutdown_mo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Resource Include="Images\AX.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\QX.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Q_NAM_MP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Q_NU_MP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 

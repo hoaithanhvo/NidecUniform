@@ -8,9 +8,11 @@
         <Border.Style>
             <Style TargetType="Border">
                 <Setter Property="Background" Value="White"/>
+                <Setter Property="Margin" Value="0 4"/>
+
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#f3f3f3"/>
+                        <Setter Property="Background" Value="#039F41"/>
                     </Trigger>
 
                     <DataTrigger Binding="{Binding ElementName=userCard,Path=IsActive}">
@@ -23,11 +25,10 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--User Image-->
-            <Ellipse Width="38" Height="38" Margin="10 2 0 0" VerticalAlignment="Top">
+            <Ellipse Width="50" Height="50"  VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="{Binding ElementName=userCard,Path=Image}"/>
                 </Ellipse.Fill>
@@ -36,13 +37,24 @@
             <!--Info Text-->
 
 
-            <StackPanel Grid.Column="1" Margin="12 0 0 0" >
-                <TextBlock Text="{Binding ElementName=userCard,Path=FullName}" Foreground="#5b5181" FontSize="13" FontWeight="SemiBold"/>
-                <TextBlock Text="{Binding ElementName=userCard,Path=Title}" Foreground="#5b5181" FontSize="10" Margin="0 5" FontWeight="SemiBold"/>
-                <TextBlock Text="{Binding ElementName=userCard,Path=Time}" Foreground="#5b5181" FontSize="10" FontWeight="SemiBold"/>
+            <StackPanel Grid.Column="1" Margin="5 0 0 0" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Product name: " Foreground="Black" FontSize="12" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding ProductName}" Foreground="Black" FontSize="12" FontWeight="SemiBold"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Price: " Foreground="Black" FontSize="10"/>
+                    <TextBlock Text="{Binding ElementName=userCard,Path=Price}" Foreground="Black" FontSize="10" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Quantity: " Foreground="Black" FontSize="10" />
+                    <TextBlock Text="{Binding ElementName=userCard,Path=Quantity}" Foreground="Black" FontSize="10" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Total Price: " Foreground="#039F41" FontSize="10"/>
+                <TextBlock Text="{Binding ElementName=userCard,Path=TotalPrice}" Foreground="#039F41" FontSize="10"/>
+                </StackPanel>
             </StackPanel>
-            <!--Message Icon-->
-            <Icon:PackIconMaterial Kind="MessageReplyOutline" VerticalAlignment="Center" Grid.Column="2"/>
         </Grid>
     </Border>
 </UserControl>
