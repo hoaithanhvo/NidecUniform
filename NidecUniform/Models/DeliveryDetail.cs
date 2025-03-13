@@ -25,6 +25,9 @@ public partial class DeliveryDetail
     public DateTime CreateDate { get; set; } = DateTime.Now;
 
 
+    public int RequestID { get; set; }
+
+
     [ForeignKey("EmployeeID")]
     public virtual M_Employee? Employee { get; set; } = null!;
 

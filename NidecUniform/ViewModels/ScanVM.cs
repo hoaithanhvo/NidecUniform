@@ -267,6 +267,8 @@ namespace NidecUniform.ViewModels
                                 ProductName = item.ProductName,
                                 QuantityDelivered = (int)item.BDQuantity,
                                 Unit = item.Unit,
+                                RequestID = request.ID,
+                                
                             });
                             updateQuantityDelivered.Add(new RequestDetail
                             {

@@ -7,18 +7,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Pages\ExportPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Pages\HomePage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Pages\ImportPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Pages\ScanPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="UserControls\UserCard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -40,18 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\ExportPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\HomePage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\ImportPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\ScanPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Button.xaml">

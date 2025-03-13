@@ -101,6 +101,46 @@ namespace NidecUniform.ViewModels
             return true;
         }
 
+        private async Task<bool> CheckProductInvalidAsync()
+        {
+            List<string> errorList = new List<string>();
+            // Lấy danh sách sản phẩm từ database
+            var productList = await _productRepository.GetProductList();
+
+            // Chuyển danh sách productList thành HashSet để tra cứu nhanh hơn
+            var validProducts = new HashSet<string>(productList.Select(p => p.ProductName), StringComparer.OrdinalIgnoreCase);
+
+            // Kiểm tra từng dòng dữ liệu
+            foreach (var item in listRawData)
+            {
+                List<string> invalidFields = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(item.PaintType) && !validProducts.Contains(item.PaintType))
+                    invalidFields.Add($"PaintType: {item.PaintType}");
+
+                if (!string.IsNullOrWhiteSpace(item.ShirtsType) && !validProducts.Contains(item.ShirtsType))
+                    invalidFields.Add($"ShirtsType: {item.ShirtsType}");
+
+                if (!string.IsNullOrWhiteSpace(item.ShoesType) && !validProducts.Contains(item.ShoesType))
+                    invalidFields.Add($"ShoesType: {item.ShoesType}");
+
+                if (!string.IsNullOrWhiteSpace(item.ConesType) && !validProducts.Contains(item.ConesType))
+                    invalidFields.Add($"ConesType: {item.ConesType}");
+
+                // Nếu có lỗi, thêm vào danh sách lỗi
+                if (invalidFields.Any())
+                {
+                    errorList.Add($"EmployeeID: {item.EmployeeID} - FullName: {item.FullName} - " + string.Join(", ", invalidFields));
+                }
+            }
+            if (errorList.Any())
+            {
+                MessageBox.Show(string.Join("\n", errorList), "Invalid Employee List", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+            return true; // Tất cả đều hợp lệ
+        }
+
         private void ExecuteOpen()
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -177,6 +217,11 @@ namespace NidecUniform.ViewModels
                 if (!await CheckUserInvalidAsync())
                 {
                     return;
+                }
+                if (!await CheckProductInvalidAsync())
+                {
+                    return;
+
                 }
                 _uiServices.ShowProgressDialog();
                 await _rawDataRepository.ImportListRequest(listRawData);

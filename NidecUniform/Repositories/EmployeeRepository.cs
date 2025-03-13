@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NidecUniform.Migrations;
 using NidecUniform.Models;
+using NidecUniform.Models.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,27 @@ namespace NidecUniform.Repositories
             return await _context.M_Employees.Include(s => s.Requests).ThenInclude(r=>r.RequestDetails).ThenInclude(d=>d.DeliveryDetails).Where(s=>s.EmployeeID == employeeID).FirstOrDefaultAsync();
         }
 
+       
+
         public async Task importEmployee(List<M_Employee> employees)
         {
             _context.M_Employees.AddRange(employees);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<TooltipsModel>> GetTooltipsAsync()
+        {
+            var result = await(from emp in _context.M_Employees
+                               join del in _context.M_Deliveries
+                               on emp.EmployeeID equals del.EmployeeID
+                               group emp by emp.Department into grouped
+                               select new TooltipsModel
+                               {
+                                   Department = grouped.Key,
+                                   TotalDeliveries = grouped.Count()
+                               }).ToListAsync();
+
+            return result;
         }
     }
 }

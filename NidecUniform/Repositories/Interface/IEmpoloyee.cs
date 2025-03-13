@@ -1,4 +1,5 @@
 ﻿using NidecUniform.Models;
+using NidecUniform.Models.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace NidecUniform.Repositories
         Task importEmployee(List<M_Employee> employees);
 
         Task<HashSet<string>> GetAllEmployeeIdsAsync();
+
+        Task<List<TooltipsModel>> GetTooltipsAsync();
     }
 }
