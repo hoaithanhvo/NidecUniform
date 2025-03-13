@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NidecUniform.Repositories.Interface;
+using NidecUniform.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +20,22 @@ namespace NidecUniform.Views
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
-    public partial class Home : UserControl
+    public partial class Home : UserControl, IUIServices
     {
         public Home()
         {
             InitializeComponent();
+            this.DataContext = new HomeVM(this);
+        }
+
+        public void HideProgressDialog()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowProgressDialog()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -23,7 +23,9 @@ namespace NidecUniform.ViewModels
         public ICommand ImportCommand { get; set; }
         public ICommand ScanCommand { get; set; }
 
-        private void Home(object obj) => CurrentView = new HomeVM();
+        //private void Home(object obj) => CurrentView = new HomeVM();
+        private void Home(object obj) => CurrentView = AppServices.GetService<HomeVM>();
+
         private void Export(object obj) => CurrentView = new ExportVM();
         //private void Import(object obj) => CurrentView = AppServices.GetService<ImportVM>();
         private void Import(object obj) => CurrentView = AppServices.GetService<ImportVM>();

@@ -26,13 +26,11 @@ namespace NidecUniform.Repositories
         {
             var requestDetail = await _context.RequestDetails
                 .FirstOrDefaultAsync(s => s.ID == requestDetailsID);
-
             if (requestDetail != null && quantityDelivered.HasValue)
             {
-                requestDetail.QuantityDelivered = quantityDelivered.Value; // Tránh lỗi khi giá trị là null
+                requestDetail.QuantityDelivered += quantityDelivered.Value; // Tránh lỗi khi giá trị là null
                 await _context.SaveChangesAsync(); // Lưu thay đổi vào DB
             }
         }
-
     }
 }

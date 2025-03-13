@@ -136,7 +136,8 @@ namespace NidecUniform.ViewModels
                 var selectedItem = BDListRequest.FirstOrDefault(x => x.ID == item.ID);
                 if (selectedItem != null)
                 {
-                    selectedItem.BDQuantity = Math.Min(selectedItem.QuantityRequested, (selectedItem.BDQuantity ?? 0) + 1);
+                    int maxQuantity = selectedItem.QuantityRequested - selectedItem.QuantityDelivered;
+                    selectedItem.BDQuantity = Math.Min(maxQuantity, (selectedItem.BDQuantity ?? 0) + 1);
                     BDListRequest = new ObservableCollection<RequestDetail>(BDListRequest);
                     OnPropertyChanged(nameof(BDListRequest));
                 }
@@ -270,7 +271,7 @@ namespace NidecUniform.ViewModels
                             updateQuantityDelivered.Add(new RequestDetail
                             {
                                 ID = item.ID,
-                                QuantityDelivered = item.BDQuantity,
+                                QuantityDelivered = item.BDQuantity ??0,
                             });
                         }
                     }

@@ -10,5 +10,6 @@ namespace NidecUniform.Repositories.Interface
     interface IDeliveryDetail
     {
         Task AddDeliveryDetails(List<DeliveryDetail> deliveryDetail);
+        List<ProductModel> GetProductInfo();
     }
 }

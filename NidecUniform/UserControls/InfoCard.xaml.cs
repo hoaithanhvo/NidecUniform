@@ -19,12 +19,12 @@ namespace NidecUniform.UserControls
         }
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(InfoCard));
 
-        public string Desc
+        public string Quantity
         {
-            get { return (string)GetValue(DescProperty); }
-            set { SetValue(DescProperty, value); }
+            get { return (string)GetValue(QuantityProperty); }
+            set { SetValue(QuantityProperty, value); }
         }
-        public static readonly DependencyProperty DescProperty = DependencyProperty.Register("Desc", typeof(string), typeof(InfoCard));
+        public static readonly DependencyProperty QuantityProperty = DependencyProperty.Register("Quantity", typeof(string), typeof(InfoCard));
 
         public string Percentage
         {
