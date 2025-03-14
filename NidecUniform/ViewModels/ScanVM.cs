@@ -176,6 +176,7 @@ namespace NidecUniform.ViewModels
                 User = await _employeeRepository.GetEmployee(BDSearch.Trim());
                 if (User == null)
                 {
+                    _uiServices.HideProgressDialog();
                     ClearBindingData();
                     MessageBox.Show($"User {BDSearch} Not found", "Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -267,6 +268,8 @@ namespace NidecUniform.ViewModels
                                 ProductName = item.ProductName,
                                 QuantityDelivered = (int)item.BDQuantity,
                                 Unit = item.Unit,
+                                RequestID = request.ID,
+                                
                             });
                             updateQuantityDelivered.Add(new RequestDetail
                             {

@@ -24,6 +24,7 @@
     <None Remove="Images\AT.png" />
     <None Remove="Images\AX.png" />
     <None Remove="Images\A_TD_TRANG.png" />
+    <None Remove="Images\GV.png" />
     <None Remove="Images\N.png" />
     <None Remove="Images\Nidec-Logo.jpg" />
     <None Remove="Images\Nidec_Logo-removebg.png" />

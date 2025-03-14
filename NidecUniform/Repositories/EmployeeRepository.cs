@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NidecUniform.Migrations;
 using NidecUniform.Models;
+using NidecUniform.Models.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +28,17 @@ namespace NidecUniform.Repositories
         public async Task<M_Employee> GetEmployee(string employeeID)
         {
             return await _context.M_Employees.Include(s => s.Requests).ThenInclude(r=>r.RequestDetails).ThenInclude(d=>d.DeliveryDetails).Where(s=>s.EmployeeID == employeeID).FirstOrDefaultAsync();
+
         }
+
+       
 
         public async Task importEmployee(List<M_Employee> employees)
         {
             _context.M_Employees.AddRange(employees);
             await _context.SaveChangesAsync();
         }
+
+       
     }
 }

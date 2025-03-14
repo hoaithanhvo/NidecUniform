@@ -6,6 +6,10 @@ namespace NidecUniform.UserControls
 {
     public partial class UserCard : UserControl
     {
+        public UserCard()
+        {
+            InitializeComponent();
+        }
         public string ProductName
         {
             get { return (string)GetValue(ProductNameProperty); }
@@ -46,9 +50,6 @@ namespace NidecUniform.UserControls
         public static readonly DependencyProperty TotalPriceProperty =
             DependencyProperty.Register("TotalPrice", typeof(int), typeof(UserCard), new PropertyMetadata(0));
 
-        public UserCard()
-        {
-            InitializeComponent();
-        }
+       
     }
 }

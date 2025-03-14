@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NidecUniform.Models;
 using NidecUniform.Repositories;
 using NidecUniform.Repositories.Interface;
+using NidecUniform.Repositories.Interface.Common;
 using NidecUniform.ViewModels;
 using NidecUniform.Views;
 using System;
@@ -23,10 +24,10 @@ namespace NidecUniform.Utilities
             var services = new ServiceCollection();
 
             // Đăng ký DbContext
-            services.AddDbContext<NidecUniformContext>(options =>
-                options.UseSqlServer("Data Source=LAPTOP-99421S3D\\SQLEXPRESS; Initial Catalog=NidecUniform; Integrated Security=True; Encrypt=True; Trust Server Certificate=True"));
             //services.AddDbContext<NidecUniformContext>(options =>
-            //   options.UseSqlServer("Data Source=10.234.1.89;Initial Catalog=NidecUniform;Persist Security Info=True;User ID=sa;Password=sa;Encrypt=True;Trust Server Certificate=True"));
+            //    options.UseSqlServer("Data Source=LAPTOP-99421S3D\\SQLEXPRESS; Initial Catalog=NidecUniform; Integrated Security=True; Encrypt=True; Trust Server Certificate=True"));
+            services.AddDbContext<NidecUniformContext>(options =>
+               options.UseSqlServer("Data Source=10.234.1.89;Initial Catalog=NidecUniform;Persist Security Info=True;User ID=sa;Password=sa;Encrypt=True;Trust Server Certificate=True"));
             // Đăng ký Repository
             services.AddScoped<IEmpoloyee, EmployeeRepository>();
             services.AddScoped<IRawData, RawDataRepository>();
@@ -35,6 +36,8 @@ namespace NidecUniform.Utilities
             services.AddScoped<IProduct, ProductRepository>();
             services.AddScoped<IDelivery, DeliveryRepository>();
             services.AddScoped<IDeliveryDetail, DeliveryDetailRepository>();
+            services.AddScoped<ICommon, CommonRepository>();
+
 
             // Trong App.xaml.cs hoặc nơi bạn đăng ký dịch vụ DI
             services.AddTransient<Import>(); // Đăng ký Import UserControl

@@ -1,4 +1,5 @@
-﻿using NidecUniform.Repositories.Interface;
+﻿using NidecUniform.Models.Model;
+using NidecUniform.Repositories.Interface;
 using NidecUniform.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,11 @@ namespace NidecUniform.Views
         {
             InitializeComponent();
             this.DataContext = new HomeVM(this);
+        }
+
+        public Task<PieModel> getDataPieChart()
+        {
+            throw new NotImplementedException();
         }
 
         public void HideProgressDialog()
