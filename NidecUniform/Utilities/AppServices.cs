@@ -37,6 +37,8 @@ namespace NidecUniform.Utilities
             services.AddScoped<IDelivery, DeliveryRepository>();
             services.AddScoped<IDeliveryDetail, DeliveryDetailRepository>();
             services.AddScoped<ICommon, CommonRepository>();
+            services.AddScoped<IExport, ExportRepository>();
+
 
 
             // Trong App.xaml.cs hoặc nơi bạn đăng ký dịch vụ DI

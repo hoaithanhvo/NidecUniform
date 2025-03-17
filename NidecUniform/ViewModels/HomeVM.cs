@@ -85,7 +85,7 @@ namespace NidecUniform.ViewModels
 
         private void LoadTotalAmount()
         {
-            TotalAmount = _commonRepository.GetTotalAmount().ToString("#,##0.00");
+            TotalAmount = _commonRepository.GetTotalAmount().ToString("#,##");
         }
         private void LoadTotalUser()
         {
@@ -111,7 +111,6 @@ namespace NidecUniform.ViewModels
             var result =  _commonRepository.getDataPieChart();
             SeriesCollection = new SeriesCollection();
 
-            // Thêm dữ liệu từ result vào SeriesCollection
             if (result != null && result.Any())
             {
                 foreach (var item in result)
@@ -119,8 +118,10 @@ namespace NidecUniform.ViewModels
                     SeriesCollection.Add(new PieSeries
                     {
                         Title = item.Name,
-                        Values = new ChartValues<double> { item.TotalPrice ?? 0 },
-                        DataLabels = true
+                        Values = new ChartValues<double> {item.TotalPrice ?? 0 },
+                        DataLabels = true,
+                        LabelPoint = chartPoint => $"{chartPoint.Y:#,##0}"
+
                     });
                 }
             }

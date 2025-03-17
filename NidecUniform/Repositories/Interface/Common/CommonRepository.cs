@@ -24,12 +24,13 @@ namespace NidecUniform.Repositories.Interface.Common
                         join b in _context.M_Employees on a.EmployeeID equals b.EmployeeID
                         join c in _context.DeliveryDetails on a.ID equals c.RequestID
                         join d in _context.M_Products on c.ProductID equals d.ProductID
-                        group d.Price by b.Department into grouped
+                        group new { d.Price, c.QuantityDelivered } by b.Department into grouped
                         select new PieModel
                         {
                             Name = grouped.Key,
-                            TotalPrice = grouped.Sum()
+                            TotalPrice = grouped.Sum(x => x.Price * x.QuantityDelivered)
                         };
+
 
             return query.ToList();
         }

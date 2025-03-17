@@ -68,7 +68,7 @@
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1">
                     <StackPanel>
-                        <uc:InfoCard Title="Total Amount" Quantity="{Binding TotalAmount}" Icon="CreditCardCheckOutline" Margin="0 30 0 30"/>
+                        <uc:InfoCard Title="Total Payment" Quantity="{Binding TotalAmount}" Icon="CreditCardCheckOutline" Margin="0 30 0 30"/>
                         <uc:InfoCard Title="Total User" Quantity="{Binding TotalUser}" Icon="CreditCardCheckOutline" Margin="0 30 0 30"/>
                     </StackPanel>
                 </Grid>
