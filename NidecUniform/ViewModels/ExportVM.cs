@@ -1,25 +1,62 @@
 ﻿using NidecUniform.Models;
+using NidecUniform.Models.Model;
+using NidecUniform.Repositories;
+using NidecUniform.Repositories.Interface;
+using NidecUniform.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NidecUniform.ViewModels
 {
-    public class ExportVM : Utilities.ViewModelBase
+    public class ExportVM : ViewModelBase
     {
-        private readonly PageModel _pageModel;
-        public int CustomerID
+        #region Binding
+        private ObservableCollection<ExportModel> _dgvExportRequest;
+        public ObservableCollection<ExportModel> DgvExportRequest
         {
-            get { return _pageModel.CustomerCount; }
-            set { _pageModel.CustomerCount = value; OnPropertyChanged(); }
+            get => _dgvExportRequest;
+            set
+            {
+                _dgvExportRequest = value;
+                OnPropertyChanged();
+            }
         }
 
-        public ExportVM()
+        private int _totalCount;
+        public int TotalCount
         {
-            _pageModel = new PageModel();
-            CustomerID = 100528;
+            get => _totalCount;
+            set
+            {
+                _totalCount = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+        private readonly IExport _exportRepository;
+
+        public ExportVM(IUIServices uiServices)
+        {
+            _exportRepository = AppServices.GetService<IExport>();
+            getDataDelivery();
+            DgvExportRequest = new ObservableCollection<ExportModel>();
+
+
+        }
+
+        private async Task getDataDelivery()
+        {
+            var result = await _exportRepository.getListExportAsync();
+            TotalCount = result.Count;
+            foreach (var exportModel in result)
+            {
+                DgvExportRequest.Add(exportModel);
+            }
+
         }
     }
 }

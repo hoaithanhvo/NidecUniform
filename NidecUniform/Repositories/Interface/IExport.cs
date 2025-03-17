@@ -1,4 +1,4 @@
-﻿using NidecUniform.Models;
+﻿using NidecUniform.Models.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories.Interface
 {
-    interface IDeliveryDetail
+    internal interface IExport
     {
-        Task AddDeliveryDetails(List<DeliveryDetail> deliveryDetail);
-        
+        Task<List<ExportModel>> getListExportAsync();
     }
 }

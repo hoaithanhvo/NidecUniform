@@ -6,20 +6,16 @@
              xmlns:local="clr-namespace:NidecUniform.Views"
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="1110"
-            xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Ivc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-            xmlns:uc="clr-namespace:NidecUniform.UserControls"
+             xmlns:uc="clr-namespace:NidecUniform.UserControls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-
-            xmlns:vm="clr-namespace:NidecUniform.ViewModels">
-
-
+             xmlns:vm="clr-namespace:NidecUniform.ViewModels">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="White" Offset="0.0"/>
-                <GradientStop Color="#9df6b0" Offset="1.5"/>
-                <GradientStop Color="#039F41" Offset="3.0"/>
+                <GradientStop Color="#e3f0ef" Offset="1.5"/>
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
@@ -69,34 +65,33 @@
             <!--Main Middle Chart Section-->
             <Grid Grid.Row="1" Grid.ColumnSpan="4"  Margin="10 0 10 0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Ivc:PieChart Grid.Row="1" Grid.ColumnSpan="4" Margin="10 40 0 0">
-                        <Ivc:PieChart.Series>
-                            <Ivc:PieSeries Title="FAN" Values="20" DataLabels="True" />
-                            <Ivc:PieSeries Title="PARTS" Values="50" DataLabels="True" />
-                            <Ivc:PieSeries Title="MOTOR" Values="10" DataLabels="True" />
-                        </Ivc:PieChart.Series>
-                    </Ivc:PieChart>
+                <Grid Grid.Row="0" Margin="0 0 0 10">
+                    <Border Background="Transparent" BorderThickness="2" BorderBrush="#039F41" CornerRadius="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Ivc:PieChart Series="{Binding SeriesCollection}" />
+                        </Grid>
+                    </Border>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1">
-                    <Ivc:PieChart Grid.Row="1" Grid.ColumnSpan="4" Margin="10 40 0 0">
-                        <Ivc:PieChart.Series>
-                            <Ivc:PieSeries Title="FAN" Values="20" DataLabels="True" />
-                            <Ivc:PieSeries Title="PARTS" Values="50" DataLabels="True" />
-                            <Ivc:PieSeries Title="MOTOR" Values="10" DataLabels="True" />
-                        </Ivc:PieChart.Series>
-                    </Ivc:PieChart>
+                    <StackPanel>
+                        <uc:InfoCard Title="Total Payment" Quantity="{Binding TotalAmount}" Icon="CreditCardCheckOutline" Margin="0 30 0 30"/>
+                        <uc:InfoCard Title="Total User" Quantity="{Binding TotalUser}" Icon="CreditCardCheckOutline" Margin="0 30 0 30"/>
+                    </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1" Grid.ColumnSpan="2">
                     <!--Main Chart-->
-                    <Border Background="Transparent" BorderThickness="2" BorderBrush="#039F41" CornerRadius="30">
+                    <Border Background="Transparent" BorderThickness="2" BorderBrush="#039F41" CornerRadius="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="221*"/>
@@ -122,8 +117,8 @@
                             <Ivc:CartesianChart Grid.Row="1" Grid.ColumnSpan="2" Margin="20 0 10 0">
                                 <Ivc:CartesianChart.Series>
                                     <Ivc:ColumnSeries Fill="#039F41"
-Values="{Binding ChartValues}"
-DataLabels="True">
+                                    Values="{Binding ChartValues}"
+                                    DataLabels="True">      
                                     </Ivc:ColumnSeries>
                                 </Ivc:CartesianChart.Series>
 
@@ -151,14 +146,12 @@ DataLabels="True">
             <StackPanel >
                 <!--Top TitleBar-->
                 <Grid Margin="10 10 0 5">
-                    <Icon:PackIconMaterial Kind="Details" Style="{StaticResource titleIcon}" Foreground="Black" Margin="20 10 0 0"/>
-                    <TextBlock Text="Details Product" Margin="40 5 0 0" Style="{StaticResource titleText}"/>
+                    <TextBlock TextAlignment="Center" Text="Details Product"  Style="{StaticResource titleText}"/>
                 </Grid>
-
                 <!--Tab Buttons-->
-                <Separator Background="#e7e5f3" Margin="20 0" Height="0.8"/>
+                <Separator Background="#039F41" Margin="20 0" Height="0.8"/>
                 <!--Users Info-->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="530">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="600">
                     <StackPanel>
                         <ItemsControl ItemsSource="{Binding Products}">
                             <ItemsControl.ItemTemplate>
@@ -168,14 +161,11 @@ DataLabels="True">
                          Price="{Binding Price}" 
                          Quantity="{Binding Quantity}" 
                          TotalPrice="{Binding TotalPrice}" />
-
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
                 </ScrollViewer>
-                <Border  CornerRadius="10" Height="125" Margin="10 25" >
-                </Border>
             </StackPanel>
         </Border>
     </Grid>

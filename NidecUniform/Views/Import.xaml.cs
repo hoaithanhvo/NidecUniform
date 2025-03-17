@@ -1,4 +1,5 @@
-﻿using NidecUniform.Repositories.Interface;
+﻿using NidecUniform.Models.Model;
+using NidecUniform.Repositories.Interface;
 using NidecUniform.ViewModels;
 using NidecUniform.Views.Common;
 using System;
@@ -28,6 +29,7 @@ namespace NidecUniform.Views
             InitializeComponent();
             DataContext = new ImportVM(this);
         }
+
 
         public void HideProgressDialog()
         {

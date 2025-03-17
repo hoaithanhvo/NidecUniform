@@ -26,34 +26,6 @@ namespace NidecUniform.UserControls
         }
         public static readonly DependencyProperty QuantityProperty = DependencyProperty.Register("Quantity", typeof(string), typeof(InfoCard));
 
-        public string Percentage
-        {
-            get { return (string)GetValue(PercentageProperty); }
-            set { SetValue(PercentageProperty, value); }
-        }
-        public static readonly DependencyProperty PercentageProperty = DependencyProperty.Register("Percentage", typeof(string), typeof(InfoCard));
-
-        public string BottomText
-        {
-            get { return (string)GetValue(BottomTextProperty); }
-            set { SetValue(BottomTextProperty, value); }
-        }
-        public static readonly DependencyProperty BottomTextProperty = DependencyProperty.Register("BottomText", typeof(string), typeof(InfoCard));
-
-        public string Days
-        {
-            get { return (string)GetValue(DaysProperty); }
-            set { SetValue(DaysProperty, value); }
-        }
-        public static readonly DependencyProperty DaysProperty = DependencyProperty.Register("Days", typeof(string), typeof(InfoCard));
-
-        public int Value
-        {
-            get { return (int)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
-        }
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(int), typeof(InfoCard));
-
         public bool CardIsActive
         {
             get { return (bool)GetValue(CardIsActiveProperty); }

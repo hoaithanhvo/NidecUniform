@@ -35,24 +35,26 @@
             </Ellipse>
 
             <!--Info Text-->
-
-
             <StackPanel Grid.Column="1" Margin="5 0 0 0" >
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Product name: " Foreground="Black" FontSize="12" FontWeight="SemiBold"/>
-                    <TextBlock Text="{Binding ProductName}" Foreground="Black" FontSize="12" FontWeight="SemiBold"/>
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Name: " Foreground="Black" FontSize="12" FontWeight="SemiBold" Grid.Column="0"/>
+                    <TextBlock Text="{Binding ProductName}" Foreground="Black" FontSize="12" TextWrapping="Wrap" FontWeight="SemiBold" Grid.Column="1"/>
+                </Grid>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Price: " Foreground="Black" FontSize="10"/>
-                    <TextBlock Text="{Binding ElementName=userCard,Path=Price}" Foreground="Black" FontSize="10" />
+                    <TextBlock Text="{Binding Price}" Foreground="Black" FontSize="10" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Quantity: " Foreground="Black" FontSize="10" />
-                    <TextBlock Text="{Binding ElementName=userCard,Path=Quantity}" Foreground="Black" FontSize="10" />
+                    <TextBlock Text="{Binding Quantity}" Foreground="Black" FontSize="10" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Total Price: " Foreground="#039F41" FontSize="10"/>
-                <TextBlock Text="{Binding ElementName=userCard,Path=TotalPrice}" Foreground="#039F41" FontSize="10"/>
+                    <TextBlock Text="{Binding TotalPrice}" Foreground="#039F41" FontSize="10"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
