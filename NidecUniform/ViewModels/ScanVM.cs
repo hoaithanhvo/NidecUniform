@@ -167,7 +167,7 @@ namespace NidecUniform.ViewModels
         }
 
         private M_Employee User = new M_Employee();
-        private async void SearchUser()
+        private async Task SearchUser()
         {
             BDListRequest.Clear();
             _uiServices.ShowProgressDialog();
@@ -193,7 +193,6 @@ namespace NidecUniform.ViewModels
             {
                 _uiServices.HideProgressDialog();
             }
-
         }
 
         private void BindingData()
@@ -203,7 +202,6 @@ namespace NidecUniform.ViewModels
             BDDepartment = User.Department;
             BDSection = User.Position;
 
-
             foreach (var i in User.Requests)
             {
                 foreach (var j in i.RequestDetails)
@@ -211,7 +209,6 @@ namespace NidecUniform.ViewModels
                     BDListRequest.Add(new RequestDetail { ID = j.ID, ProductName = j.ProductName, 
                         QuantityDelivered = j.QuantityDelivered, QuantityRequested = j.QuantityRequested, 
                         StartDate = i.StartDate, EndDate = i.EndDate, RequestID = i.ID ,ProductID = j.ProductID,EmployeeID = j.EmployeeID,Unit=j.Unit
-
                     });
                 }
             }
@@ -228,9 +225,7 @@ namespace NidecUniform.ViewModels
         {
             try
             {
-                var deliveryTasks = new List<Task>();
-                var detailTasks = new List<Task>();
-
+                _uiServices.ShowProgressDialog();
                 List<RequestDetail> BDListRequestTemp = new List<RequestDetail>();
                 List<DeliveryDetail> deliveryDetailsList = new List<DeliveryDetail>();
                 List<RequestDetail> updateQuantityDelivered = new List<RequestDetail>();
@@ -283,7 +278,11 @@ namespace NidecUniform.ViewModels
                 {
                     await _requestDetailReporitory.UpdateQuantityDelivered(request.ID,request.QuantityDelivered);
                 }
+                
                 await _deliveryDetailReporitory.AddDeliveryDetails(deliveryDetailsList);
+                await SearchUser();
+                _uiServices.HideProgressDialog();
+
                 MessageBox.Show("Import Sucess", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

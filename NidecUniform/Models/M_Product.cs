@@ -1,26 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace NidecUniform.Models;
-[Table("M_Product")]
-
-public partial class M_Product
+namespace NidecUniform.Models
 {
-    [Key]
-    [StringLength(50)]
-    public string? ProductID { get; set; }
+    public class M_Product
+    {
+        [Key]
+        [StringLength(50)]
+        public string? ProductID { get; set; }
 
-    [StringLength(100)]
-    public string? ProductName { get; set; }
+        [StringLength(50)]
+        public string? ProductEnglishName { get; set; }
 
-    public double? Price { get; set; }
+        [StringLength(50)]
+        public string? ProductVietnameseName { get; set; }
 
-    public string? Unit { get; set; }
+        [StringLength(10)]
+        public string? Currency { get; set; }
 
-    public virtual ICollection<RequestDetail> RequestDetails { get; set; } = new List<RequestDetail>();
+        public double? Price { get; set; }
 
-    public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
+        public string? Unit { get; set; }
 
+        public virtual ICollection<RequestDetail> RequestDetails { get; set; } = new List<RequestDetail>();
+
+        public virtual ICollection<DeliveryDetail> DeliveryDetails { get; set; } = new List<DeliveryDetail>();
+
+    }
 }

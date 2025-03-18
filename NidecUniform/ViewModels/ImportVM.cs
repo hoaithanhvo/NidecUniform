@@ -108,7 +108,7 @@ namespace NidecUniform.ViewModels
             var productList = await _productRepository.GetProductList();
 
             // Chuyển danh sách productList thành HashSet để tra cứu nhanh hơn
-            var validProducts = new HashSet<string>(productList.Select(p => p.ProductName), StringComparer.OrdinalIgnoreCase);
+            var validProducts = new HashSet<string>(productList.Select(p => p.ProductEnglishName), StringComparer.OrdinalIgnoreCase);
 
             // Kiểm tra từng dòng dữ liệu
             foreach (var item in listRawData)
@@ -257,10 +257,10 @@ namespace NidecUniform.ViewModels
                         requestDetails.Add(new RequestDetail
                         {
                             RequestID = realRequestID,
-                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.ProductID ?? "",
-                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.ProductName ?? "",
+                            ProductID = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.PaintType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.PaintType)?.ProductEnglishName ?? "",
                             QuantityRequested = rawData.NumberOfPaint,
-                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.PaintType)?.Unit ?? ""
+                            Unit = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.PaintType)?.Unit ?? ""
                         });
                     }
 
@@ -269,10 +269,10 @@ namespace NidecUniform.ViewModels
                         requestDetails.Add(new RequestDetail
                         {
                             RequestID = realRequestID,
-                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.ProductID ?? "",
-                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.ProductName ?? "",
+                            ProductID = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ShirtsType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ShirtsType)?.ProductEnglishName ?? "",
                             QuantityRequested = rawData.NumberOfshirts,
-                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ShirtsType)?.Unit ?? ""
+                            Unit = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ShirtsType)?.Unit ?? ""
                         });
                     }
                     if (rawData.NumberOfCones > 0)
@@ -280,10 +280,10 @@ namespace NidecUniform.ViewModels
                         requestDetails.Add(new RequestDetail
                         {
                             RequestID = realRequestID,
-                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.ProductID ?? "",
-                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.ProductName ?? "",
+                            ProductID = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ConesType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ConesType)?.ProductEnglishName ?? "",
                             QuantityRequested = rawData.NumberOfCones,
-                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ConesType)?.Unit ?? ""
+                            Unit = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ConesType)?.Unit ?? ""
                         });
                     }
                     if (rawData.NumberOfShoes > 0)
@@ -291,10 +291,10 @@ namespace NidecUniform.ViewModels
                         requestDetails.Add(new RequestDetail
                         {
                             RequestID = realRequestID,
-                            ProductID = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.ProductID ?? "",
-                            ProductName = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.ProductName ?? "",
+                            ProductID = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ShoesType)?.ProductID ?? "",
+                            ProductName = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ShoesType)?.ProductEnglishName ?? "",
                             QuantityRequested = rawData.NumberOfShoes,
-                            Unit = productList.FirstOrDefault(p => p.ProductName == rawData.ShoesType)?.Unit ?? ""
+                            Unit = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ShoesType)?.Unit ?? ""
                         });
                     }
                     await _requestDetailsRepository.ImportRequestDetailsListAsync(requestDetails);

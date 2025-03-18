@@ -23,7 +23,7 @@ namespace NidecUniform.Repositories.Interface.Common
             var query = from a in _context.M_Requests
                         join b in _context.M_Employees on a.EmployeeID equals b.EmployeeID
                         join c in _context.DeliveryDetails on a.ID equals c.RequestID
-                        join d in _context.M_Products on c.ProductID equals d.ProductID
+                        join d in _context.M_Product on c.ProductID equals d.ProductID
                         group new { d.Price, c.QuantityDelivered } by b.Department into grouped
                         select new PieModel
                         {
@@ -51,11 +51,11 @@ namespace NidecUniform.Repositories.Interface.Common
         public List<ProductModel> GetProductInfo()
         {
             var result = (from d in _context.DeliveryDetails
-                          join p in _context.M_Products on d.ProductID equals p.ProductID
-                          group d by new { d.ProductID, p.ProductName, p.Price } into g
+                          join p in _context.M_Product on d.ProductID equals p.ProductID
+                          group d by new { d.ProductID, p.ProductEnglishName, p.Price } into g
                           select new ProductModel
                           {
-                              ProductName = g.Key.ProductName,
+                              ProductName = g.Key.ProductEnglishName,
                               Price = g.Key.Price,
                               Quantity = g.Sum(d => d.QuantityDelivered),
                               TotalPrice = g.Key.Price * g.Sum(d => d.QuantityDelivered),
@@ -76,7 +76,7 @@ namespace NidecUniform.Repositories.Interface.Common
         public decimal GetTotalAmount()
         {
             decimal totalAmount = (from deliveryDetail in _context.DeliveryDetails
-                                   join product in _context.M_Products on deliveryDetail.ProductID equals product.ProductID
+                                   join product in _context.M_Product on deliveryDetail.ProductID equals product.ProductID
                                    select Convert.ToDecimal(deliveryDetail.QuantityDelivered) * Convert.ToDecimal(product.Price ?? 0))
                           .Sum();
             return totalAmount;

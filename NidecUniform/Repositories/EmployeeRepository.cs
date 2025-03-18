@@ -30,9 +30,6 @@ namespace NidecUniform.Repositories
             return await _context.M_Employees.Include(s => s.Requests).ThenInclude(r=>r.RequestDetails).ThenInclude(d=>d.DeliveryDetails).Where(s=>s.EmployeeID == employeeID).FirstOrDefaultAsync();
 
         }
-
-       
-
         public async Task importEmployee(List<M_Employee> employees)
         {
             _context.M_Employees.AddRange(employees);

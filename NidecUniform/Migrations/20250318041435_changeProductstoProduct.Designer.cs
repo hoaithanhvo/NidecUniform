@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NidecUniform.Models;
 
@@ -11,9 +12,11 @@ using NidecUniform.Models;
 namespace NidecUniform.Migrations
 {
     [DbContext(typeof(NidecUniformContext))]
-    partial class NidecUniformContextModelSnapshot : ModelSnapshot
+    [Migration("20250318041435_changeProductstoProduct")]
+    partial class changeProductstoProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

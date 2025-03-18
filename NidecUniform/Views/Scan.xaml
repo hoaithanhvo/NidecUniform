@@ -6,7 +6,12 @@
              mc:Ignorable="d"
              xmlns:vm="clr-namespace:NidecUniform.ViewModels"
              xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:NidecUniform.Utilities"
              d:DesignHeight="760" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <local:ComparisonConverter  x:Key="ComparisonConverter"/>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -74,28 +79,37 @@
                                 <Setter Property="FontSize" Value="15"/>
                                 <Setter Property="FontWeight" Value="Bold"/>
                                 <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <Binding Path="." Converter="{StaticResource ComparisonConverter}"/>
+                                    </Setter.Value>
+                                </Setter>
                                 <Style.Triggers>
                                     <!-- Đổi màu khi rê chuột -->
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#D3D3D3"/>
+                                        <Setter Property="Background" Value="#57B4BA"/>
                                     </Trigger>
                                     <!-- Đổi màu khi được chọn -->
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="Background" Value="#039F41"/>
+                                        <Setter Property="Background" Value="#015551"/>
                                         <Setter Property="FontWeight" Value="Bold"/>
                                     </Trigger>
+
+                                    <!-- Nếu QuantityDelivered == QuantityRequested thì nền xanh -->
+                                    
+
                                 </Style.Triggers>
                             </Style>
                         </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView >
-                                <GridViewColumn Header="#" Width="50">
+                                <!--<GridViewColumn Header="#" Width="50">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <CheckBox IsChecked="{Binding CheckBox, Mode=TwoWay}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                </GridViewColumn>-->
                                 <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding ProductName}" Width="300"/>
                                 <GridViewColumn Header="Start Date" Width="150">
                                     <GridViewColumn.CellTemplate>
@@ -133,7 +147,6 @@
                                                 <Button Content="-" Width="30" Margin="10 0 20 0"
 Command="{Binding DataContext.DecreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 CommandParameter="{Binding}" />
-
                                                 <!-- Số lượng -->
                                                 <TextBlock Text="{Binding BDQuantity, Mode=TwoWay}" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 
