@@ -21,7 +21,7 @@ public partial class NidecUniformContext : DbContext
 
     public virtual DbSet<M_Employee> M_Employees { get; set; }
 
-    public virtual DbSet<M_Product> M_Products { get; set; }
+    public virtual DbSet<M_Product> M_Product { get; set; }
 
     public virtual DbSet<M_Request> M_Requests { get; set; }
 
@@ -32,7 +32,7 @@ public partial class NidecUniformContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         //=> optionsBuilder.UseSqlServer("Data Source=LAPTOP-99421S3D\\SQLEXPRESS; Initial Catalog=NidecUniform; Integrated Security=True; Encrypt=True; Trust Server Certificate=True");
-        => optionsBuilder.UseSqlServer("Data Source = 10.234.1.89; Initial Catalog = NidecUniform; Persist Security Info=True;User ID = sa; Password=sa;Encrypt=True;Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Data Source = 10.234.1.89; Initial Catalog = NidecUniformV2; Persist Security Info=True;User ID = sa; Password=sa;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -59,16 +59,16 @@ public partial class NidecUniformContext : DbContext
             entity.Property(e => e.Position).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<M_Product>(entity =>
-        {
-            entity.ToTable("M_Product");
+        //modelBuilder.Entity<M_Product>(entity =>
+        //{
+        //    entity.ToTable("M_Product");
 
-            //entity.Property(e => e.ID).HasColumnName("ID");
-            entity.Property(e => e.ProductID)
-                .HasMaxLength(20)
-                .HasColumnName("ProductID");
-            entity.Property(e => e.ProductName).HasMaxLength(50);
-        });
+        //    //entity.Property(e => e.ID).HasColumnName("ID");
+        //    entity.Property(e => e.ProductID)
+        //        .HasMaxLength(20)
+        //        .HasColumnName("ProductID");
+        //    entity.Property(e => e.ProductName).HasMaxLength(50);
+        //});
 
         modelBuilder.Entity<M_Request>(entity =>
         {

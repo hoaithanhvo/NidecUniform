@@ -14,5 +14,4 @@ namespace NidecUniform.Models
         public double? TotalPrice { get; set; }
         public string Image { get; set; } 
     }
-
 }

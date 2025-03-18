@@ -23,6 +23,7 @@ namespace NidecUniform.Repositories
             var result = await (from deliveryDetails in _context.DeliveryDetails
                           join request in _context.M_Requests on deliveryDetails.RequestID equals request.ID
                           join employee in _context.M_Employees on request.EmployeeID equals employee.EmployeeID
+                          join product in _context.M_Product  on deliveryDetails.ProductID equals product.ProductID
                           select new ExportModel
                           {
                               EmployeeID = employee.EmployeeID,
@@ -31,7 +32,8 @@ namespace NidecUniform.Repositories
                               Position = employee.Position,
                               RequestType = request.RequestType,
                               ProductID = deliveryDetails.ProductID,
-                              ProductName = deliveryDetails.ProductName,
+                              ProductEnglishName = product.ProductEnglishName,
+                              ProductVieNameseName = product.ProductVietnameseName,
                               QuantityDelivered = deliveryDetails.QuantityDelivered,
                               CreateDate = deliveryDetails.CreateDate
                           }).OrderByDescending(s=>s.CreateDate).ToListAsync();

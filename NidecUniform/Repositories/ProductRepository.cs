@@ -19,7 +19,7 @@ namespace NidecUniform.Repositories
         }
         public async Task<List<M_Product>> GetProductList()
         {
-            return await _context.M_Products.ToListAsync();
+            return await _context.M_Product.ToListAsync();
         }
     }
 }

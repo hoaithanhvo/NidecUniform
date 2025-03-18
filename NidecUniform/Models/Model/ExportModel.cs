@@ -15,7 +15,9 @@ namespace NidecUniform.Models.Model
         public string RequestType { get; set; }
         public string ProductID { get; set; }
 
-        public string ProductName {  get; set; }    
+        public string ProductVieNameseName {  get; set; }    
+        public string ProductEnglishName { get; set; }
+
         public int QuantityDelivered { get; set; }  
         public DateTime CreateDate {  get; set; }   
     }
