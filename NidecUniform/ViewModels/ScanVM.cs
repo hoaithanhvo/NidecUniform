@@ -1,31 +1,41 @@
 ﻿using Azure.Core;
+using CoreScanner;
+using NidecUniform.ConnectZebra;
 using NidecUniform.Helpers;
 using NidecUniform.Models;
 using NidecUniform.Repositories;
 using NidecUniform.Repositories.Interface;
 using NidecUniform.Utilities;
+using STC;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace NidecUniform.ViewModels
 {
-    public class ScanVM : ViewModelBase
+    public partial class ScanVM : ViewModelBase
     {
+        #region Variable
         public ICommand SearchCommand { get; set; }
         public ICommand IncreaseQuantityCommand { get; private set; }
         public ICommand DecreaseQuantityCommand { get; private set; }
 
         public ICommand PushCommand { get; set; }
+
+        public ICommand ConnectScanCommand { get; set; }
 
         private readonly IEmpoloyee _employeeRepository;
         private readonly IDelivery _deliveryRepository;
@@ -33,6 +43,7 @@ namespace NidecUniform.ViewModels
         private readonly IRequestDetails _requestDetailReporitory;
         private readonly IUIServices _uiServices;
 
+        #endregion
 
         #region Binding Data
         private string _bdEmployeeID;
@@ -112,6 +123,17 @@ namespace NidecUniform.ViewModels
 
         #endregion 
 
+
+        private string _barcode;
+        public string Barcode
+        {
+            get => _barcode;
+            set { 
+              _barcode = value;
+                OnPropertyChanged(nameof(Barcode));
+            }
+        }
+
         public ScanVM(IUIServices uiServices)
         {
             BDListRequest = new ObservableCollection<RequestDetail>();
@@ -122,12 +144,18 @@ namespace NidecUniform.ViewModels
 
             _uiServices = uiServices;
 
-            SearchCommand = new RelayCommand(_ => SearchUser());
             IncreaseQuantityCommand = new RelayCommand(IncreaseQuantity);
             DecreaseQuantityCommand = new RelayCommand(DecreaseQuantity);
             PushCommand = new RelayCommand(_ => PushRequest());
-        }
 
+
+            #region Setup Zebra Scanner
+            DiscoverScanner discoverScanner = DiscoverScanner.GetInstance();
+            DiscoverScanner.BarcodeScanned -= OnBarcodeReceived;
+            DiscoverScanner.BarcodeScanned += OnBarcodeReceived;
+            #endregion
+
+        }
         private void IncreaseQuantity(object parameter)
         {
             Debug.WriteLine("Increase Quantity clicked");
@@ -167,16 +195,21 @@ namespace NidecUniform.ViewModels
         }
 
         private M_Employee User = new M_Employee();
-        private async Task SearchUser()
+        //private SemaphoreSlim _searchLock = new SemaphoreSlim(1, 1);
+        private async Task SearchUser(string scannedBarcode)
         {
-            BDListRequest.Clear();
-            _uiServices.ShowProgressDialog();
+            //await _searchLock.WaitAsync();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                BDListRequest.Clear();
+            });
+            //_uiServices.ShowProgressDialog();
             try
             {
-                User = await _employeeRepository.GetEmployee(BDSearch.Trim());
+                User = await _employeeRepository.GetEmployee(scannedBarcode);
                 if (User == null)
                 {
-                    _uiServices.HideProgressDialog();
+                    //_uiServices.HideProgressDialog();
                     ClearBindingData();
                     MessageBox.Show($"User {BDSearch} Not found", "Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -191,7 +224,8 @@ namespace NidecUniform.ViewModels
             }
             finally
             {
-                _uiServices.HideProgressDialog();
+                //_searchLock.Release(); // Giải phóng khóa -> Cho phép scan tiếp
+                //_uiServices.HideProgressDialog();
             }
         }
 
@@ -206,10 +240,23 @@ namespace NidecUniform.ViewModels
             {
                 foreach (var j in i.RequestDetails)
                 {
-                    BDListRequest.Add(new RequestDetail { ID = j.ID, ProductName = j.ProductName, 
-                        QuantityDelivered = j.QuantityDelivered, QuantityRequested = j.QuantityRequested, 
-                        StartDate = i.StartDate, EndDate = i.EndDate, RequestID = i.ID ,ProductID = j.ProductID,EmployeeID = j.EmployeeID,Unit=j.Unit
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        BDListRequest.Add(new RequestDetail
+                        {
+                            ID = j.ID,
+                            ProductName = j.ProductName,
+                            QuantityDelivered = j.QuantityDelivered,
+                            QuantityRequested = j.QuantityRequested,
+                            StartDate = i.StartDate,
+                            EndDate = i.EndDate,
+                            RequestID = i.ID,
+                            ProductID = j.ProductID,
+                            EmployeeID = j.EmployeeID,
+                            Unit = j.Unit
+                        });
                     });
+
                 }
             }
         }
@@ -264,23 +311,23 @@ namespace NidecUniform.ViewModels
                                 QuantityDelivered = (int)item.BDQuantity,
                                 Unit = item.Unit,
                                 RequestID = request.ID,
-                                
+
                             });
                             updateQuantityDelivered.Add(new RequestDetail
                             {
                                 ID = item.ID,
-                                QuantityDelivered = item.BDQuantity ??0,
+                                QuantityDelivered = item.BDQuantity ?? 0,
                             });
                         }
                     }
                 }
                 foreach (var request in updateQuantityDelivered)
                 {
-                    await _requestDetailReporitory.UpdateQuantityDelivered(request.ID,request.QuantityDelivered);
+                    await _requestDetailReporitory.UpdateQuantityDelivered(request.ID, request.QuantityDelivered);
                 }
-                
+
                 await _deliveryDetailReporitory.AddDeliveryDetails(deliveryDetailsList);
-                await SearchUser();
+                //await SearchUser();
                 _uiServices.HideProgressDialog();
 
                 MessageBox.Show("Import Sucess", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -289,6 +336,10 @@ namespace NidecUniform.ViewModels
             {
                 MessageBox.Show(ex.InnerException?.Message ?? ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        private async void OnBarcodeReceived(string scannedBarcode)
+        {
+             await SearchUser(scannedBarcode);
         }
     }
 }

@@ -18,12 +18,13 @@ namespace NidecUniform.Repositories.Interface.Common
 
             _context = context;
         }
-        public List<PieModel> getDataPieChart()
+        public List<PieModel> getDataPieChart(DateTime startDate, DateTime endDate)
         {
             var query = from a in _context.M_Requests
                         join b in _context.M_Employees on a.EmployeeID equals b.EmployeeID
                         join c in _context.DeliveryDetails on a.ID equals c.RequestID
                         join d in _context.M_Product on c.ProductID equals d.ProductID
+                        where (c.CreateDate >= startDate && c.CreateDate <= endDate)
                         group new { d.Price, c.QuantityDelivered } by b.Department into grouped
                         select new PieModel
                         {
@@ -34,24 +35,40 @@ namespace NidecUniform.Repositories.Interface.Common
 
             return query.ToList();
         }
-        public List<TooltipsModel> GetTooltipsAsync()
+        //public List<TooltipsModel> GetTooltipsAsync(DateTime startDate, DateTime endDate)
+        //{
+        //    var result =  (from emp in _context.M_Employees
+        //                        join req in _context.M_Requests
+        //                        on del.RequestID equals req.ID
+        //                        join del in _context.DeliveryDetails
+        //                        group emp by emp.Department into grouped
+        //                        select new TooltipsModel
+        //                        {
+        //                            Department = grouped.Key,
+        //                            TotalDeliveries = grouped.Count()
+        //                        }).ToList();
+
+        //    return result;
+        //}
+        public List<TooltipsModel> GetTooltipsAsync(DateTime startDate, DateTime endDate)
         {
-            var result =  (from emp in _context.M_Employees
-                                join del in _context.M_Deliveries
-                                on emp.EmployeeID equals del.EmployeeID
-                                group emp by emp.Department into grouped
-                                select new TooltipsModel
-                                {
-                                    Department = grouped.Key,
-                                    TotalDeliveries = grouped.Count()
-                                }).ToList();
+            var result = (from del in _context.DeliveryDetails
+                          join req in _context.M_Requests on del.RequestID equals req.ID
+                          join emp in _context.M_Employees on req.EmployeeID equals emp.EmployeeID
+                          where del.CreateDate >= startDate && del.CreateDate <= endDate
+                          group emp by emp.Department into grouped
+                          select new TooltipsModel
+                          {
+                              Department = grouped.Key,
+                              TotalDeliveries = grouped.Select(e => e.EmployeeID).Distinct().Count()
+                          }).ToList();
 
             return result;
         }
-        public List<ProductModel> GetProductInfo()
+        public List<ProductModel> GetProductInfo(DateTime startDate , DateTime endDate)
         {
             var result = (from d in _context.DeliveryDetails
-                          join p in _context.M_Product on d.ProductID equals p.ProductID
+                          join p in _context.M_Product on d.ProductID equals p.ProductID where(d.CreateDate>=startDate && d.CreateDate<=endDate)
                           group d by new { d.ProductID, p.ProductEnglishName, p.Price } into g
                           select new ProductModel
                           {
@@ -64,19 +81,21 @@ namespace NidecUniform.Repositories.Interface.Common
             return result;
         }
 
-        public int GetTotalUser()
+        public int GetTotalUser(DateTime startDate, DateTime endDate)
         {
             var result = (from request in _context.M_Requests
                           join employee in _context.M_Employees on request.EmployeeID equals employee.EmployeeID
                           join deliveryDetail in _context.DeliveryDetails on request.ID equals deliveryDetail.RequestID
-                          select request.EmployeeID).Distinct().Count();
+                          where (deliveryDetail.CreateDate >= startDate && deliveryDetail.CreateDate <= endDate)
+                          select employee.EmployeeID).Distinct().Count();
             return result;
         }
 
-        public decimal GetTotalAmount()
+        public decimal GetTotalAmount(DateTime startDate, DateTime endDate)
         {
             decimal totalAmount = (from deliveryDetail in _context.DeliveryDetails
                                    join product in _context.M_Product on deliveryDetail.ProductID equals product.ProductID
+                                   where (deliveryDetail.CreateDate >= startDate && deliveryDetail.CreateDate <= endDate)
                                    select Convert.ToDecimal(deliveryDetail.QuantityDelivered) * Convert.ToDecimal(product.Price ?? 0))
                           .Sum();
             return totalAmount;

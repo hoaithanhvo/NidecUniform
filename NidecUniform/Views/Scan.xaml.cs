@@ -1,7 +1,10 @@
-﻿using NidecUniform.Models.Model;
+﻿using NidecUniform.ConnectZebra;
+using NidecUniform.Models.Model;
 using NidecUniform.Repositories.Interface;
+using NidecUniform.Utilities;
 using NidecUniform.ViewModels;
 using NidecUniform.Views.Common;
+using STC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +30,7 @@ namespace NidecUniform.Views
         public Scan()
         {
             InitializeComponent();
-            this.DataContext = new ScanVM(this);
+            this.DataContext = AppServices.GetService<ScanVM>(); // Dùng DI container
         }
 
         public Task<PieModel> getDataPieChart()
@@ -44,5 +47,7 @@ namespace NidecUniform.Views
         {
             ShowProgressDialogCommon.ShowProgressDialog(this);
         }
+
+       
     }
 }

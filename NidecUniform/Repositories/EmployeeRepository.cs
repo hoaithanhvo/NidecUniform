@@ -12,9 +12,9 @@ namespace NidecUniform.Repositories
 {
     public class EmployeeRepository : IEmpoloyee
     {
-        private readonly NidecUniformContext _context;
+        private readonly IDbContextFactory<NidecUniformContext>  _context;
 
-        public EmployeeRepository(NidecUniformContext context)
+        public EmployeeRepository(IDbContextFactory<NidecUniformContext> context)
         {
 
             _context = context;
@@ -22,33 +22,18 @@ namespace NidecUniform.Repositories
 
         public async Task<HashSet<string>> GetAllEmployeeIdsAsync()
         {
-            return await _context.M_Employees.Select(s => s.EmployeeID).ToHashSetAsync();
+            return await _context.CreateDbContextAsync().Result.M_Employees.Select(s => s.EmployeeID).ToHashSetAsync();
         }
 
         public async Task<M_Employee> GetEmployee(string employeeID)
         {
-            return await _context.M_Employees.Include(s => s.Requests).ThenInclude(r=>r.RequestDetails).ThenInclude(d=>d.DeliveryDetails).Where(s=>s.EmployeeID == employeeID).FirstOrDefaultAsync();
+            return await _context.CreateDbContextAsync().Result.M_Employees.Include(s => s.Requests).ThenInclude(r=>r.RequestDetails).ThenInclude(d=>d.DeliveryDetails).Where(s=>s.EmployeeID == employeeID).FirstOrDefaultAsync();
 
         }
         public async Task importEmployee(List<M_Employee> employees)
         {
-            _context.M_Employees.AddRange(employees);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<List<TooltipsModel>> GetTooltipsAsync()
-        {
-            var result = await(from emp in _context.M_Employees
-                               join del in _context.M_Deliveries
-                               on emp.EmployeeID equals del.EmployeeID
-                               group emp by emp.Department into grouped
-                               select new TooltipsModel
-                               {
-                                   Department = grouped.Key,
-                                   TotalDeliveries = grouped.Count()
-                               }).ToListAsync();
-
-            return result;
+            _context.CreateDbContextAsync().Result.M_Employees.AddRange(employees);
+            await _context.CreateDbContextAsync().Result.SaveChangesAsync();
         }
     }
 }

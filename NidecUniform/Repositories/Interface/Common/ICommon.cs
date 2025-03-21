@@ -10,13 +10,11 @@ namespace NidecUniform.Repositories.Interface.Common
 {
     public interface ICommon
     {
-        List<PieModel> getDataPieChart();
-        List<ProductModel> GetProductInfo();
-        List<TooltipsModel> GetTooltipsAsync();
-        int GetTotalUser();
+        List<PieModel> getDataPieChart(DateTime startDate, DateTime endDate);
+        List<ProductModel> GetProductInfo(DateTime startDate , DateTime endDate);
+        List<TooltipsModel> GetTooltipsAsync(DateTime startDate, DateTime endDate);
+        int GetTotalUser(DateTime startDate, DateTime endDate);
 
-        decimal GetTotalAmount();
-        
-
+        decimal GetTotalAmount(DateTime startDate, DateTime endDate);
     }
 }
