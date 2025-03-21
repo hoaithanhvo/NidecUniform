@@ -1,6 +1,7 @@
 ﻿using NidecUniform.Models.Model;
 using NidecUniform.Repositories.Interface;
 using NidecUniform.ViewModels;
+using NidecUniform.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,12 +37,13 @@ namespace NidecUniform.Views
 
         public void HideProgressDialog()
         {
-            throw new NotImplementedException();
+            ShowProgressDialogCommon.HideProgressDialog(this);
+
         }
 
         public void ShowProgressDialog()
         {
-            throw new NotImplementedException();
+            ShowProgressDialogCommon.ShowProgressDialog(this);
         }
     }
 }

@@ -2,10 +2,19 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Prefer32Bit>False</Prefer32Bit>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Prefer32Bit>False</Prefer32Bit>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,33 +29,59 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Images\AK_MP.png" />
-    <None Remove="Images\AT.png" />
-    <None Remove="Images\AX.png" />
-    <None Remove="Images\A_TD_TRANG.png" />
+    <None Remove="Images\DM.png" />
     <None Remove="Images\GV.png" />
-    <None Remove="Images\N.png" />
+    <None Remove="Images\HAT.png" />
+    <None Remove="Images\JK_G.png" />
     <None Remove="Images\Nidec-Logo.jpg" />
     <None Remove="Images\Nidec_Logo-removebg.png" />
     <None Remove="Images\Nidec_Logo.png" />
     <None Remove="Images\Nidec_Logo_RemoveBG.png" />
-    <None Remove="Images\QT.png" />
-    <None Remove="Images\QX.png" />
-    <None Remove="Images\Q_NAM_MP.png" />
-    <None Remove="Images\Q_NU_MP.png" />
+    <None Remove="Images\SS_ESD_G.png" />
+    <None Remove="Images\SS_ESD_W.png" />
+    <None Remove="Images\S_ESD.png" />
+    <None Remove="Images\S_NonESD.png" />
+    <None Remove="Images\TR_G.png" />
+    <None Remove="Images\TR_M_DG.png" />
+    <None Remove="Images\TR_W.png" />
+    <None Remove="Images\TS_ESD_G.png" />
+    <None Remove="Images\TS_ESD_W.png" />
+    <None Remove="Images\TS_G.png" />
+    <None Remove="Images\TS_W.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\AK_MP.png">
+    <Resource Include="Images\DM.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\AT.png">
+    <Resource Include="Images\JK_G.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\A_TD_TRANG.png">
+    <Resource Include="Images\SS_ESD_G.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\N.png">
+    <Resource Include="Images\SS_ESD_W.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\S_ESD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\S_NonESD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\TR_M_DG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\TS_ESD_G.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\TS_W.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\TS_ESD_W.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\HAT.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Nidec_Logo.png">
@@ -70,25 +105,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Interop.CoreScanner">
+      <HintPath>..\..\B600044177\NidecIDM\NidecIDM\obj\Debug\Interop.CoreScanner.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\Nidec-Logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Nidec_Logo_RemoveBG.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\QT.png">
+    <Resource Include="Images\TR_W.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\AX.png">
+    <Resource Include="Images\TS_G.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\QX.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Q_NAM_MP.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Q_NU_MP.png">
+    <Resource Include="Images\TR_G.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

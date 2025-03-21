@@ -43,4 +43,7 @@ public partial class RequestDetail
 
     [NotMapped]
     public int? BDQuantity { get; set; } = 0;
+
+    [NotMapped]
+    public string? ProductVietNameseName { get; set; }
 }

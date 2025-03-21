@@ -4,17 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              Name="userCard">
-    <Border Padding="15 10">
+    <Border Margin="10 0 10 5">
         <Border.Style>
             <Style TargetType="Border">
-                <Setter Property="Background" Value="White"/>
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="BorderThickness" Value="2"/>
                 <Setter Property="Margin" Value="0 4"/>
-
+                <Setter Property="BorderBrush" Value="#039F41"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#039F41"/>
+                        <Setter Property="Background" Value="#9DC08B"/>
                     </Trigger>
-
                     <DataTrigger Binding="{Binding ElementName=userCard,Path=IsActive}">
                         <Setter Property="Background" Value="#f3f3f3"/>
                     </DataTrigger>
@@ -28,11 +29,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--User Image-->
-            <Ellipse Width="50" Height="50"  VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Ellipse.Fill>
-                    <ImageBrush ImageSource="{Binding ElementName=userCard,Path=Image}"/>
-                </Ellipse.Fill>
-            </Ellipse>
+            <Rectangle  Width="50" Height="50"  VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="{Binding ElementName=userCard,Path=Image}" Stretch="Uniform"/>
+                </Rectangle.Fill>
+            </Rectangle>
 
             <!--Info Text-->
             <StackPanel Grid.Column="1" Margin="5 0 0 0" >
@@ -41,20 +42,22 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Name: " Foreground="Black" FontSize="12" FontWeight="SemiBold" Grid.Column="0"/>
-                    <TextBlock Text="{Binding ProductName}" Foreground="Black" FontSize="12" TextWrapping="Wrap" FontWeight="SemiBold" Grid.Column="1"/>
+                    <TextBlock Text="P.Name: " Foreground="Black" FontSize="15" FontWeight="SemiBold" Grid.Column="0"/>
+                    <TextBlock Text="{Binding ProductName}" Foreground="Black" FontSize="15" TextWrapping="Wrap" FontWeight="SemiBold" Grid.Column="1"/>
                 </Grid>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Price: " Foreground="Black" FontSize="10"/>
-                    <TextBlock Text="{Binding Price}" Foreground="Black" FontSize="10" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Price: " Foreground="Black" FontSize="15"/>
+                        <TextBlock Text="{Binding Price}" Foreground="Black" FontSize="15" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="30 0 0 0">
+                        <TextBlock Text="Quantity: " Foreground="Black" FontSize="15" />
+                        <TextBlock Text="{Binding Quantity}" Foreground="Black" FontSize="15" />
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Quantity: " Foreground="Black" FontSize="10" />
-                    <TextBlock Text="{Binding Quantity}" Foreground="Black" FontSize="10" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Total Price: " Foreground="#039F41" FontSize="10"/>
-                    <TextBlock Text="{Binding TotalPrice}" Foreground="#039F41" FontSize="10"/>
+                    <TextBlock Text="Total Price:"  FontSize="15" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding TotalPrice}" FontSize="15" FontWeight="SemiBold" Margin="10 0 0 0"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

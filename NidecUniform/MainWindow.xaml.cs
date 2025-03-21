@@ -1,4 +1,5 @@
 ﻿using NidecUniform.Repositories;
+using NidecUniform.Utilities;
 using NidecUniform.ViewModels;
 using System.Net.WebSockets;
 using System.Text;
@@ -20,13 +21,10 @@ namespace NidecUniform
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly IEmpoloyee _empoloyeeRepository;
-        public MainWindow(IEmpoloyee empoloyeeRepository)
+        public MainWindow()
         {
             InitializeComponent();
-            _empoloyeeRepository = empoloyeeRepository;
             this.DataContext = new NavigationVM();
-              
         }
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {

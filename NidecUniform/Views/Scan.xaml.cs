@@ -1,7 +1,9 @@
-﻿using NidecUniform.Models.Model;
+﻿using NidecUniform.ConnectZebra;
+using NidecUniform.Models.Model;
 using NidecUniform.Repositories.Interface;
 using NidecUniform.ViewModels;
 using NidecUniform.Views.Common;
+using STC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,5 +46,7 @@ namespace NidecUniform.Views
         {
             ShowProgressDialogCommon.ShowProgressDialog(this);
         }
+
+       
     }
 }

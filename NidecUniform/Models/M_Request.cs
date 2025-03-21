@@ -30,6 +30,8 @@ public partial class M_Request
     [ForeignKey("EmployeeID")]
     public virtual M_Employee? Employee { get; set; }
 
+
+
     public virtual ICollection<RequestDetail> RequestDetails { get; set; } = new List<RequestDetail>();
 
     public virtual M_Delivery Delivery { get; set; } = null!;
