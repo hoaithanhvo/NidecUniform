@@ -26,7 +26,7 @@ namespace NidecUniform.Utilities
             // Đăng ký DbContext
             //services.AddDbContext<NidecUniformContext>(options =>
             //    options.UseSqlServer("Data Source=LAPTOP-99421S3D\\SQLEXPRESS; Initial Catalog=NidecUniform; Integrated Security=True; Encrypt=True; Trust Server Certificate=True"));
-            services.AddDbContext<NidecUniformContext>(options =>
+            services.AddDbContextFactory<NidecUniformContext>(options =>
                options.UseSqlServer("Data Source=10.234.1.89;Initial Catalog=NidecUniformV2;Persist Security Info=True;User ID=sa;Password=sa;Encrypt=True;Trust Server Certificate=True"));
             // Đăng ký Repository
             services.AddScoped<IEmpoloyee, EmployeeRepository>();
@@ -37,7 +37,8 @@ namespace NidecUniform.Utilities
             services.AddScoped<IDelivery, DeliveryRepository>();
             services.AddScoped<IDeliveryDetail, DeliveryDetailRepository>();
             services.AddScoped<ICommon, CommonRepository>();
-            services.AddScoped<IExport, ExportRepository>();
+            services.AddScoped<IExport, ExportRepository>()
+                .AddTransient<NidecUniformContext>();
 
 
 

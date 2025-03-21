@@ -23,16 +23,11 @@
         <Border CornerRadius="0,40,40,0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="20"/>
                     <RowDefinition Height="130"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                <StackPanel Margin="10 0" Orientation="Horizontal">
-                    <TextBox x:Name="txtSearch"  Style="{StaticResource searchTextbox}"  Height="40" Width="395"  HorizontalAlignment="Left" Text="{Binding BDSearch}"/>
-                    <Button Width="100" Height="40" FontSize="20" Content="Find" Style="{StaticResource mainButton}" Command="{Binding SearchCommand,Mode=TwoWay}"/>
-                    <Button Width="100" Height="40" FontSize="20" Content="Connect" Style="{StaticResource mainButton}" Command="{Binding ConnectScanCommand,Mode=OneWay}" />
-                </StackPanel>
                 <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Border Background="#039F41" BorderThickness="2" CornerRadius="10" Padding="10" Margin="10 0" Height="130" Width="500">
                         <Grid>

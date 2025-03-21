@@ -41,48 +41,6 @@ namespace STC
         public const short ScaleTypesSSI_BT = 11;
         public const short CameraTypesUVC = 14;
         public const short TotalScannerTypes = CameraTypesUVC;
-
-        public enum DefaultOption
-        {
-            [Description("No Defaults")]
-            NoDefaults = 0,
-            [Description("Set Factory Defaults")]
-            SetFactoryDefaults = 1,
-            [Description("Restore Factory Defaults")]
-            RestoreFactoryDefaults = 2
-        }
-
-        public enum ImageSize
-        {
-            [Description("Small")]
-            Small = 1,
-            [Description("Medium")]
-            Medium = 2,
-            [Description("Large")]
-            Large = 3
-        }
-        public enum ScannerType
-        {
-            [Description("Legacy")]
-            Legacy = 0,
-            [Description("New")]
-            New = 1
-        }
-        public enum ProtocolName
-        {
-            [Description("Simple Serial Interface (SSI)")]
-            SSI = 1,
-            [Description("Serial Port Profile(SPP)")]
-            SPP = 14,
-            [Description("Human Interface Device(HID)")]
-            HID = 17
-        }
-
-        public enum HostName
-        {
-            [Description("SSI BT Classic (Non-Discoverable)")]
-            SSIBTClassic = 22
-        }
     }
     public class ScanToConnect
     {
