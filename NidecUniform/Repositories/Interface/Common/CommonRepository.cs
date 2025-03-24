@@ -15,7 +15,6 @@ namespace NidecUniform.Repositories.Interface.Common
 
         public CommonRepository(NidecUniformContext context)
         {
-
             _context = context;
         }
         public List<PieModel> getDataPieChart(DateTime startDate, DateTime endDate)
@@ -31,8 +30,6 @@ namespace NidecUniform.Repositories.Interface.Common
                             Name = grouped.Key,
                             TotalPrice = grouped.Sum(x => x.Price * x.QuantityDelivered)
                         };
-
-
             return query.ToList();
         }
         //public List<TooltipsModel> GetTooltipsAsync(DateTime startDate, DateTime endDate)

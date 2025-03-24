@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NidecUniform.ViewModels
 {
@@ -37,26 +38,35 @@ namespace NidecUniform.ViewModels
             }
         }
         #endregion
-        private readonly IExport _exportRepository;
 
-        public ExportVM(IUIServices uiServices)
+        private readonly IExport _exportRepository;
+        private readonly IUIServices _uiServices;
+
+        public ExportVM()
         {
             _exportRepository = AppServices.GetService<IExport>();
-            getDataDelivery();
             DgvExportRequest = new ObservableCollection<ExportModel>();
-
-
         }
 
-        private async Task getDataDelivery()
+        public async Task getDataDelivery()
         {
-            var result = await _exportRepository.getListExportAsync();
-            TotalCount = result.Count;
-            foreach (var exportModel in result)
+            try
             {
-                DgvExportRequest.Add(exportModel);
+                DgvExportRequest.Clear();
+                await Task.Delay(3000);
+                var result = await _exportRepository.getListExportAsync();
+                if (result != null)
+                {
+                    foreach (var exportModel in result)
+                    {
+                        DgvExportRequest.Add(exportModel);
+                    }
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex?.InnerException?.Message, "Error", MessageBoxButton.OK);
+            }
         }
     }
 }

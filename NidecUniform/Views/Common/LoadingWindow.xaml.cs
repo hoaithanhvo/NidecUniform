@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace NidecUniform.Views.Common
 {
     /// <summary>
-    /// Interaction logic for LoadingControl.xaml
+    /// Interaction logic for LoadingWindow.xaml
     /// </summary>
-    public partial class LoadingControl : UserControl
+    public partial class LoadingWindow : Window
     {
-        public LoadingControl()
+        public LoadingWindow()
         {
             InitializeComponent();
         }

@@ -26,12 +26,6 @@ namespace NidecUniform.UserControls
         }
         public static readonly DependencyProperty QuantityProperty = DependencyProperty.Register("Quantity", typeof(string), typeof(InfoCard));
 
-        public bool CardIsActive
-        {
-            get { return (bool)GetValue(CardIsActiveProperty); }
-            set { SetValue(CardIsActiveProperty, value); }
-        }
-        public static readonly DependencyProperty CardIsActiveProperty = DependencyProperty.Register("CardIsActive", typeof(bool), typeof(InfoCard));
 
 
         public MahApps.Metro.IconPacks.PackIconMaterialKind Icon

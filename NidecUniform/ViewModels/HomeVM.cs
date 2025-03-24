@@ -19,7 +19,6 @@ namespace NidecUniform.ViewModels
     {
         private readonly ICommon _commonRepository;
 
-        private readonly IUIServices _uiServices;
 
         
 
@@ -104,24 +103,20 @@ namespace NidecUniform.ViewModels
         public ICommand SearchCommand { get; }
         #endregion
 
-        public HomeVM(IUIServices uiServices)
+        public HomeVM()
         {
             _commonRepository = AppServices.GetService<ICommon>();
-            _uiServices = uiServices;
             SearchCommand = new RelayCommand(_ => ExecuteSearch());
             RenderData();
         }
 
-        private void RenderData()
+        public void RenderData()
         {
-            _uiServices.ShowProgressDialog();
             LoadProducts();
             LoadTooltips();
             LoadChartData();
             LoadTotalAmount();
             LoadTotalUser();
-            _uiServices.HideProgressDialog();
-
         }
         private void ExecuteSearch()
         {
@@ -171,7 +166,7 @@ namespace NidecUniform.ViewModels
 
         private void LoadChartData()
         {
-            var result = _commonRepository.getDataPieChart(StartDate.Value, EndDate.Value);
+            var result =  _commonRepository.getDataPieChart(StartDate.Value, EndDate.Value);
 
             if (SeriesCollection == null)
                 SeriesCollection = new SeriesCollection();

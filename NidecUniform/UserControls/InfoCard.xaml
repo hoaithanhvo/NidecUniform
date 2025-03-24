@@ -12,20 +12,6 @@
             <Icon:PackIconMaterial Kind="{Binding ElementName=infoCard,Path=Icon}" Width="30" Height="30" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Border>
         
-        <!--Purple Border-->
-
-        <Border x:Name="border" BorderThickness="1" BorderBrush="#7163ba" CornerRadius="20" Margin="5">
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=infoCard,Path=IsActive}" Value="True">
-                            <Setter Property="Visibility"  Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-        </Border>
        <!--Main Section-->
         <Border Background="#039F41" CornerRadius="20">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

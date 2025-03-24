@@ -74,7 +74,7 @@
                 <Grid Grid.Column="1">
                     <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <StackPanel>
-                            <ItemsControl ItemsSource="{Binding Products}">
+                            <!--<ItemsControl ItemsSource="{Binding Products}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <uc:UserCard ProductName="{Binding ProductName}" 
@@ -84,7 +84,7 @@
                          TotalPrice="{Binding TotalPrice}" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                            </ItemsControl>-->
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

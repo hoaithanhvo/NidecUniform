@@ -1,5 +1,6 @@
 ﻿using NidecUniform.Models.Model;
 using NidecUniform.Repositories.Interface;
+using NidecUniform.Utilities;
 using NidecUniform.ViewModels;
 using NidecUniform.Views.Common;
 using System;
@@ -22,12 +23,12 @@ namespace NidecUniform.Views
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
-    public partial class Home : UserControl, IUIServices
+    public partial class Home : UserControl
     {
         public Home()
         {
             InitializeComponent();
-            this.DataContext = new HomeVM(this);
+            this.DataContext = AppServices.GetService<HomeVM>(); 
         }
 
         public Task<PieModel> getDataPieChart()
@@ -35,15 +36,6 @@ namespace NidecUniform.Views
             throw new NotImplementedException();
         }
 
-        public void HideProgressDialog()
-        {
-            ShowProgressDialogCommon.HideProgressDialog(this);
-
-        }
-
-        public void ShowProgressDialog()
-        {
-            ShowProgressDialogCommon.ShowProgressDialog(this);
-        }
+      
     }
 }

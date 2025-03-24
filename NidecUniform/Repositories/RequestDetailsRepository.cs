@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories
 {
-    class RequestDetailsRepository : IRequestDetails
+    public class RequestDetailsRepository : IRequestDetails
     {
         private readonly NidecUniformContext _context;
 

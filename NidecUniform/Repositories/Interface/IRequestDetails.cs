@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories
 {
-    interface IRequestDetails
+    public interface IRequestDetails
     {
         Task ImportRequestDetailsListAsync(List<RequestDetail> requestDetailsList);
 

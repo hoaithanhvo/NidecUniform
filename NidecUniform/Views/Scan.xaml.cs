@@ -25,7 +25,7 @@ namespace NidecUniform.Views
     /// <summary>
     /// Interaction logic for Scan.xaml
     /// </summary>
-    public partial class Scan : UserControl, IUIServices
+    public partial class Scan : UserControl
     {
         public Scan()
         {
@@ -38,15 +38,7 @@ namespace NidecUniform.Views
             throw new NotImplementedException();
         }
 
-        public void HideProgressDialog()
-        {
-            ShowProgressDialogCommon.HideProgressDialog(this);
-        }
-
-        public void ShowProgressDialog()
-        {
-            ShowProgressDialogCommon.ShowProgressDialog(this);
-        }
+       
 
        
     }

@@ -22,12 +22,8 @@ namespace NidecUniform
         {
             base.OnStartup(e);
 
-            // Khởi tạo Dependency Injection
             AppServices.ConfigureServices();
-            // Trong App.xaml.cs hoặc nơi bạn đăng ký dịch vụ DI
-         
 
-            // Lấy MainWindow từ DI
             var mainWindow = AppServices.GetService<MainWindow>();
             mainWindow.Show();
         }

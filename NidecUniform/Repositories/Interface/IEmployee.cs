@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories
 {
-    public interface IEmpoloyee
+    public interface IEmployee
     {
         Task<M_Employee> GetEmployee(string employeeID);
 

@@ -5,6 +5,7 @@ using NidecUniform.Helpers;
 using NidecUniform.Models;
 using NidecUniform.Repositories;
 using NidecUniform.Repositories.Interface;
+using NidecUniform.Repositories.Interface.Common;
 using NidecUniform.Utilities;
 using NidecUniform.Views;
 using NidecUniform.Views.Common;
@@ -54,9 +55,10 @@ namespace NidecUniform.ViewModels
         private readonly IRawData _rawDataRepository;
         private readonly IRequest _requestRepository;
         private readonly IRequestDetails _requestDetailsRepository;
-        private readonly IEmpoloyee _employeeRepository;
+        private readonly IEmployee _employeeRepository;
         private readonly IProduct _productRepository;
         private readonly IUIServices _uiServices;
+        private readonly IUnitOfWork _unitOfWork;
 
         #region Variable
 
@@ -64,7 +66,7 @@ namespace NidecUniform.ViewModels
         private List<RawData> listRawData = new List<RawData>();
 
         #endregion
-        public ImportVM(IUIServices uiServices)
+        public ImportVM()
         {
             ClearCommand = new RelayCommand(_ => ClearDgv());
             OpenCommand = new RelayCommand(_ => ExecuteOpen());
@@ -73,9 +75,10 @@ namespace NidecUniform.ViewModels
             _rawDataRepository = AppServices.GetService<IRawData>();
             _requestRepository = AppServices.GetService<IRequest>();
             _requestDetailsRepository = AppServices.GetService<IRequestDetails>();
-            _employeeRepository = AppServices.GetService<IEmpoloyee>();
+            _employeeRepository = AppServices.GetService<IEmployee>();
             _productRepository = AppServices.GetService<IProduct>();
-            _uiServices = uiServices;
+            //_uiServices = uiServices;
+            _unitOfWork = AppServices.GetService<IUnitOfWork>(); // Lấy UnitOfWork từ DI
         }
         private void ClearDgv()
         {
@@ -214,21 +217,17 @@ namespace NidecUniform.ViewModels
         {
             try
             {
-                if (!await CheckUserInvalidAsync())
-                {
-                    return;
-                }
-                if (!await CheckProductInvalidAsync())
-                {
-                    return;
-
-                }
-                _uiServices.ShowProgressDialog();
-                await _rawDataRepository.ImportListRequest(listRawData);
+                //if (!await CheckUserInvalidAsync())
+                //{
+                //    return;
+                //}
+                //if (!await CheckProductInvalidAsync())
+                //{
+                //    return;
+                //}
+                //await _rawDataRepository.ImportListRequest(listRawData);
                 var productList = await _productRepository.GetProductList();
                 await ProcessRequests(productList);
-                _uiServices.HideProgressDialog();
-                MessageBox.Show("Import Success!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -237,6 +236,8 @@ namespace NidecUniform.ViewModels
         }
         private async Task ProcessRequests(List<M_Product> productList)
         {
+            var transactionSuccessful = false;
+            _unitOfWork.BeginTransaction();
             try
             {
                 foreach (var rawData in DgvImportRequest)
@@ -249,7 +250,7 @@ namespace NidecUniform.ViewModels
                         RequestType = rawData.UniformType ?? "",
                     };
 
-                    int realRequestID = await _requestRepository.SaveRequest(request);
+                    int realRequestID = await _unitOfWork.RequestRepository.SaveRequest(request);
 
                     var requestDetails = new List<RequestDetail>();
                     if (rawData.NumberOfPaint > 0)
@@ -297,12 +298,22 @@ namespace NidecUniform.ViewModels
                             Unit = productList.FirstOrDefault(p => p.ProductEnglishName == rawData.ShoesType)?.Unit ?? ""
                         });
                     }
-                    await _requestDetailsRepository.ImportRequestDetailsListAsync(requestDetails);
+                    await _unitOfWork.RequestDetailsRepository.ImportRequestDetailsListAsync(requestDetails);
                 }
+                _unitOfWork.Commit();
+                transactionSuccessful = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.InnerException?.Message, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                _unitOfWork.Rollback();
+                MessageBox.Show(ex.InnerException?.Message, "Error: Import Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (transactionSuccessful)
+                {
+                    MessageBox.Show("Thao tác thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
         }
     }

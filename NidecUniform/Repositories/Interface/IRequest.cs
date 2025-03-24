@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories
 {
-    interface IRequest
+    public interface IRequest
     {
         void ImportRequest(List<M_Request> ImportRequestList);
         Task<int> SaveRequest(M_Request request);

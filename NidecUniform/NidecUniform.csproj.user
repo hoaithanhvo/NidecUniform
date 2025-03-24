@@ -10,7 +10,7 @@
     <Compile Update="UserControls\UserCard.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Common\LoadingControl.xaml.cs">
+    <Compile Update="Views\Common\LoadingWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Export.xaml.cs">
@@ -90,10 +90,7 @@
     <Page Update="UserControls\UserCard.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Utilities\DataTemplate.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Common\LoadingControl.xaml">
+    <Page Update="Views\Common\LoadingWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Export.xaml">

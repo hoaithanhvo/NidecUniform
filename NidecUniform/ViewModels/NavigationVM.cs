@@ -24,20 +24,20 @@ namespace NidecUniform.ViewModels
         public ICommand ImportCommand { get; set; }
         public ICommand ScanCommand { get; set; }
 
-        private void Home(object obj) => CurrentView = AppServices.GetService<HomeVM>();
-        private void Export(object obj) => CurrentView = AppServices.GetService<Export>();
-        private void Import(object obj) => CurrentView = AppServices.GetService<ImportVM>();
-        private void Scan(object obj) => CurrentView = AppServices.GetService<ScanVM>();
-
 
         public NavigationVM()
         {
             HomeCommand = new RelayCommand(_ => CurrentView = AppServices.GetService<HomeVM>());
-            ExportCommand = new RelayCommand(_ => CurrentView = AppServices.GetService<ExportVM>());
+            ExportCommand = new RelayCommand(async _ =>
+            {
+                LoadingService.Show();
+                var exportVM = AppServices.GetService<ExportVM>();
+                CurrentView = exportVM;
+                await exportVM.getDataDelivery();
+                LoadingService.Close(); // Đóng loading
+            });
             ImportCommand = new RelayCommand(_ => CurrentView = AppServices.GetService<ImportVM>());
             ScanCommand = new RelayCommand(_ => CurrentView = AppServices.GetService<ScanVM>());
-
-            // Mặc định là Home
             CurrentView = AppServices.GetService<HomeVM>();
         }
     }

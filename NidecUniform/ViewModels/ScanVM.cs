@@ -37,7 +37,7 @@ namespace NidecUniform.ViewModels
 
         public ICommand ConnectScanCommand { get; set; }
 
-        private readonly IEmpoloyee _employeeRepository;
+        private readonly IEmployee _employeeRepository;
         private readonly IDelivery _deliveryRepository;
         private readonly IDeliveryDetail _deliveryDetailReporitory;
         private readonly IRequestDetails _requestDetailReporitory;
@@ -137,7 +137,7 @@ namespace NidecUniform.ViewModels
         public ScanVM(IUIServices uiServices)
         {
             BDListRequest = new ObservableCollection<RequestDetail>();
-            _employeeRepository = AppServices.GetService<IEmpoloyee>();
+            _employeeRepository = AppServices.GetService<IEmployee>();
             _deliveryRepository = AppServices.GetService<IDelivery>();
             _deliveryDetailReporitory = AppServices.GetService<IDeliveryDetail>();
             _requestDetailReporitory = AppServices.GetService<IRequestDetails>();

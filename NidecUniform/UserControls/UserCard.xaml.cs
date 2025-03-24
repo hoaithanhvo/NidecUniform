@@ -49,7 +49,5 @@ namespace NidecUniform.UserControls
         }
         public static readonly DependencyProperty TotalPriceProperty =
             DependencyProperty.Register("TotalPrice", typeof(int), typeof(UserCard), new PropertyMetadata(0));
-
-       
     }
 }

@@ -46,8 +46,8 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
             <TextBlock Text="Total:" VerticalAlignment="Center" FontSize="13" Foreground="Black"/>
             <TextBlock Text="{Binding TotalCount,TargetNullValue = 0}" VerticalAlignment="Center" FontSize="13" Foreground="Black" Margin="2 0 10 0"/>
-            <Button  Content="Export" Command="{Binding ExportCommand}"  Style="{StaticResource mainButton}" >
-            </Button>
+            <!--<Button  Content="Export" Command="{Binding ExportCommand}"  Style="{StaticResource mainButton}" >
+            </Button>-->
         </StackPanel>
     </Grid>
 </UserControl>

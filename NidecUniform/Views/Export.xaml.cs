@@ -1,5 +1,7 @@
 ﻿using NidecUniform.Repositories.Interface;
+using NidecUniform.Utilities;
 using NidecUniform.ViewModels;
+using NidecUniform.Views.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +22,13 @@ namespace NidecUniform.Views
     /// <summary>
     /// Interaction logic for Export.xaml
     /// </summary>
-    public partial class Export : UserControl, IUIServices
+    public partial class Export : UserControl
     {
 
         public Export()
         {
             InitializeComponent();
-            DataContext = new ExportVM(this);
+            this.DataContext = AppServices.GetService<ExportVM>(); 
         }
     }
 }

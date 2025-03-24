@@ -3,17 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NidecUniform"
         mc:Ignorable="d"
         Title="Nidec Uniform" Height="760" Width="1280" WindowStartupLocation="CenterScreen"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         Icon="/Images/Nidec_Logo.png"
-        xmlns:Menu="clr-namespace:NidecUniform.Utilities"
-        xmlns:vm="clr-namespace:NidecUniform.ViewModels">
-  
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-    </Window.Resources>
+        xmlns:Navigate="clr-namespace:NidecUniform.CustomControl">
     <Border Background="#cfd5e5" CornerRadius="40" BorderThickness="2" BorderBrush=" #ebedf3" Padding="20" MouseDown="Border_MouseDown">
         <Border CornerRadius="40">
             <Border.Background>
@@ -38,42 +32,41 @@
                         </Border>
                     </StackPanel>
                     <StackPanel Height="400" Width="170">
-
                         <!--// Home //-->
-                        <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding HomeCommand}" IsChecked="True">
+                        <Navigate:RadioButtonControl Style="{StaticResource BtnStyle}" Command="{Binding HomeCommand}" IsChecked="True">
                             <StackPanel Orientation="Horizontal">
                                 <Icon:PackIconMaterial Kind="Home" Style="{StaticResource menuButtonIcon}"/>
                                 <TextBlock Text="Home" Style="{StaticResource Text_Style}" />
                             </StackPanel>
-                        </Menu:Btn>
+                        </Navigate:RadioButtonControl>
 
                         <!--// Import //-->
-                        <Menu:Btn Style="{StaticResource BtnStyle}"
-                  Command="{Binding ImportCommand}">
+                        <Navigate:RadioButtonControl Style="{StaticResource BtnStyle}"
+Command="{Binding ImportCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <Icon:PackIconMaterial Kind="Import" Style="{StaticResource menuButtonIcon}"/>
                                 <TextBlock Text="Import" Style="{StaticResource Text_Style}" />
                             </StackPanel>
-                        </Menu:Btn>
+                        </Navigate:RadioButtonControl>
 
                         <!--// Export //-->
 
-                        <Menu:Btn Style="{StaticResource BtnStyle}"
-                  Command="{Binding ExportCommand}">
+                        <Navigate:RadioButtonControl Style="{StaticResource BtnStyle}"
+Command="{Binding ExportCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <Icon:PackIconMaterial Kind="InvoiceExportOutline" Style="{StaticResource menuButtonIcon}"/>
                                 <TextBlock Text="Export" Style="{StaticResource Text_Style}" />
                             </StackPanel>
-                        </Menu:Btn>
+                        </Navigate:RadioButtonControl>
 
                         <!--// Scan //-->
-                        <Menu:Btn Style="{StaticResource BtnStyle}"
-                  Command="{Binding ScanCommand}">
+                        <Navigate:RadioButtonControl Style="{StaticResource BtnStyle}"
+Command="{Binding ScanCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <Icon:PackIconMaterial Kind="QrcodeScan" Style="{StaticResource menuButtonIcon}"/>
                                 <TextBlock Text="Scan" Style="{StaticResource Text_Style}" />
                             </StackPanel>
-                        </Menu:Btn>
+                        </Navigate:RadioButtonControl>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Column="1">

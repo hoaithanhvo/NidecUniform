@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NidecUniform.Repositories
 {
-    public class EmployeeRepository : IEmpoloyee
+    public class EmployeeRepository : IEmployee
     {
         private readonly IDbContextFactory<NidecUniformContext>  _context;
 
